@@ -1,0 +1,442 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.infrastructure\\data\\configdbcontext\\configproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|solutionrelative:usaautopartes.infrastructure\\data\\configdbcontext\\configproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\controllers\\proveedorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\proveedorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.infrastructure\\data\\repositorio\\genericrepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|solutionrelative:usaautopartes.infrastructure\\data\\repositorio\\genericrepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.infrastructure\\data\\repositorio\\proveedorrepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|solutionrelative:usaautopartes.infrastructure\\data\\repositorio\\proveedorrepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\handlers\\authenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\handlers\\authenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\controllers\\descuentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\descuentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\types\\proveedortype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\types\\proveedortype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\types\\productotype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\types\\productotype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\types\\importaciontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\types\\importaciontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\types\\importacion_detalletype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\types\\importacion_detalletype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\types\\historialpreciotype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\types\\historialpreciotype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\proveedorquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\proveedorquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\productoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\productoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\mequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\mequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\importacionquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\importacionquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\descuentoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\descuentoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.infrastructure\\servicios\\processors\\authtokenprocessor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|solutionrelative:usaautopartes.infrastructure\\servicios\\processors\\authtokenprocessor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2731B6D1-23BA-4D8F-B990-E07A935B4268}|UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.domain\\enum\\authenums\\cookiesnames.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2731B6D1-23BA-4D8F-B990-E07A935B4268}|UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj|solutionrelative:usaautopartes.domain\\enum\\authenums\\cookiesnames.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\kafe-yana\\usaautopartes.api\\usaautopartes.infrastructure\\servicios\\processors\\jwtoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78E82E11-2E2F-4B11-855E-9593CA9C94F4}|UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj|solutionrelative:usaautopartes.infrastructure\\servicios\\processors\\jwtoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 208,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GenericRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
+              "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T18:24:41.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProveedorRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProveedorRepositorio.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProveedorRepositorio.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProveedorRepositorio.cs",
+              "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProveedorRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T18:24:38.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConfigProveedor.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\ConfigDbContext\\ConfigProveedor.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Data\\ConfigDbContext\\ConfigProveedor.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\ConfigDbContext\\ConfigProveedor.cs",
+              "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Data\\ConfigDbContext\\ConfigProveedor.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T18:17:48.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\appsettings.Development.json",
+              "RelativeToolTip": "UsaAutoPartes.Api\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-25T23:10:14.99Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "CookiesNames.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\Enum\\AuthEnums\\CookiesNames.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Domain\\Enum\\AuthEnums\\CookiesNames.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\Enum\\AuthEnums\\CookiesNames.cs",
+              "RelativeToolTip": "UsaAutoPartes.Domain\\Enum\\AuthEnums\\CookiesNames.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T22:30:02.649Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "JwtOptions.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Servicios\\Processors\\JwtOptions.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Servicios\\Processors\\JwtOptions.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Servicios\\Processors\\JwtOptions.cs",
+              "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Servicios\\Processors\\JwtOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T22:09:42.827Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AuthTokenProcessor.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Servicios\\Processors\\AuthTokenProcessor.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Servicios\\Processors\\AuthTokenProcessor.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Servicios\\Processors\\AuthTokenProcessor.cs",
+              "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Servicios\\Processors\\AuthTokenProcessor.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAgwFcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T22:09:37.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "DescuentoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T21:59:21.814Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ImportacionQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T21:59:12.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ProveedorQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T21:54:45.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MeQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T21:53:48.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProveedorController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProveedorController.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\ProveedorController.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProveedorController.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\ProveedorController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAiwBwAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:43:49.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DescuentoController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\DescuentoController.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\DescuentoController.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\DescuentoController.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\DescuentoController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwA0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:43:31.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:43:19.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ProveedorType.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ProveedorType.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\ProveedorType.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ProveedorType.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\ProveedorType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:25:47.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ImportacionType.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ImportacionType.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\ImportacionType.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ImportacionType.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\ImportacionType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:25:43.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Importacion_DetalleType.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\Importacion_DetalleType.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\Importacion_DetalleType.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\Importacion_DetalleType.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\Importacion_DetalleType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:25:41.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "HistorialPrecioType.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\HistorialPrecioType.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\HistorialPrecioType.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\HistorialPrecioType.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\HistorialPrecioType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:25:39.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ProductoType.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ProductoType.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\ProductoType.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\ProductoType.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\ProductoType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:19:12.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ProductoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T17:18:45.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Program.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Program.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Program.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAmwGgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T16:32:37.793Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\appsettings.json",
+              "RelativeToolTip": "UsaAutoPartes.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-25T16:15:28.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductoController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAswA4AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T08:06:29.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthenticationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Handlers\\AuthenticationHandler.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Handlers\\AuthenticationHandler.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Handlers\\AuthenticationHandler.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Handlers\\AuthenticationHandler.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAgwBkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T07:54:11.432Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
