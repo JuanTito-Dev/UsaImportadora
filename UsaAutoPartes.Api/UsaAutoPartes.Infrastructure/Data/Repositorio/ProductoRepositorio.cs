@@ -18,11 +18,9 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             datos = _db.Set<Producto>();
         }
 
-        public async Task<Producto> GetProductoforCodigo(string codigo)
+        public async Task<Producto?> GetProductoforCodigo(string codigo)
         {
             var producto = await datos.FirstOrDefaultAsync(x => x.Codigo == codigo);
-
-            if (producto == null) throw new EntidadNoEncontradaException("Producto");
 
             return producto;
         }
