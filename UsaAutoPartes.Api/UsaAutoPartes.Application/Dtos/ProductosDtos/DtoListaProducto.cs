@@ -9,8 +9,6 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
 {
     public class DtoListaProducto
     {
-        [Required(ErrorMessage = "El campo ConversionABs es obligatorio.")]
-        public decimal ConversionABs { get; set; }
 
         public List<DtoProductosLista> Productos { get; set; } = new List<DtoProductosLista>();
     }

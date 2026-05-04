@@ -16,10 +16,6 @@ namespace UsaAutoPartes.Application.Dtos.ImportacionDtos
         public required DateTime Fecha { get; set; }
 
         [Required]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Tipo de cambio debe ser mayor a 0")]
-        public required decimal ConversionABs { get; set; }
-
-        [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Costo total debe ser mayor a 0")]
         public required decimal CostoTotal {  get; set; }
 

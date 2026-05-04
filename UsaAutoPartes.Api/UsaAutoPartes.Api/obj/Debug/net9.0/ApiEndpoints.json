@@ -131,6 +131,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "UsaAutoPartes.Api.Controllers.PrestamoController",
+    "Method": "Crear",
+    "RelativePath": "api/Prestamo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "datos",
+        "Type": "UsaAutoPartes.Application.Dtos.PrestamoDtos.DtoPrestamoCrear",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UsaAutoPartes.Api.Controllers.PrestamoController",
+    "Method": "Cancelar",
+    "RelativePath": "api/Prestamo/Cancelar/{Id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "UsaAutoPartes.Api.Controllers.ProductoController",
     "Method": "Crear",
     "RelativePath": "api/Producto",

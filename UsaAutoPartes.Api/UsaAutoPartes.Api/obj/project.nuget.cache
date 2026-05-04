@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jGsDypRsOrw=",
+  "dgSpecHash": "XvNmeg6dH38=",
   "success": true,
-  "projectFilePath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
+  "projectFilePath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\chillicream.nitro.app\\28.0.7\\chillicream.nitro.app.28.0.7.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\greendonut\\15.1.13\\greendonut.15.1.13.nupkg.sha512",

@@ -440,6 +440,9 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Piezas")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("Precio")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
@@ -472,6 +475,71 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasDatabaseName("IX_ImportacionDetalle_IdImportacion");
 
                     b.ToTable("Importacion_Detalle", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nota")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Prestamo", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo_detalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id_Prestamo")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Precio")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Prestamo");
+
+                    b.ToTable("Prestamo_detalle", (string)null);
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Producto", b =>
@@ -513,6 +581,9 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Piezas")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Precio")
                         .HasPrecision(10, 2)
@@ -723,9 +794,26 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Navigation("Importacion");
                 });
 
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo_detalle", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Prestamo", "Prestamo")
+                        .WithMany("Detalle")
+                        .HasForeignKey("Id_Prestamo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fx_pretamos_pretamodetalle");
+
+                    b.Navigation("Prestamo");
+                });
+
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Importacion", b =>
                 {
                     b.Navigation("Detalles");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
+                {
+                    b.Navigation("Detalle");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Producto", b =>

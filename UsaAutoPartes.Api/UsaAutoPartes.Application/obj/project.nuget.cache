@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GkN4tUzflDg=",
+  "dgSpecHash": "bv5Jbswt3h0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
+  "projectFilePath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\9.0.14\\microsoft.aspnetcore.cryptography.internal.9.0.14.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\9.0.14\\microsoft.aspnetcore.cryptography.keyderivation.9.0.14.nupkg.sha512",

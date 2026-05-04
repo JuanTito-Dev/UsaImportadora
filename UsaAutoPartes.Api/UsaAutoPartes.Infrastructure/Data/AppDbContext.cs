@@ -34,6 +34,10 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<Descuento> Descuentos { get; set; }
 
+        public DbSet<Prestamo> Prestamos { get; set; }
+
+        public DbSet<Prestamo_detalle> Prestamo_Detalles {  get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);
@@ -45,6 +49,8 @@ namespace UsaAutoPartes.Infrastructure.Data
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigHistorialPrecio).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigImportacion_Detalle).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigDescuento).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigPrestamo).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigPrestamo_Detalle).Assembly);
         }
     }
 }

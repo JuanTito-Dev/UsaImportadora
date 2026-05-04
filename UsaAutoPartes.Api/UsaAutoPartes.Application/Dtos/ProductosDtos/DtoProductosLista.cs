@@ -28,9 +28,16 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "No puedes inresar menos de 0")]
-        public required int Stock_Actual { get; set; }
+        public required int Cantidad { get; set; }
 
         public int Stock_Minimo { get; set; } = 0;
+
+        [Required(ErrorMessage = "El las pieza son obligatorias")]
+        [Range(0, int.MaxValue, ErrorMessage = "Piezas fuera de rango")]
+        public int Piezas { get; set; } = 1;
+
+        [Required(ErrorMessage = "El campo ConversionABs es obligatorio.")]
+        public decimal ConversionABs { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "No puedes inresar menos de 0")]
@@ -39,12 +46,11 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         public decimal Precio { get; set; } = 0;
 
 
-        public virtual Producto Crear(decimal TipoCambio)
+        public virtual Producto Crear()
         {
             var precio = this.Precio > 0 ? this.Precio : 0;
             var costo = this.Costo;
-            var ConversionABs = TipoCambio;
-            var producto = new Producto(costo, precio, ConversionABs)
+            var producto = new Producto(costo, precio, this.ConversionABs)
             {
                 Codigo = Codigo,
                 CodigoAux = this.CodigoAux != string.Empty ? this.CodigoAux : string.Empty,
@@ -54,15 +60,16 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion : string.Empty, 
                 Descripcion = this.Descripcion != string.Empty ? this.Descripcion : string.Empty,
                 Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : string.Empty,
-                Stock_Actual = this.Stock_Actual,
+                Stock_Actual = this.Cantidad * this.Piezas,
                 Stock_Minimo = this.Stock_Minimo <= 0 ? 5 : this.Stock_Minimo,
+                Piezas = this.Piezas
             }; 
 
             return producto;
         }   
 
 
-        public virtual HistorialPrecio Actualizar(Producto producto, decimal TipoCambio, string Nota)
+        public virtual HistorialPrecio Actualizar(Producto producto, string Nota)
         {
             producto.CodigoAux = this.CodigoAux != string.Empty? CodigoAux : producto.CodigoAux;
             producto.CodigoAux2 = this.CodigoAux2 != string.Empty ? this.CodigoAux2 : producto.CodigoAux2;
@@ -70,14 +77,14 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
             producto.Marca = this.Marca != string.Empty ? this.Marca : producto.Marca;
             producto.Descripcion = this.Descripcion != string.Empty ? this.Descripcion : producto.Descripcion;
             producto.Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : producto.Unidad_Medida;
-            producto.Stock_Actual += this.Stock_Actual;
+            producto.Stock_Actual += this.Cantidad * this.Piezas;
             producto.Stock_Minimo = this.Stock_Minimo <= 0 ? producto.Stock_Minimo : this.Stock_Minimo;
             producto.Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion: producto.Ubicacion;
 
             var preciocambio = this.Precio > 0 ? this.Precio : producto.Precio;
             var costocambio = this.Costo > 0 ? this.Costo : producto.Costo;
 
-            return producto.CambiarPrecio(costocambio, preciocambio, TipoCambio, Nota);
+            return producto.CambiarPrecio(costocambio, preciocambio, this.ConversionABs, Nota);
         }
     }
 }

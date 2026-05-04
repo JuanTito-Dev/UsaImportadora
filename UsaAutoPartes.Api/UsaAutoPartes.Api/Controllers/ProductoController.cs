@@ -26,7 +26,7 @@ namespace UsaAutoPartes.Api.Controllers
 
             await _producto.GuardarAsync();
 
-            return Created();
+            return Created("", new { message = "Producto creado"});
         }
 
         [HttpPut("{Id:int}")]
@@ -40,7 +40,7 @@ namespace UsaAutoPartes.Api.Controllers
 
             await _producto.GuardarAsync();
 
-            return NoContent();
+            return Ok(new {message = "Producto editado"});
         }
 
         [HttpPost("CambiarPrecio/{Id:int}")]
@@ -49,11 +49,6 @@ namespace UsaAutoPartes.Api.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var productoBd = await _db.productos.Obtener(Id);
-
-            if (productoBd == null)
-            {
-                return BadRequest(new { message = "Producto no encontrado" });
-            }
 
             var precio = productoBd.CambiarPrecio(datos.Costo, datos.Precio, datos.ConversionABs, datos.Nota);
 
@@ -91,13 +86,13 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
-                    var precio = item.Actualizar(producto, Lista.ConversionABs, "Actualizacion de la lista");
+                    var precio = item.Actualizar(producto, "Actualizacion de la lista");
                     await _db.historialPrecios.Crear(precio);
                     ActualizadoCant++;
                 }
                 else
                 {
-                    var newproducto = item.Crear(Lista.ConversionABs);
+                    var newproducto = item.Crear();
                     await _db.productos.Crear(newproducto);
                     CreadoCant++;
 
@@ -118,11 +113,6 @@ namespace UsaAutoPartes.Api.Controllers
 
             var proveedor = await _db.proveedores.Obtener(datos.Id_Proveedor);
 
-            if (proveedor is null)
-            {
-                return BadRequest("Proveedor no encontrado");
-            }
-
             if (datos.Productos == null || !datos.Productos.Any())
                 return BadRequest(new { mensaje = "La lista está vacía." });
 
@@ -137,19 +127,19 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
-                    var precio = item.Actualizar(producto, datos.ConversionABs, "Actualizado por importacion");
+                    var precio = item.Actualizar(producto, "Actualizado por importacion");
                     await _db.historialPrecios.Crear(precio);
 
-                    var detalle = item.CrearImportacionDetalle(datos.ConversionABs);
+                    var detalle = item.CrearImportacionDetalle();
                     detalle.Tipo = "Stock+";
                     detallesImportacion.Add(detalle);
                     ActualizadoCant++;
                 }
                 else
                 {
-                    var newproducto = item.Crear(datos.ConversionABs);
+                    var newproducto = item.Crear();
                     await _db.productos.Crear(newproducto);
-                    var detalle = item.CrearImportacionDetalle(datos.ConversionABs);
+                    var detalle = item.CrearImportacionDetalle();
                     detalle.Tipo = "Nuevo";
                     detallesImportacion.Add(detalle);
                     CreadoCant++;

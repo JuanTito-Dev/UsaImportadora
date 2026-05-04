@@ -25,6 +25,8 @@ namespace UsaAutoPartes.Domain.Entities
 
         public string Ubicacion { get; set; } = string.Empty;
 
+        public required int Piezas { get; set; } = 1;
+
         public required int Stock_Actual { get; set; }
 
         public required int Stock_Minimo { get; set; }
@@ -68,6 +70,11 @@ namespace UsaAutoPartes.Domain.Entities
                 ConversionABs = ConversionABs,
                 Nota = Nota
             };
+        }
+
+        public void Descontar(int cantidad)
+        {
+            Stock_Actual -= cantidad;
         }
     }
 }

@@ -188,6 +188,54 @@
         }
       }
     },
+    "/api/Prestamo": {
+      "post": {
+        "tags": [
+          "Prestamo"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DtoPrestamoCrear"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Prestamo/Cancelar/{Id}": {
+      "post": {
+        "tags": [
+          "Prestamo"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Producto": {
       "post": {
         "tags": [
@@ -466,7 +514,6 @@
       "required": [
         "id_Proveedor",
         "fecha",
-        "conversionABs",
         "costoTotal",
         "f_Internacional",
         "aduana_Arancel",
@@ -481,11 +528,6 @@
         "fecha": {
           "format": "date-time",
           "type": "string"
-        },
-        "conversionABs": {
-          "format": "double",
-          "minimum": 1,
-          "type": "number"
         },
         "costoTotal": {
           "format": "double",
@@ -516,7 +558,9 @@
       "required": [
         "codigo",
         "nombre",
-        "stock_Actual",
+        "cantidad",
+        "piezas",
+        "conversionABs",
         "costo"
       ],
       "type": "object",
@@ -545,7 +589,7 @@
         "ubicacion": {
           "type": "string"
         },
-        "stock_Actual": {
+        "cantidad": {
           "format": "int32",
           "maximum": 2147483647,
           "minimum": 0,
@@ -554,6 +598,16 @@
         "stock_Minimo": {
           "format": "int32",
           "type": "integer"
+        },
+        "piezas": {
+          "format": "int32",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "conversionABs": {
+          "format": "double",
+          "type": "number"
         },
         "costo": {
           "format": "double",
@@ -567,15 +621,8 @@
       }
     },
     "DtoListaProducto": {
-      "required": [
-        "conversionABs"
-      ],
       "type": "object",
       "properties": {
-        "conversionABs": {
-          "format": "double",
-          "type": "number"
-        },
         "productos": {
           "type": "array",
           "items": {
@@ -584,11 +631,56 @@
         }
       }
     },
+    "DtoPrestamoCrear": {
+      "required": [
+        "nombre",
+        "fecha"
+      ],
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string"
+        },
+        "fecha": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "nota": {
+          "type": "string"
+        },
+        "detalles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DtoPrestamoDetalleCrear"
+          }
+        }
+      }
+    },
+    "DtoPrestamoDetalleCrear": {
+      "required": [
+        "codigo",
+        "cantidad"
+      ],
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "string"
+        },
+        "cantidad": {
+          "format": "int32",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    },
     "DtoProductosLista": {
       "required": [
         "codigo",
         "nombre",
-        "stock_Actual",
+        "cantidad",
+        "piezas",
+        "conversionABs",
         "costo"
       ],
       "type": "object",
@@ -617,7 +709,7 @@
         "ubicacion": {
           "type": "string"
         },
-        "stock_Actual": {
+        "cantidad": {
           "format": "int32",
           "maximum": 2147483647,
           "minimum": 0,
@@ -626,6 +718,16 @@
         "stock_Minimo": {
           "format": "int32",
           "type": "integer"
+        },
+        "piezas": {
+          "format": "int32",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "conversionABs": {
+          "format": "double",
+          "type": "number"
         },
         "costo": {
           "format": "double",
@@ -684,6 +786,7 @@
       "required": [
         "codigo",
         "nombre",
+        "piezas",
         "stock_Actual",
         "stock_Minimo"
       ],
@@ -713,6 +816,10 @@
         "ubicacion": {
           "type": "string"
         },
+        "piezas": {
+          "format": "int32",
+          "type": "integer"
+        },
         "stock_Actual": {
           "format": "int32",
           "type": "integer"
@@ -727,8 +834,9 @@
       "required": [
         "codigo",
         "nombre",
-        "stock_Actual",
+        "cantidad",
         "stock_Minimo",
+        "piezas",
         "costo",
         "precio",
         "conversionABs"
@@ -759,12 +867,18 @@
         "ubicacion": {
           "type": "string"
         },
-        "stock_Actual": {
+        "cantidad": {
           "format": "int32",
           "type": "integer"
         },
         "stock_Minimo": {
           "format": "int32",
+          "type": "integer"
+        },
+        "piezas": {
+          "format": "int32",
+          "maximum": 2147483647,
+          "minimum": 0,
           "type": "integer"
         },
         "costo": {
@@ -876,6 +990,9 @@
     },
     {
       "name": "Descuento"
+    },
+    {
+      "name": "Prestamo"
     },
     {
       "name": "Producto"
