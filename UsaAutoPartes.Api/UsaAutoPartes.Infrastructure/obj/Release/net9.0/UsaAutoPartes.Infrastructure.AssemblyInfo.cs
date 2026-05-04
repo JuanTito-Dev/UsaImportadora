@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UsaAutoPartes.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fa671f5af138f6f1076eef9e79a8ec3b311e6c4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e285cc45b1053d92f79d4165a006f23137f77ccc")]
 [assembly: System.Reflection.AssemblyProductAttribute("UsaAutoPartes.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UsaAutoPartes.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

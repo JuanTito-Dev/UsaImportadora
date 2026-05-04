@@ -27,6 +27,9 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
 
         public string Ubicacion { get; set; } = string.Empty;
 
+        [Required]
+        public required int Piezas { get; set; } = 1;
+
         [Required(ErrorMessage = "Stock Actual requerido")]
         public required int Stock_Actual { get; set; }
         [Required(ErrorMessage = "Stock Minimo requerido")]

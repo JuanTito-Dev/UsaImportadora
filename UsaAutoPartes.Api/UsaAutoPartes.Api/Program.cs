@@ -56,6 +56,7 @@ builder.Services.AddScoped<IProveedorRepositorio, ProveedorRepositorio>();
 builder.Services.AddScoped<IImportacionRepositorio, ImportacionRepositorio>();
 builder.Services.AddScoped<IHistorialPrecioRepositorio, HistorialPrecioRepositorio>();
 builder.Services.AddScoped<IDescuentoRepositorio, DescuentoRepositorio>();
+builder.Services.AddScoped<IPrestamoRepositorio, PrestamoRepositorio>();
 
 
 builder.Services.AddAuthentication(opt =>
@@ -97,7 +98,7 @@ builder.Services.AddAuthentication(opt =>
 
 builder.Services.AddMapster();
 builder.Services.AddAuthorization();
-builder.Services.AddExceptionHandler<AuthenticationHandler>();
+builder.Services.AddExceptionHandler<GlobalHandler>();
 
 //CORS
 
@@ -122,12 +123,15 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddTypeExtension<ProveedorQuery>()
     .AddTypeExtension<ImportacionQuery>()
     .AddTypeExtension<DescuentoQuery>()
+    .AddTypeExtension<PrestamoQuery>()
     .AddType<ProductoType>()
     .AddType<MeQuery>()
     .AddType<ProveedorType>()
     .AddType<ImportacionType>()
     .AddType<HistorialPrecioType>()
     .AddType<Importacion_DetalleType>()
+    .AddType<PrestamoType>()
+    .AddType<Prestamo_DetalleType>()
     .AddAuthorization()
     .AddProjections()
     .AddFiltering()

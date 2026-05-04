@@ -15,6 +15,8 @@ namespace UsaAutoPartes.Application.IRepositorio
         IImportacionRepositorio importaciones { get; }
 
         IHistorialPrecioRepositorio historialPrecios { get; }
+
+        IPrestamoRepositorio prestamos { get; }
         Task<int> SaveUnitWork();
     }
 }

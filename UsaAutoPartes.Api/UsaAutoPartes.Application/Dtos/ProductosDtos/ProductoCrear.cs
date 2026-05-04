@@ -29,9 +29,13 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         public string Ubicacion { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Stock Actual requerido")]
-        public required int Stock_Actual { get; set; }
+        public required int Cantidad { get; set; }
         [Required(ErrorMessage = "Stock Minimo requerido")]
         public required int Stock_Minimo { get; set; }
+
+        [Required(ErrorMessage = "El las pieza son obligatorias")]
+        [Range(0, int.MaxValue, ErrorMessage = "Piezas fuera de rango")]
+        public int Piezas { get; set; } = 1;
 
         [Required(ErrorMessage = "Costo requerido")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Costo debe ser mayor a 0")]
@@ -45,6 +49,8 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         [Range(0.01, double.MaxValue, ErrorMessage = "ConversionABs debe ser mayor a 0")]
         public required decimal ConversionABs { get; set; }
 
+        
+
         public Producto AdaptarProducto()
         {
             var producto = new Producto(Costo, Precio, ConversionABs)
@@ -57,8 +63,9 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 Descripcion = this.Descripcion,
                 Unidad_Medida = this.Unidad_Medida,
                 Ubicacion = this.Ubicacion,
-                Stock_Actual = this.Stock_Actual,
-                Stock_Minimo = this.Stock_Minimo
+                Stock_Actual = this.Cantidad * Piezas,
+                Stock_Minimo = this.Stock_Minimo,
+                Piezas = this.Piezas
             };
 
             return producto;

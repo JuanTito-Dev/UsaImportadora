@@ -10,10 +10,10 @@ using UsaAutoPartes.Domain.Entities.IdentityDb;
 
 namespace UsaAutoPartes.Api.Handlers
 {
-    public class AuthenticationHandler : IExceptionHandler
+    public class GlobalHandler : IExceptionHandler
     {
-        private readonly ILogger<AuthenticationHandler> _logger;
-        public AuthenticationHandler(ILogger<AuthenticationHandler> logger)
+        private readonly ILogger<GlobalHandler> _logger;
+        public GlobalHandler(ILogger<GlobalHandler> logger)
         {
             _logger = logger;
         }
@@ -25,7 +25,7 @@ namespace UsaAutoPartes.Api.Handlers
                 exception = pgEx.SqlState switch
                 {
                     "23505" => new UniqueConstraintException(ResolverUnico(pgEx.ConstraintName)),
-                    "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName)),
+                    "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName, pgEx.MessageText)),
                     _ => exception
                 };
             }
@@ -48,7 +48,7 @@ namespace UsaAutoPartes.Api.Handlers
                 RefreshTokenFailException => (HttpStatusCode.BadRequest, exception.Message),
                 RegistroTransaccionFailException => (HttpStatusCode.BadRequest, exception.Message),
                 UsuarioExisteException => (HttpStatusCode.Conflict, exception.Message),
-                EntidadNoEncontradaException => (HttpStatusCode.Conflict, exception.Message),
+                EntidadNoEncontradaException => (HttpStatusCode.NotFound, exception.Message),
                 UniqueConstraintException => (HttpStatusCode.Conflict, exception.Message),
                 ForeignKeyException => (HttpStatusCode.BadRequest, exception.Message),
                 _ => (HttpStatusCode.InternalServerError, $"Ocurrio un error inesperado. {exception.Message}")
@@ -71,12 +71,32 @@ namespace UsaAutoPartes.Api.Handlers
             };
         }
 
-        private string ResolverFK(string? constraintName)
+        private string ResolverFK(string? constraintName, string? messageText)
+        {
+            bool esInsercion = messageText?.Contains("insert or update") ?? false;
+
+            return esInsercion
+                ? ResolverFK_Insercion(constraintName)
+                : ResolverFK_Eliminacion(constraintName);
+        }
+
+        private string ResolverFK_Insercion(string? constraintName)
         {
             return constraintName switch
             {
-                "FK_Importacion_Proveedor" => "Este proveedor tiene importaciones asociadas y no puede ser eliminado.",
-                _ => "La referencia indicada no existe."
+                "FK_HistorialPrecio_Producto" => "Producto no encontrado para el historial",
+                "FK_Importacion_Proveedor" => "El proveedor seleccionado no existe.",
+                "fx_pretamos_pretamodetalle" => "Prestamo no encontrado",
+                _ => "El registro relacionado no existe."
+            };
+        }
+
+        private string ResolverFK_Eliminacion(string? constraintName)
+        {
+            return constraintName switch
+            {
+                "FK_Importacion_Proveedor" => "Este proveedor tiene importaciones y no puede eliminarse.",
+                _ => "El registro pertenece a otro y no puede eliminarse."
             };
         }
     }

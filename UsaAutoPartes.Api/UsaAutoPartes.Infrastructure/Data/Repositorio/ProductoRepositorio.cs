@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UsaAutoPartes.Application.Exceptions.GenericExceptions;
 using UsaAutoPartes.Application.IRepositorio;
 using UsaAutoPartes.Domain.Entities;
 
@@ -17,9 +18,13 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             datos = _db.Set<Producto>();
         }
 
-        public async Task<Producto?> GetProductoforCodigo(string codigo)
+        public async Task<Producto> GetProductoforCodigo(string codigo)
         {
-            return await datos.FirstOrDefaultAsync(x => x.Codigo == codigo);
+            var producto = await datos.FirstOrDefaultAsync(x => x.Codigo == codigo);
+
+            if (producto == null) throw new EntidadNoEncontradaException("Producto");
+
+            return producto;
         }
         public IQueryable<Producto> GetProductos()
         {

@@ -11,18 +11,18 @@ namespace UsaAutoPartes.Application.Dtos.ImportacionDtos
 {
     public class DtoImportacionProducto : DtoProductosLista
     {
-        public override Producto Crear(decimal conversionABs)
+        public override Producto Crear()
         {
-            var producto = base.Crear(conversionABs);
+            var producto = base.Crear();
             return producto;
         }
 
-        public override HistorialPrecio Actualizar(Producto producto, decimal conversionABs, string Nota)
+        public override HistorialPrecio Actualizar(Producto producto, string Nota)
         {
-            return base.Actualizar(producto, conversionABs, Nota);
+            return base.Actualizar(producto, Nota);
         }
 
-        public Importacion_Detalle CrearImportacionDetalle(decimal conversionABs)
+        public Importacion_Detalle CrearImportacionDetalle()
         {
             var detalle = new Importacion_Detalle
             {
@@ -34,11 +34,13 @@ namespace UsaAutoPartes.Application.Dtos.ImportacionDtos
                 Descripcion = this.Descripcion,
                 Unidad_Medida = this.Unidad_Medida,
                 Ubicacion = this.Ubicacion,
-                Stock_Actual = this.Stock_Actual,
+                Stock_Actual = this.Cantidad * Piezas,
                 Stock_Minimo = this.Stock_Minimo,
                 Costo = this.Costo,
                 Precio = this.Precio,
-                ConversionABs = conversionABs
+                ConversionABs = this.ConversionABs,
+                Piezas = this.Piezas,
+
             };
             return detalle;
         }

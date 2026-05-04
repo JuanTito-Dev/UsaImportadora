@@ -25,7 +25,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
         {
             var entidad = await _Set.FindAsync(Id);
 
-            if (entidad == null) throw new EntidadNoEncontradaException();
+            if (entidad == null) throw new EntidadNoEncontradaException(typeof(T).Name);
 
             return entidad;
         }
@@ -38,7 +38,8 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
         public async Task<bool> Eliminar(int Id)
         {
             var entidad = await _Set.FindAsync(Id);
-            if (entidad == null) throw new EntidadNoEncontradaException();
+
+            if (entidad == null) throw new EntidadNoEncontradaException(typeof(T).Name);
             
             _Set.Remove(entidad);
 

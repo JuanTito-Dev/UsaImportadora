@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace UsaAutoPartes.Application.Exceptions.GenericExceptions
 {
-    public class EntidadNoEncontradaException() : Exception($"La entidad no existe."); 
+    public class EntidadNoEncontradaException(string nombre) : Exception($"{nombre} no existe."); 
 }

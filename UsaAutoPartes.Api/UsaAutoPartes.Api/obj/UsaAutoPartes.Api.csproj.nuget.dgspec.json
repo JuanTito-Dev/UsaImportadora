@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj": {}
+    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj": {
+    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
         "projectName": "UsaAutoPartes.Api",
-        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
+        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj"
+              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj"
               }
             }
           }
@@ -117,14 +117,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
+    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
         "projectName": "UsaAutoPartes.Application",
-        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
+        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -146,8 +146,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
-                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
+              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
+                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
               }
             }
           }
@@ -187,14 +187,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
+    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj",
         "projectName": "UsaAutoPartes.Domain",
-        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj",
+        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -259,14 +259,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj": {
+    "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
         "projectName": "UsaAutoPartes.Infrastructure",
-        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -288,11 +288,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
-                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj"
+              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
+                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj"
               },
-              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
-                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\kafe-yana\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
+              "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
+                "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
               }
             }
           }
