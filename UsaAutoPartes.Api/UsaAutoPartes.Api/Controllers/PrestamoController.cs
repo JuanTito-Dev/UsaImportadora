@@ -23,6 +23,8 @@ namespace UsaAutoPartes.Api.Controllers
             {
                 var producto = await _db.productos.GetProductoforCodigo(item.Codigo);
 
+                if (producto is null) return NotFound(new { message = "Poducto no encontrado" });
+
                 var detalle = item.Crear(producto.Nombre, producto.Precio);
 
                 Listadetalle.Add(detalle);
