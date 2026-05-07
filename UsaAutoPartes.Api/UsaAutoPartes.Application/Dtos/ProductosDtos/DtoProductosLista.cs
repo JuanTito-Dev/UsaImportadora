@@ -80,7 +80,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
             producto.Stock_Actual += this.Cantidad * this.Piezas;
             producto.Stock_Minimo = this.Stock_Minimo <= 0 ? producto.Stock_Minimo : this.Stock_Minimo;
             producto.Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion: producto.Ubicacion;
-
+            producto.Piezas = this.Piezas;
             var preciocambio = this.Precio > 0 ? this.Precio : producto.Precio;
             var costocambio = this.Costo > 0 ? this.Costo : producto.Costo;
 
