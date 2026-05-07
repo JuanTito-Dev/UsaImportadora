@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UsaAutoPartes.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74d81c79804e7f9f93cfe693006e9ed4a4470775")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ce08e6774f6d679db40243f510dbae1f2fda580")]
 [assembly: System.Reflection.AssemblyProductAttribute("UsaAutoPartes.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UsaAutoPartes.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

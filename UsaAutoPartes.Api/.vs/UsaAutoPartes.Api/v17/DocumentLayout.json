@@ -3,12 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\controllers\\prestamocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\prestamocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\proveedorquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\proveedorquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\productoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\productoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\prestamoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\prestamoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\mequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\mequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\importacionquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\importacionquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\queries\\descuentoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\schema\\queries\\descuentoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\controllers\\prestamocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|solutionrelative:usaautopartes.api\\controllers\\prestamocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B72EE86-6C54-464F-A676-6EFFEB207C97}|UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.application\\dtos\\productosdtos\\dtoproductoslista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B72EE86-6C54-464F-A676-6EFFEB207C97}|UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj|solutionrelative:usaautopartes.application\\dtos\\productosdtos\\dtoproductoslista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{72A7A706-CF62-430C-9DE5-A46EC9EA380A}|UsaAutoPartes.Api\\UsaAutoPartes.Api.csproj|c:\\users\\hp\\escritorio\\c#\\aspe .net core mvc\\usaimportadora\\usaautopartes.api\\usaautopartes.api\\schema\\types\\prestamo_detalletype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,32 +91,115 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PrestamoController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
-              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
-              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
-              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwCAAAAAAAAAAAAAAAA==",
+              "Title": "ProveedorQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ProveedorQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:50:14.343Z",
+              "WhenOpened": "2026-05-04T20:45:28.368Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ProductoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ProductoQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:45:26.165Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PrestamoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\PrestamoQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\PrestamoQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\PrestamoQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\PrestamoQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:45:22.999Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MeQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\MeQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:45:20.804Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ImportacionQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\ImportacionQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:42:42.041Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DescuentoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Queries\\DescuentoQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:42:31.36Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DtoProductosLista.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\Dtos\\ProductosDtos\\DtoProductosLista.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Application\\Dtos\\ProductosDtos\\DtoProductosLista.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\Dtos\\ProductosDtos\\DtoProductosLista.cs",
+              "RelativeToolTip": "UsaAutoPartes.Application\\Dtos\\ProductosDtos\\DtoProductosLista.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAIwAoAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T20:35:21.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PrestamoController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
+              "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
+              "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
+              "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\PrestamoController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T19:50:14.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "ProductoController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
               "ToolTip": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
               "RelativeToolTip": "UsaAutoPartes.Api\\Controllers\\ProductoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswIQAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:50:12.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:50:12.354Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "PrestamoType.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\PrestamoType.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\PrestamoType.cs",
@@ -96,12 +207,11 @@
               "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\PrestamoType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:50:05.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:50:05.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "Prestamo_DetalleType.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Api\\Schema\\Types\\Prestamo_DetalleType.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Api\\Schema\\Types\\Prestamo_DetalleType.cs",
@@ -109,12 +219,11 @@
               "RelativeToolTip": "UsaAutoPartes.Api\\Schema\\Types\\Prestamo_DetalleType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:50:03.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:50:03.494Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "IProductoRepositorio.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\IRepositorio\\IProductoRepositorio.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Application\\IRepositorio\\IProductoRepositorio.cs",
@@ -122,12 +231,11 @@
               "RelativeToolTip": "UsaAutoPartes.Application\\IRepositorio\\IProductoRepositorio.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:49:48.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:49:48.834Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "ProductoRepositorio.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProductoRepositorio.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProductoRepositorio.cs",
@@ -135,12 +243,11 @@
               "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\ProductoRepositorio.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:49:28.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:49:28.906Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "GenericRepositorio.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
               "RelativeDocumentMoniker": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
@@ -148,8 +255,7 @@
               "RelativeToolTip": "UsaAutoPartes.Infrastructure\\Data\\Repositorio\\GenericRepositorio.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T19:49:24.48Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T19:49:24.48Z"
             }
           ]
         }
