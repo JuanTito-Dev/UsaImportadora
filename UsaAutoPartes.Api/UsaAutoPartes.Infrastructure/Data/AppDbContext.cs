@@ -38,6 +38,10 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<Prestamo_detalle> Prestamo_Detalles {  get; set; }
 
+        public DbSet<Caja> Cajas { get; set; }
+
+        public DbSet<MovimientoCaja> MovimientosCaja { get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);

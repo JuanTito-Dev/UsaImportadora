@@ -3353,43 +3353,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\jaime\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
       "projectName": "UsaAutoPartes.Infrastructure",
-      "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\obj\\",
+      "projectPath": "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\UsaAutoPartes.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\jaime\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\jaime\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
-              "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj"
+            "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj": {
+              "projectPath": "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Application\\UsaAutoPartes.Application.csproj"
             },
-            "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
-              "projectPath": "C:\\Users\\HP\\Escritorio\\C#\\Aspe .net core MVC\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
+            "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj": {
+              "projectPath": "C:\\Users\\jaime\\Desktop\\UsaImportadora\\UsaImportadora\\UsaAutoPartes.Api\\UsaAutoPartes.Domain\\UsaAutoPartes.Domain.csproj"
             }
           }
         }

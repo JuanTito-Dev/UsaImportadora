@@ -9,6 +9,7 @@ namespace UsaAutoPartes.Domain.Enum.UsuarioEnums
     public static class UsuarioRoles
     {
         public const string Admin = "Admin";
+        public const string Cajero = "Cajero";
 
     }
 }

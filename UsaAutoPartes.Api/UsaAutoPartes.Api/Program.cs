@@ -57,6 +57,8 @@ builder.Services.AddScoped<IImportacionRepositorio, ImportacionRepositorio>();
 builder.Services.AddScoped<IHistorialPrecioRepositorio, HistorialPrecioRepositorio>();
 builder.Services.AddScoped<IDescuentoRepositorio, DescuentoRepositorio>();
 builder.Services.AddScoped<IPrestamoRepositorio, PrestamoRepositorio>();
+builder.Services.AddScoped<ICajaRepositorio, CajaRepositorio>();
+builder.Services.AddScoped<IMovimientoCajaRepositorio, MovimientoCajaRepositorio>();
 
 
 builder.Services.AddAuthentication(opt =>
@@ -124,6 +126,7 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddTypeExtension<ImportacionQuery>()
     .AddTypeExtension<DescuentoQuery>()
     .AddTypeExtension<PrestamoQuery>()
+    .AddTypeExtension<CajaQuery>()
     .AddType<ProductoType>()
     .AddType<MeQuery>()
     .AddType<ProveedorType>()
@@ -132,6 +135,8 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddType<Importacion_DetalleType>()
     .AddType<PrestamoType>()
     .AddType<Prestamo_DetalleType>()
+    .AddType<CajaType>()
+    .AddType<MovimientoCajaType>()
     .AddAuthorization()
     .AddProjections()
     .AddFiltering()
@@ -163,6 +168,11 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync(UsuarioRoles.Admin.ToString()))
     {
         await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Admin.ToString()));
+    }
+
+    if (!await roleManager.RoleExistsAsync(UsuarioRoles.Cajero))
+    {
+        await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Cajero));
     }
 }
 
