@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UsaAutoPartes.Infrastructure.Data;
@@ -11,9 +12,11 @@ using UsaAutoPartes.Infrastructure.Data;
 namespace UsaAutoPartes.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260508072107_AgregarMargenGanancia")]
+    partial class AgregarMargenGanancia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,24 +226,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasDatabaseName("IX_Cliente_Telefono");
 
                     b.ToTable("Cliente", (string)null);
-                });
-
-            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.ConfigVenta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ModoVenta")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConfigVenta", (string)null);
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Descuento", b =>

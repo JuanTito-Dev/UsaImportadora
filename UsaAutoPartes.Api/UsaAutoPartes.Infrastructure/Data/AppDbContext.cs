@@ -48,6 +48,10 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<Cliente> Clientes { get; set; }
 
+        public DbSet<MargenGanancia> MargenGanancias { get; set; }
+
+        public DbSet<ConfigVenta> ConfigVentas { get; set; }
+
         public DbSet<OrdenVenta> OrdenesVenta { get; set; }
 
         public DbSet<OrdenVentaItem> OrdenesVentaItems { get; set; }
@@ -69,6 +73,8 @@ namespace UsaAutoPartes.Infrastructure.Data
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigPrestamo_Detalle).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigTipoCambio).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigCliente).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigMargenGanancia).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigVentaConfig).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVenta).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItem).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItemPieza).Assembly);

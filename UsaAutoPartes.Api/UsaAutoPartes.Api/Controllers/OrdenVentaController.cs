@@ -22,7 +22,7 @@ namespace UsaAutoPartes.Api.Controllers
         IHubContext<VentasHub> _hub) : ControllerBase
     {
         [HttpPost]
-        [Authorize(Roles = UsuarioRoles.Cajero)]
+        [Authorize(Roles = $"{UsuarioRoles.Cajero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> Crear(DtoCrearOrden datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -90,7 +90,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Cancelar")]
-        [Authorize(Roles = UsuarioRoles.Cajero)]
+        [Authorize(Roles = $"{UsuarioRoles.Cajero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> Cancelar(int id, [FromBody] string? nota)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -144,7 +144,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Aceptar")]
-        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> Aceptar(int id)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -166,7 +166,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Items/{itemId:int}/Incompleto")]
-        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> MarcarItemIncompleto(int id, int itemId, DtoMarcarIncompleto datos)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -186,7 +186,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Lista")]
-        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> MarcarLista(int id)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -208,7 +208,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Items/{itemId:int}/Confirmar")]
-        [Authorize(Roles = UsuarioRoles.Operador)]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> ConfirmarItem(int id, int itemId)
         {
             var orden = await _db.ordenesVenta.GetConItems(id);
@@ -247,7 +247,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Items/{itemId:int}/Piezas/{piezaItemId:int}/Confirmar")]
-        [Authorize(Roles = UsuarioRoles.Operador)]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> ConfirmarPieza(int id, int itemId, int piezaItemId, DtoConfirmarPieza datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -284,7 +284,7 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("{id:int}/Completar")]
-        [Authorize(Roles = UsuarioRoles.Operador)]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> Completar(int id, DtoCompletarOrden datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

@@ -64,6 +64,8 @@ builder.Services.AddScoped<IPiezaKitRepositorio, PiezaKitRepositorio>();
 builder.Services.AddScoped<ITipoCambioRepositorio, TipoCambioRepositorio>();
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IOrdenVentaRepositorio, OrdenVentaRepositorio>();
+builder.Services.AddScoped<IMargenGananciaRepositorio, MargenGananciaRepositorio>();
+builder.Services.AddScoped<IConfigVentaRepositorio, ConfigVentaRepositorio>();
 builder.Services.AddSignalR();
 
 
@@ -135,6 +137,9 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddTypeExtension<CajaQuery>()
     .AddTypeExtension<TipoCambioQuery>()
     .AddTypeExtension<ClienteQuery>()
+    .AddTypeExtension<OrdenVentaQuery>()
+    .AddTypeExtension<MargenGananciaQuery>()
+    .AddTypeExtension<ConfigVentaQuery>()
     .AddType<ProductoType>()
     .AddType<MeQuery>()
     .AddType<ProveedorType>()
@@ -148,6 +153,9 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddType<PiezaKitType>()
     .AddType<TipoCambioType>()
     .AddType<ClienteType>()
+    .AddType<OrdenVentaType>()
+    .AddType<OrdenVentaItemType>()
+    .AddType<OrdenVentaItemPiezaType>()
     .AddAuthorization()
     .AddProjections()
     .AddFiltering()
