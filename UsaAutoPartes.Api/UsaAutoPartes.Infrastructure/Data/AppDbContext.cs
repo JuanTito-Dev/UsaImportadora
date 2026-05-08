@@ -44,6 +44,10 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<MovimientoCaja> MovimientosCaja { get; set; }
 
+        public DbSet<TipoCambio> TipoCambios { get; set; }
+
+        public DbSet<Cliente> Clientes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);
@@ -57,6 +61,8 @@ namespace UsaAutoPartes.Infrastructure.Data
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigDescuento).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigPrestamo).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigPrestamo_Detalle).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigTipoCambio).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigCliente).Assembly);
         }
     }
 }
