@@ -38,6 +38,8 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<Prestamo_detalle> Prestamo_Detalles {  get; set; }
 
+        public DbSet<PiezaKit> PiezasKit { get; set; }
+
         public DbSet<Caja> Cajas { get; set; }
 
         public DbSet<MovimientoCaja> MovimientosCaja { get; set; }

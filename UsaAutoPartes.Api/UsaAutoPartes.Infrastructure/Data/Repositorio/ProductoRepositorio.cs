@@ -20,10 +20,14 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 
         public async Task<Producto?> GetProductoforCodigo(string codigo)
         {
-            var producto = await datos.FirstOrDefaultAsync(x => x.Codigo == codigo);
-
-            return producto;
+            return await datos.Include(x => x.PiezasKit).FirstOrDefaultAsync(x => x.Codigo == codigo);
         }
+
+        public async Task<Producto?> ObtenerConPiezas(int id)
+        {
+            return await datos.Include(x => x.PiezasKit).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public IQueryable<Producto> GetProductos()
         {
             return datos.AsQueryable();

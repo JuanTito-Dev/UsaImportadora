@@ -59,6 +59,7 @@ builder.Services.AddScoped<IDescuentoRepositorio, DescuentoRepositorio>();
 builder.Services.AddScoped<IPrestamoRepositorio, PrestamoRepositorio>();
 builder.Services.AddScoped<ICajaRepositorio, CajaRepositorio>();
 builder.Services.AddScoped<IMovimientoCajaRepositorio, MovimientoCajaRepositorio>();
+builder.Services.AddScoped<IPiezaKitRepositorio, PiezaKitRepositorio>();
 
 
 builder.Services.AddAuthentication(opt =>
@@ -137,6 +138,7 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddType<Prestamo_DetalleType>()
     .AddType<CajaType>()
     .AddType<MovimientoCajaType>()
+    .AddType<PiezaKitType>()
     .AddAuthorization()
     .AddProjections()
     .AddFiltering()

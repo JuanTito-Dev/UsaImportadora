@@ -37,8 +37,11 @@ namespace UsaAutoPartes.Domain.Entities
 
         public decimal ConversionABs { get; private set; }
 
+        public bool EsKit { get; set; } = false;
+
         public List<HistorialPrecio> HistorialPrecios { get; set; } = new List<HistorialPrecio>();
 
+        public List<PiezaKit> PiezasKit { get; set; } = new List<PiezaKit>();
 
         public Producto() { }
         public Producto(decimal costo, decimal precio, decimal conversionABs)
@@ -75,6 +78,49 @@ namespace UsaAutoPartes.Domain.Entities
         public void Descontar(int cantidad)
         {
             Stock_Actual -= cantidad;
+        }
+
+        public int CalcularStockKit()
+        {
+            if (!PiezasKit.Any()) return 0;
+            return PiezasKit.Min(p => p.StockActual / p.CantidadPorKit);
+        }
+
+        public void ConvertirAKit(List<PiezaKit> piezas)
+        {
+            EsKit = true;
+            foreach (var pieza in piezas)
+                pieza.EstablecerStockInicial(Stock_Actual);
+            PiezasKit.AddRange(piezas);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        public void ConvertirARegular(int stockManual)
+        {
+            EsKit = false;
+            Stock_Actual = stockManual;
+            PiezasKit.Clear();
+        }
+
+        public void AgregarStockKit(int cantidad)
+        {
+            foreach (var pieza in PiezasKit)
+                pieza.AgregarStock(cantidad * pieza.CantidadPorKit);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        public void DescontarKit(int cantidad)
+        {
+            foreach (var pieza in PiezasKit)
+                pieza.DescontarStock(cantidad * pieza.CantidadPorKit);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        public void ActualizarPiezas(List<PiezaKit> nuevasPiezas)
+        {
+            PiezasKit.Clear();
+            PiezasKit.AddRange(nuevasPiezas);
+            Stock_Actual = CalcularStockKit();
         }
     }
 }

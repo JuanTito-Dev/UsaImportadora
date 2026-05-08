@@ -12,5 +12,7 @@ namespace UsaAutoPartes.Application.IRepositorio
         IQueryable<Producto> GetProductos();
 
         Task<Producto?> GetProductoforCodigo(string codigo);
+
+        Task<Producto?> ObtenerConPiezas(int id);
     }
 }

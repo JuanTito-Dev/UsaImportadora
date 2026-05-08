@@ -12,6 +12,7 @@ namespace UsaAutoPartes.Api.Schema.Types
             producto.Field(p => p.Codigo).Type<NonNullType<StringType>>();
             producto.Field(p => p.Nombre).Type<NonNullType<StringType>>(); 
             producto.Field(P => P.HistorialPrecios).Type<ListType<HistorialPrecioType>>();
+            producto.Field(P => P.PiezasKit).Type<ListType<PiezaKitType>>();
         }
     }
 }

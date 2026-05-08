@@ -88,6 +88,7 @@ namespace UsaAutoPartes.Api.Handlers
                 "FK_Importacion_Proveedor" => "El proveedor seleccionado no existe.",
                 "fx_pretamos_pretamodetalle" => "Prestamo no encontrado",
                 "FK_MovimientoCaja_Caja" => "La caja no existe.",
+                "FK_PiezaKit_Producto" => "El producto no existe.",
                 _ => "El registro relacionado no existe."
             };
         }

@@ -1,11 +1,11 @@
-﻿using Mapster;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UsaAutoPartes.Application.Dtos.ImportacionDtos;
 using UsaAutoPartes.Application.Dtos.ProductosDtos;
 using UsaAutoPartes.Application.IRepositorio;
-using UsaAutoPartes.Domain.Entities; 
+using UsaAutoPartes.Domain.Entities;
 using UsaAutoPartes.Domain.Enum.UsuarioEnums;
 
 namespace UsaAutoPartes.Api.Controllers
@@ -57,7 +57,6 @@ namespace UsaAutoPartes.Api.Controllers
             await _db.SaveUnitWork();
 
             return Ok(new { message = "Precio cambiado" });
-
         }
 
         [HttpDelete("{id:int}")]
@@ -76,7 +75,6 @@ namespace UsaAutoPartes.Api.Controllers
             if (Lista.Productos == null || !Lista.Productos.Any())
                 return BadRequest(new { mensaje = "La lista está vacía." });
 
-
             int CreadoCant = 0;
             int ActualizadoCant = 0;
 
@@ -86,8 +84,21 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
-                    var precio = item.Actualizar(producto, "Actualizacion de la lista");
-                    await _db.historialPrecios.Crear(precio);
+                    if (producto.EsKit)
+                    {
+                        var cantidadNueva = item.Cantidad * item.Piezas;
+                        var preciocambio = item.Precio > 0 ? item.Precio : producto.Precio;
+                        var costocambio = item.Costo > 0 ? item.Costo : producto.Costo;
+                        var precio = producto.CambiarPrecio(costocambio, preciocambio, item.ConversionABs, "Actualizacion de la lista");
+                        await _db.historialPrecios.Crear(precio);
+                        if (cantidadNueva > 0)
+                            producto.AgregarStockKit(cantidadNueva);
+                    }
+                    else
+                    {
+                        var precio = item.Actualizar(producto, "Actualizacion de la lista");
+                        await _db.historialPrecios.Crear(precio);
+                    }
                     ActualizadoCant++;
                 }
                 else
@@ -95,7 +106,6 @@ namespace UsaAutoPartes.Api.Controllers
                     var newproducto = item.Crear();
                     await _db.productos.Crear(newproducto);
                     CreadoCant++;
-
                 }
             }
 
@@ -127,8 +137,21 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
-                    var precio = item.Actualizar(producto, "Actualizado por importacion");
-                    await _db.historialPrecios.Crear(precio);
+                    if (producto.EsKit)
+                    {
+                        var cantidadNueva = item.Cantidad * item.Piezas;
+                        var preciocambio = item.Precio > 0 ? item.Precio : producto.Precio;
+                        var costocambio = item.Costo > 0 ? item.Costo : producto.Costo;
+                        var precio = producto.CambiarPrecio(costocambio, preciocambio, item.ConversionABs, "Actualizado por importacion");
+                        await _db.historialPrecios.Crear(precio);
+                        if (cantidadNueva > 0)
+                            producto.AgregarStockKit(cantidadNueva);
+                    }
+                    else
+                    {
+                        var precio = item.Actualizar(producto, "Actualizado por importacion");
+                        await _db.historialPrecios.Crear(precio);
+                    }
 
                     var detalle = item.CrearImportacionDetalle();
                     detalle.Tipo = "Stock+";
@@ -171,6 +194,109 @@ namespace UsaAutoPartes.Api.Controllers
             var res = new DtoRespuestaLista(ActualizadoCant, CreadoCant);
 
             return Ok(res);
+        }
+
+        [HttpPut("ConvertirKit/{id:int}")]
+        public async Task<IActionResult> ConvertirAKit(int id, DtoConvertirAKit datos)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var producto = await _db.productos.ObtenerConPiezas(id);
+            if (producto is null) return NotFound(new { message = "Producto no encontrado." });
+            if (producto.EsKit) return BadRequest(new { message = "El producto ya es un kit." });
+
+            var piezas = datos.Piezas.Select(p => p.Crear()).ToList();
+
+            var codigos = piezas.Select(p => p.CodigoUniversal).ToList();
+            if (codigos.Distinct().Count() != codigos.Count())
+                return BadRequest(new { message = "Hay piezas con códigos duplicados en el kit." });
+
+            producto.ConvertirAKit(piezas);
+            await _db.SaveUnitWork();
+
+            foreach (var pieza in producto.PiezasKit)
+                pieza.ActualizarCodigo();
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Producto convertido a kit." });
+        }
+
+        [HttpPut("ConvertirRegular/{id:int}")]
+        public async Task<IActionResult> ConvertirARegular(int id, DtoConvertirARegular datos)
+        {
+            var producto = await _db.productos.ObtenerConPiezas(id);
+            if (producto is null) return NotFound(new { message = "Producto no encontrado." });
+            if (!producto.EsKit) return BadRequest(new { message = "El producto ya es regular." });
+
+            var stockFinal = datos.StockManual ?? producto.CalcularStockKit();
+            producto.ConvertirARegular(stockFinal);
+
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Producto convertido a regular.", stockFinal });
+        }
+
+        [HttpPost("{id:int}/Piezas")]
+        public async Task<IActionResult> AgregarPiezas(int id, DtoConvertirAKit datos)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var producto = await _db.productos.ObtenerConPiezas(id);
+            if (producto is null) return NotFound(new { message = "Producto no encontrado." });
+            if (!producto.EsKit) return BadRequest(new { message = "El producto no es un kit." });
+
+            var nuevasPiezas = datos.Piezas.Select(p => p.Crear()).ToList();
+
+            var codigosNuevos = nuevasPiezas.Select(p => p.CodigoUniversal).ToList();
+            if (codigosNuevos.Distinct().Count() != codigosNuevos.Count())
+                return BadRequest(new { message = "Hay piezas con códigos duplicados en el lote." });
+
+            var stockActual = producto.CalcularStockKit();
+            foreach (var pieza in nuevasPiezas)
+                pieza.EstablecerStockInicial(stockActual);
+
+            producto.PiezasKit.AddRange(nuevasPiezas);
+            await _db.SaveUnitWork();
+
+            foreach (var pieza in nuevasPiezas)
+                pieza.ActualizarCodigo();
+            await _db.SaveUnitWork();
+
+            return Created("", new { message = "Piezas agregadas." });
+        }
+
+        [HttpPut("{id:int}/Piezas/{piezaId:int}")]
+        public async Task<IActionResult> ActualizarPieza(int id, int piezaId, DtoActualizarPieza datos)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var pieza = await _db.piezasKit.Obtener(piezaId);
+            if (pieza.Id_Producto != id) return BadRequest(new { message = "La pieza no pertenece a este producto." });
+
+            pieza.ActualizarDatos(datos.CodigoBase, datos.Nombre, datos.CantidadPorKit);
+
+            if (datos.CantidadPorKit.HasValue)
+            {
+                var producto = await _db.productos.ObtenerConPiezas(id);
+                if (producto is not null)
+                    producto.Stock_Actual = producto.CalcularStockKit();
+            }
+
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Pieza actualizada." });
+        }
+
+        [HttpDelete("{id:int}/Piezas/{piezaId:int}")]
+        public async Task<IActionResult> EliminarPieza(int id, int piezaId)
+        {
+            var pieza = await _db.piezasKit.Obtener(piezaId);
+            if (pieza.Id_Producto != id) return BadRequest(new { message = "La pieza no pertenece a este producto." });
+
+            await _db.piezasKit.Eliminar(piezaId);
+            await _db.SaveUnitWork();
+
+            return NoContent();
         }
     }
 }
