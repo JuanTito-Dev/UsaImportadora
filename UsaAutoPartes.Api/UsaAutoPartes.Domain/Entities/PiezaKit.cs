@@ -14,6 +14,8 @@ namespace UsaAutoPartes.Domain.Entities
 
         public int StockActual { get; set; }
 
+        public int StockReservado { get; set; } = 0;
+
         public Producto? Producto { get; set; }
 
         public PiezaKit() { }
@@ -44,6 +46,10 @@ namespace UsaAutoPartes.Domain.Entities
         {
             StockActual = stockKit * CantidadPorKit;
         }
+
+        public void Reservar(int cantidad) => StockReservado += cantidad;
+
+        public void LiberarReserva(int cantidad) => StockReservado = Math.Max(0, StockReservado - cantidad);
 
         public void AgregarStock(int cantidad)
         {

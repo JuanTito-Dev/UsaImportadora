@@ -39,6 +39,8 @@ namespace UsaAutoPartes.Domain.Entities
 
         public bool EsKit { get; set; } = false;
 
+        public int StockReservado { get; set; } = 0;
+
         public List<HistorialPrecio> HistorialPrecios { get; set; } = new List<HistorialPrecio>();
 
         public List<PiezaKit> PiezasKit { get; set; } = new List<PiezaKit>();
@@ -74,6 +76,10 @@ namespace UsaAutoPartes.Domain.Entities
                 Nota = Nota
             };
         }
+
+        public void Reservar(int cantidad) => StockReservado += cantidad;
+
+        public void LiberarReserva(int cantidad) => StockReservado = Math.Max(0, StockReservado - cantidad);
 
         public void Descontar(int cantidad)
         {
