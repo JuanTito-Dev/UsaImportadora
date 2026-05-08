@@ -72,5 +72,69 @@ namespace UsaAutoPartes.Api.Controllers
 
             return Ok(new { message = "Orden cancelada." });
         }
+
+        [HttpPost("{id:int}/Aceptar")]
+        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        public async Task<IActionResult> Aceptar(int id)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _ordenes.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Pendiente) return BadRequest(new { message = "La orden ya fue aceptada o no está disponible." });
+
+            orden.Aceptar(userId);
+            await _ordenes.GuardarAsync();
+
+            await _hub.Clients.Group($"orden-{id}").SendAsync("OrdenAceptada", new
+            {
+                orden.Id,
+                AlmaceneroId = userId
+            });
+
+            return Ok(new { message = "Orden aceptada." });
+        }
+
+        [HttpPost("{id:int}/Items/{itemId:int}/Incompleto")]
+        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        public async Task<IActionResult> MarcarItemIncompleto(int id, int itemId, DtoMarcarIncompleto datos)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _ordenes.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Id_Almacenero != userId) return Forbid();
+            if (orden.Estado != EstadosOrden.Aceptada) return BadRequest(new { message = "La orden no está en estado Aceptada." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+
+            item.MarcarIncompleto(datos.Nota);
+            await _ordenes.GuardarAsync();
+
+            return Ok(new { message = "Ítem marcado como incompleto." });
+        }
+
+        [HttpPost("{id:int}/Lista")]
+        [Authorize(Roles = UsuarioRoles.Almacenero)]
+        public async Task<IActionResult> MarcarLista(int id)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _ordenes.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Id_Almacenero != userId) return Forbid();
+            if (orden.Estado != EstadosOrden.Aceptada) return BadRequest(new { message = "La orden no está en estado Aceptada." });
+
+            orden.MarcarLista();
+            await _ordenes.GuardarAsync();
+
+            await _hub.Clients.Group($"orden-{id}").SendAsync("OrdenLista", new
+            {
+                orden.Id
+            });
+
+            return Ok(new { message = "Orden marcada como lista." });
+        }
     }
 }
