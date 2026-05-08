@@ -22,6 +22,8 @@ namespace UsaAutoPartes.Application.IRepositorio
 
         IOrdenVentaRepositorio ordenesVenta { get; }
 
+        IAjusteStockRepositorio ajustesStock { get; }
+
         Task<int> SaveUnitWork();
     }
 }

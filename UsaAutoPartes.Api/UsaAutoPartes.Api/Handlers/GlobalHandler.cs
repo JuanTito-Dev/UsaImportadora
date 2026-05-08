@@ -49,6 +49,7 @@ namespace UsaAutoPartes.Api.Handlers
                 RegistroTransaccionFailException => (HttpStatusCode.BadRequest, exception.Message),
                 UsuarioExisteException => (HttpStatusCode.Conflict, exception.Message),
                 EntidadNoEncontradaException => (HttpStatusCode.NotFound, exception.Message),
+                StockInsuficienteException => (HttpStatusCode.Conflict, exception.Message),
                 UniqueConstraintException => (HttpStatusCode.Conflict, exception.Message),
                 ForeignKeyException => (HttpStatusCode.BadRequest, exception.Message),
                 _ => (HttpStatusCode.InternalServerError, $"Ocurrio un error inesperado. {exception.Message}")

@@ -58,6 +58,8 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<OrdenVentaItemPieza> OrdenesVentaItemPiezas { get; set; }
 
+        public DbSet<AjusteStock> AjustesStock { get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);

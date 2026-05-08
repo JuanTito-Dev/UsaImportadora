@@ -45,6 +45,8 @@ namespace UsaAutoPartes.Domain.Entities
 
         public List<PiezaKit> PiezasKit { get; set; } = new List<PiezaKit>();
 
+        public List<AjusteStock> AjustesStock { get; set; } = new List<AjusteStock>();
+
         public Producto() { }
         public Producto(decimal costo, decimal precio, decimal conversionABs)
         {
@@ -120,6 +122,14 @@ namespace UsaAutoPartes.Domain.Entities
             foreach (var pieza in PiezasKit)
                 pieza.DescontarStock(cantidad * pieza.CantidadPorKit);
             Stock_Actual = CalcularStockKit();
+        }
+
+        // Returns null if valid, or error message describing which piece has insufficient stock
+        public string? ValidarPiezasSuficientes(int cantidadKits)
+        {
+            var pieza = PiezasKit.FirstOrDefault(p => p.StockActual < p.CantidadPorKit * cantidadKits);
+            if (pieza == null) return null;
+            return $"Pieza '{pieza.Nombre}' tiene {pieza.StockActual} unidades. Se necesitan {pieza.CantidadPorKit * cantidadKits} para armar {cantidadKits} kits.";
         }
 
         public void ActualizarPiezas(List<PiezaKit> nuevasPiezas)

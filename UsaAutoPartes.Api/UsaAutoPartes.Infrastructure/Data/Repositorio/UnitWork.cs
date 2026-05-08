@@ -22,13 +22,16 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 
         public IOrdenVentaRepositorio ordenesVenta { get; private set; }
 
+        public IAjusteStockRepositorio ajustesStock { get; private set; }
+
         public UnitWork(IProductoRepositorio _productos,
             AppDbContext _db, IProveedorRepositorio proveedor,
             IImportacionRepositorio _impoop,
             IHistorialPrecioRepositorio _historialPrecios,
             IPrestamoRepositorio prestamos,
             IPiezaKitRepositorio _piezasKit,
-            IOrdenVentaRepositorio _ordenesVenta
+            IOrdenVentaRepositorio _ordenesVenta,
+            IAjusteStockRepositorio _ajustesStock
             )
         {
             productos = _productos;
@@ -39,6 +42,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             this.prestamos = prestamos;
             piezasKit = _piezasKit;
             ordenesVenta = _ordenesVenta;
+            ajustesStock = _ajustesStock;
         }
         public void Dispose()
         {

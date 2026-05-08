@@ -30,8 +30,6 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         [Required]
         public required int Piezas { get; set; } = 1;
 
-        [Required(ErrorMessage = "Stock Actual requerido")]
-        public required int Stock_Actual { get; set; }
         [Required(ErrorMessage = "Stock Minimo requerido")]
         public required int Stock_Minimo { get; set; }
     }

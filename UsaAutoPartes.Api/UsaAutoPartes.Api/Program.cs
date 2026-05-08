@@ -64,6 +64,7 @@ builder.Services.AddScoped<IPiezaKitRepositorio, PiezaKitRepositorio>();
 builder.Services.AddScoped<ITipoCambioRepositorio, TipoCambioRepositorio>();
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IOrdenVentaRepositorio, OrdenVentaRepositorio>();
+builder.Services.AddScoped<IAjusteStockRepositorio, AjusteStockRepositorio>();
 builder.Services.AddScoped<IMargenGananciaRepositorio, MargenGananciaRepositorio>();
 builder.Services.AddScoped<IConfigVentaRepositorio, ConfigVentaRepositorio>();
 builder.Services.AddSignalR();
