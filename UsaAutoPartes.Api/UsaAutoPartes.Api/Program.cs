@@ -8,6 +8,7 @@ using Scalar.AspNetCore;
 using System.Net;
 using System.Text;
 using UsaAutoPartes.Api.Handlers;
+using UsaAutoPartes.Api.Hubs;
 using UsaAutoPartes.Api.Schema.Queries;
 using UsaAutoPartes.Api.Schema.Types;
 using UsaAutoPartes.Application.IRepositorio;
@@ -62,6 +63,8 @@ builder.Services.AddScoped<IMovimientoCajaRepositorio, MovimientoCajaRepositorio
 builder.Services.AddScoped<IPiezaKitRepositorio, PiezaKitRepositorio>();
 builder.Services.AddScoped<ITipoCambioRepositorio, TipoCambioRepositorio>();
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+builder.Services.AddScoped<IOrdenVentaRepositorio, OrdenVentaRepositorio>();
+builder.Services.AddSignalR();
 
 
 builder.Services.AddAuthentication(opt =>
@@ -168,6 +171,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<VentasHub>("/hubs/ventas");
 
 using (var scope = app.Services.CreateScope())
 {

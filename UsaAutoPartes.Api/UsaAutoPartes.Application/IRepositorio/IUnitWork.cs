@@ -20,6 +20,8 @@ namespace UsaAutoPartes.Application.IRepositorio
 
         IPiezaKitRepositorio piezasKit { get; }
 
+        IOrdenVentaRepositorio ordenesVenta { get; }
+
         Task<int> SaveUnitWork();
     }
 }
