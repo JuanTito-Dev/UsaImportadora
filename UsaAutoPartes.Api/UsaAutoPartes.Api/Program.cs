@@ -128,7 +128,9 @@ builder.Services.AddCors(X =>
         
 });
 
-builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
+builder.Services.AddGraphQLServer()
+    .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
+    .ModifyCostOptions(options => options.MaxFieldCost = 10000)
     .AddQueryType(d => d.Name("Query"))
     .AddTypeExtension<ProductoQuery>()
     .AddTypeExtension<ProveedorQuery>()
