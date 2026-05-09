@@ -8,6 +8,7 @@ namespace UsaAutoPartes.Api.Schema.Types
         {
             base.Configure(descriptor);
             descriptor.Ignore(x => x.Item);
+            descriptor.Field(x => x.Pieza).Type<PiezaKitType>();
         }
     }
 }

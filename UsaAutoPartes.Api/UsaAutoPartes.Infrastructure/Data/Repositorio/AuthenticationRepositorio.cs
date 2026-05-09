@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using UsaAutoPartes.Application.Dtos;
 using UsaAutoPartes.Application.Dtos.Autentication;
 using UsaAutoPartes.Application.Dtos.Authentication;
-using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.Exceptions.AuthenticationExceptions;
+using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.IRepositorio;
 using UsaAutoPartes.Application.IServicios;
 using UsaAutoPartes.Domain.Entities.IdentityDb;
@@ -81,6 +81,9 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             var user = await _usuarios.FindByEmailAsync(datos.Email);
 
             if (user == null || !await _usuarios.CheckPasswordAsync(user, password: datos.Password)) throw new LoginFailException(datos.Email);
+
+            if (user.LockoutEnabled && user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow)
+                throw new UsuarioDesactivadoException();
             
             var Role = await _usuarios.GetRolesAsync(user);
 
@@ -119,10 +122,21 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 
             return new DtoUsuarioDatos
             {
+                Id = datosToke.Id,
                 Nombre = datosToke.Nombre,
                 Correo = datosToke.Email,
                 Rol = datosToke.Rol
             };
+        }
+
+        public async Task RevokeRefreshTokenAsync(string token)
+        {
+            var info = await db.RefreshTokens.FirstOrDefaultAsync(x => x.Token == token);
+            if (info != null && !info.IsRevoked)
+            {
+                info.IsRevoked = true;
+                await db.SaveChangesAsync();
+            }
         }
 
         public async Task<DtoUsuarioDatos> RefreshTokenAsync(string? Token)
@@ -144,17 +158,25 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
                 Rol = (await _usuarios.GetRolesAsync(info.Usuario)).FirstOrDefault() ?? string.Empty,
             };
 
+            // Revocar el token viejo de forma real
             info.IsRevoked = true;
 
             var (jwt, expires) = _servicesToken.GenerateToken(datosToke);
             var eshToken = _servicesToken.GenerateRefresToken();
             var refreshExpires = DateTime.UtcNow.AddDays(7);
 
-            info.Token = eshToken;
-            info.ExpiraEn = refreshExpires;
-            info.CreadoEn = DateTime.UtcNow;
-            info.IsRevoked = false;
-            
+            // Crear nuevo registro — no mutar el viejo (evita race condition en DB)
+            var nuevoRefresh = new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                Token = eshToken,
+                UserId = info.Usuario.Id,
+                IsRevoked = false,
+                CreadoEn = DateTime.UtcNow,
+                ExpiraEn = refreshExpires,
+            };
+
+            await db.RefreshTokens.AddAsync(nuevoRefresh);
             await db.SaveChangesAsync();
 
             _servicesToken.WriteAuthCookie(CookieName: CookiesNames.access.ToString(), jwt, expires);
@@ -162,6 +184,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 
             return new DtoUsuarioDatos
             {
+                Id = datosToke.Id,
                 Nombre = datosToke.Nombre,
                 Correo = datosToke.Email,
                 Rol = datosToke.Rol

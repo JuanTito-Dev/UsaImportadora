@@ -185,6 +185,37 @@ namespace UsaAutoPartes.Api.Controllers
             return Ok(new { message = "Ítem marcado como incompleto." });
         }
 
+        [HttpPost("{id:int}/Items/{itemId:int}/Piezas/{piezaItemId:int}/Incompleto")]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> MarcarPiezaIncompleta(int id, int itemId, int piezaItemId, DtoMarcarIncompleto datos)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Id_Almacenero != userId) return Forbid();
+            if (orden.Estado != EstadosOrden.Aceptada) return BadRequest(new { message = "La orden no está en estado Aceptada." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+            if (!item.EsParcial) return BadRequest(new { message = "Solo ítems parciales tienen piezas." });
+
+            var piezaItem = item.Piezas.FirstOrDefault(x => x.Id == piezaItemId);
+            if (piezaItem is null) return NotFound(new { message = "Pieza no encontrada." });
+
+            var pieza = await _db.piezasKit.Obtener(piezaItem.Id_Pieza);
+            if (pieza is not null) pieza.LiberarReserva(piezaItem.Cantidad);
+
+            piezaItem.MarcarIncompleto(datos.Nota);
+
+            if (item.Piezas.All(p => p.NotaIncompleto != null))
+                item.MarcarIncompleto(datos.Nota);
+
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Pieza marcada como incompleta." });
+        }
+
         [HttpPost("{id:int}/Lista")]
         [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> MarcarLista(int id)

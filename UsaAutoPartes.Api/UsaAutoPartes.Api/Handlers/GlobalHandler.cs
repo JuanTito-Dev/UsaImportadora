@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Net;
-using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.Exceptions.AuthenticationExceptions;
+using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.Exceptions.DataBaseException;
 using UsaAutoPartes.Application.Exceptions.GenericExceptions;
 using UsaAutoPartes.Domain.Entities.IdentityDb;
@@ -45,6 +45,7 @@ namespace UsaAutoPartes.Api.Handlers
             return exception switch
             {
                 LoginFailException => (HttpStatusCode.Unauthorized, exception.Message),
+                UsuarioDesactivadoException => (HttpStatusCode.Forbidden, exception.Message),
                 RefreshTokenFailException => (HttpStatusCode.BadRequest, exception.Message),
                 RegistroTransaccionFailException => (HttpStatusCode.BadRequest, exception.Message),
                 UsuarioExisteException => (HttpStatusCode.Conflict, exception.Message),

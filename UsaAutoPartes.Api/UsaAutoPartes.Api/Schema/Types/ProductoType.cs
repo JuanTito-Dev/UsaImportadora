@@ -10,9 +10,12 @@ namespace UsaAutoPartes.Api.Schema.Types
             base.Configure(producto);
             producto.Field(p => p.Id).Type<NonNullType<IdType>>();
             producto.Field(p => p.Codigo).Type<NonNullType<StringType>>();
-            producto.Field(p => p.Nombre).Type<NonNullType<StringType>>(); 
+            producto.Field(p => p.Nombre).Type<NonNullType<StringType>>();
             producto.Field(P => P.HistorialPrecios).Type<ListType<HistorialPrecioType>>();
             producto.Field(P => P.PiezasKit).Type<ListType<PiezaKitType>>();
+            producto.Field("calcularStockKit")
+                .Type<IntType>()
+                .Resolve(ctx => ctx.Parent<Producto>().Stock_Actual);
         }
     }
 }

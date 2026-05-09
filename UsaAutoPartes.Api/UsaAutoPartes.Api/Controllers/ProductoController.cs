@@ -26,7 +26,7 @@ namespace UsaAutoPartes.Api.Controllers
 
             await _producto.GuardarAsync();
 
-            return Created("", new { message = "Producto creado"});
+            return Created("", new { message = "Producto creado", id = producto.Id });
         }
 
         [HttpPut("{Id:int}")]
@@ -279,7 +279,12 @@ namespace UsaAutoPartes.Api.Controllers
             {
                 var producto = await _db.productos.ObtenerConPiezas(id);
                 if (producto is not null)
-                    producto.Stock_Actual = producto.CalcularStockKit();
+                {
+                    var nuevoStock = producto.CalcularStockKit();
+                    if (nuevoStock < producto.StockReservado)
+                        return Conflict(new { message = $"No se puede cambiar la cantidad. El nuevo stock ({nuevoStock}) sería menor al stock reservado ({producto.StockReservado})." });
+                    producto.Stock_Actual = nuevoStock;
+                }
             }
 
             await _db.SaveUnitWork();

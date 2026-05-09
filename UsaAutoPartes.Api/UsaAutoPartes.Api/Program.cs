@@ -18,6 +18,7 @@ using UsaAutoPartes.Domain.Enum.CookieNames;
 using UsaAutoPartes.Domain.Enum.UsuarioEnums;
 using UsaAutoPartes.Infrastructure.Data;
 using UsaAutoPartes.Infrastructure.Data.Repositorio;
+using UsaAutoPartes.Infrastructure.Servicios;
 using UsaAutoPartes.Infrastructure.Servicios.Processors;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,6 +69,7 @@ builder.Services.AddScoped<IAjusteStockRepositorio, AjusteStockRepositorio>();
 builder.Services.AddScoped<IMargenGananciaRepositorio, MargenGananciaRepositorio>();
 builder.Services.AddScoped<IConfigVentaRepositorio, ConfigVentaRepositorio>();
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<BloqueoRecurrenteService>();
 
 
 builder.Services.AddAuthentication(opt =>

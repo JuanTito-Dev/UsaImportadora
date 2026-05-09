@@ -33,7 +33,6 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("refresh")]
-
         public async Task<ActionResult<DtoUsuarioDatos>> RefreshToken()
         {
             var token = Request.Cookies[CookiesNames.accessreload.ToString()];
@@ -41,6 +40,19 @@ namespace UsaAutoPartes.Api.Controllers
             var usuario = await _Auth.RefreshTokenAsync(token);
 
             return Ok(usuario);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var token = Request.Cookies[CookiesNames.accessreload.ToString()];
+            if (!string.IsNullOrEmpty(token))
+                await _Auth.RevokeRefreshTokenAsync(token);
+
+            Response.Cookies.Delete(CookiesNames.access.ToString(), new CookieOptions { Path = "/" });
+            Response.Cookies.Delete(CookiesNames.accessreload.ToString(), new CookieOptions { Path = "/api/Auth/refresh" });
+
+            return Ok(new { message = "Sesión cerrada." });
         }
     }
 }

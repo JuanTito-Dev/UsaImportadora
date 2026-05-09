@@ -13,6 +13,8 @@ namespace UsaAutoPartes.Domain.Entities.IdentityDb
 
         public required string Apellido { get; set; }
 
+        public bool BloqueoHorarioActivo { get; set; }
+
 
         public static Usuario Created(string Email, string Nombre, string Apellido)
         {

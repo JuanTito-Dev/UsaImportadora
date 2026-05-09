@@ -60,6 +60,8 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<AjusteStock> AjustesStock { get; set; }
 
+        public DbSet<HorarioBloqueo> HorariosBloqueo { get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);
@@ -80,6 +82,7 @@ namespace UsaAutoPartes.Infrastructure.Data
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVenta).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItem).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItemPieza).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigHorarioBloqueo).Assembly);
         }
     }
 }
