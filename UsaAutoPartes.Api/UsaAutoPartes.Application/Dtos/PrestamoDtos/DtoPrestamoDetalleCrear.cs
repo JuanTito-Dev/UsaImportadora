@@ -17,14 +17,15 @@ namespace UsaAutoPartes.Application.Dtos.PrestamoDtos
         [Range(0, int.MaxValue, ErrorMessage = "Rango invalido")]
         public int Cantidad { get; set; } 
 
-        public Prestamo_detalle Crear(string Nombre, decimal precio)
+        public Prestamo_detalle Crear(string Nombre, decimal precio, int idProducto)
         {
             return new Prestamo_detalle
             {
                 Codigo = this.Codigo,
                 Nombre = Nombre,
                 Precio = precio,
-                Cantidad = Cantidad
+                Cantidad = Cantidad,
+                Id_Producto = idProducto
             };
         }
     }

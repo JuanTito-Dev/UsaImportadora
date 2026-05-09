@@ -32,6 +32,10 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
             builder.Property(x => x.Precio).HasPrecision(10, 2);
 
             builder.Property(x => x.ConversionABs).HasPrecision(10, 2);
+
+            builder.Property(x => x.Activo).HasDefaultValue(true);
+
+            builder.Property(x => x.FechaEliminacion).IsRequired(false);
         }
     }
 }

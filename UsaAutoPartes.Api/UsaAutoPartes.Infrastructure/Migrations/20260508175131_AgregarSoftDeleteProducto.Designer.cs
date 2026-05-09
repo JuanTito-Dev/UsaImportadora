@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UsaAutoPartes.Infrastructure.Data;
@@ -11,9 +12,11 @@ using UsaAutoPartes.Infrastructure.Data;
 namespace UsaAutoPartes.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260508175131_AgregarSoftDeleteProducto")]
+    partial class AgregarSoftDeleteProducto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -867,9 +870,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Id_Cliente")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -883,8 +883,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("numeric(10,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id_Cliente");
 
                     b.ToTable("Prestamo", (string)null);
                 });
@@ -907,9 +905,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<int>("Id_Prestamo")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Id_Producto")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -921,8 +916,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Id_Prestamo");
-
-                    b.HasIndex("Id_Producto");
 
                     b.ToTable("Prestamo_detalle", (string)null);
                 });
@@ -1348,18 +1341,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Navigation("Producto");
                 });
 
-            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
-                {
-                    b.HasOne("UsaAutoPartes.Domain.Entities.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("Id_Cliente")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_prestamo_cliente");
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo_detalle", b =>
                 {
                     b.HasOne("UsaAutoPartes.Domain.Entities.Prestamo", "Prestamo")
@@ -1369,16 +1350,7 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fx_pretamos_pretamodetalle");
 
-                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("Id_Producto")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_prestamo_detalle_producto");
-
                     b.Navigation("Prestamo");
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Caja", b =>

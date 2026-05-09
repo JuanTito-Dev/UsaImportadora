@@ -25,6 +25,12 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
             builder.Property(x => x.Total).HasPrecision(10, 2);
 
             builder.Property(X => X.Estado).IsRequired();
+
+            builder.HasOne(x => x.Cliente)
+                .WithMany()
+                .HasForeignKey(x => x.Id_Cliente)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_prestamo_cliente");
         }
     }
 }

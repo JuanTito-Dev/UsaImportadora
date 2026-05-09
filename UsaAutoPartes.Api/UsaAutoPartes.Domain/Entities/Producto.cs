@@ -41,6 +41,10 @@ namespace UsaAutoPartes.Domain.Entities
 
         public int StockReservado { get; set; } = 0;
 
+        public bool Activo { get; set; } = true;
+
+        public DateTime? FechaEliminacion { get; set; }
+
         public List<HistorialPrecio> HistorialPrecios { get; set; } = new List<HistorialPrecio>();
 
         public List<PiezaKit> PiezasKit { get; set; } = new List<PiezaKit>();
@@ -86,6 +90,11 @@ namespace UsaAutoPartes.Domain.Entities
         public void Descontar(int cantidad)
         {
             Stock_Actual -= cantidad;
+        }
+
+        public void Devolver(int cantidad)
+        {
+            Stock_Actual += cantidad;
         }
 
         public int CalcularStockKit()

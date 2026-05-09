@@ -10,7 +10,10 @@ namespace UsaAutoPartes.Domain.Entities
     public class Prestamo_detalle : BaseEntity
     { 
         public int Id_Prestamo { get; set; }
-        public required string Codigo { get; set; } 
+
+        public int Id_Producto { get; set; }
+
+        public required string Codigo { get; set; }
 
         public string Nombre { get; set; } = string.Empty;
 
@@ -19,6 +22,8 @@ namespace UsaAutoPartes.Domain.Entities
         public required decimal Precio { get; set; }
 
         public Prestamo? Prestamo { get; set; }
+
+        public Producto? Producto { get; set; }
 
         public Prestamo_detalle() { }
 

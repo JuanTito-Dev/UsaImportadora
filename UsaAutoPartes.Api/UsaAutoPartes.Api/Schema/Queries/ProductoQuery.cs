@@ -15,7 +15,7 @@ namespace UsaAutoPartes.Api.Schema.Queries
         //[Authorize(Roles = new[] { UsuarioRoles.Admin })]
         public IQueryable<Producto> Productos([Service] IProductoRepositorio _db)
         {
-            return _db.GetProductos();
+            return _db.Query();
         }
     }
 }

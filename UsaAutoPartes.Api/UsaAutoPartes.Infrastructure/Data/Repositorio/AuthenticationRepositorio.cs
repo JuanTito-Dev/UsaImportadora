@@ -52,7 +52,14 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
                     throw new RegistroTransaccionFailException(result.Errors.Select(x => x.Description));
                 }
 
-                var rolresult = await _usuarios.AddToRoleAsync(usuario, UsuarioRoles.Admin.ToString());
+                var rolValido = datos.Rol == UsuarioRoles.Admin || datos.Rol == UsuarioRoles.Cajero
+                    || datos.Rol == UsuarioRoles.Almacenero || datos.Rol == UsuarioRoles.Operador;
+                if (!rolValido)
+                {
+                    throw new ArgumentException($"Rol inválido. Roles válidos: {UsuarioRoles.Admin}, {UsuarioRoles.Cajero}, {UsuarioRoles.Almacenero}, {UsuarioRoles.Operador}");
+                }
+
+                var rolresult = await _usuarios.AddToRoleAsync(usuario, datos.Rol);
 
                 if (!rolresult.Succeeded)
                 {
