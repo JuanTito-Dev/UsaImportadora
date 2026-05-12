@@ -1,4 +1,3 @@
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +12,7 @@ namespace UsaAutoPartes.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize(Roles = UsuarioRoles.Admin)]
-    public class ProductoController(IProductoRepositorio _producto, IUnitWork _db) : ControllerBase
+    public class ProductoController(IProductoRepositorio _producto, IUnitWork _db, ILogger<ProductoController> _logger) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Crear(ProductoCrear datos)
@@ -36,7 +35,16 @@ namespace UsaAutoPartes.Api.Controllers
 
             var productoBd = await _producto.Obtener(Id);
 
-            productoBd = datos.Adapt(productoBd);
+            productoBd.Codigo        = datos.Codigo;
+            productoBd.CodigoAux     = datos.CodigoAux;
+            productoBd.CodigoAux2    = datos.CodigoAux2;
+            productoBd.Nombre        = datos.Nombre;
+            productoBd.Marca         = datos.Marca;
+            productoBd.Descripcion   = datos.Descripcion;
+            productoBd.Unidad_Medida = datos.Unidad_Medida;
+            productoBd.Ubicacion     = datos.Ubicacion;
+            productoBd.Piezas        = datos.Piezas;
+            productoBd.Stock_Minimo  = datos.Stock_Minimo;
 
             await _producto.GuardarAsync();
 
@@ -86,7 +94,7 @@ namespace UsaAutoPartes.Api.Controllers
                 {
                     if (producto.EsKit)
                     {
-                        var cantidadNueva = item.Cantidad * item.Piezas;
+                        var cantidadNueva = item.Cantidad;
                         var preciocambio = item.Precio > 0 ? item.Precio : producto.Precio;
                         var costocambio = item.Costo > 0 ? item.Costo : producto.Costo;
                         var precio = producto.CambiarPrecio(costocambio, preciocambio, item.ConversionABs, "Actualizacion de la lista");
@@ -139,7 +147,7 @@ namespace UsaAutoPartes.Api.Controllers
                 {
                     if (producto.EsKit)
                     {
-                        var cantidadNueva = item.Cantidad * item.Piezas;
+                        var cantidadNueva = item.Cantidad;
                         var preciocambio = item.Precio > 0 ? item.Precio : producto.Precio;
                         var costocambio = item.Costo > 0 ? item.Costo : producto.Costo;
                         var precio = producto.CambiarPrecio(costocambio, preciocambio, item.ConversionABs, "Actualizado por importacion");
@@ -256,6 +264,7 @@ namespace UsaAutoPartes.Api.Controllers
                 pieza.EstablecerStockInicial(stockActual);
 
             producto.PiezasKit.AddRange(nuevasPiezas);
+            producto.Stock_Actual = producto.CalcularStockKit();
             await _db.SaveUnitWork();
 
             foreach (var pieza in nuevasPiezas)

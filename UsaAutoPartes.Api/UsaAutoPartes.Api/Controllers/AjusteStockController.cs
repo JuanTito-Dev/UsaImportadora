@@ -25,28 +25,33 @@ namespace UsaAutoPartes.Api.Controllers
                 ? producto.CalcularStockKit()
                 : producto.Stock_Actual;
 
-            int delta = datos.NuevaCantidad - cantidadAnterior;
+            if (datos.Delta == 0)
+                return BadRequest(new { message = "El delta no puede ser 0." });
 
-            if (delta == 0)
-                return BadRequest(new { message = "El stock ya es igual a la cantidad indicada." });
+            int cantidadNueva = cantidadAnterior + datos.Delta;
+
+            if (cantidadNueva < 0)
+                return BadRequest(new { message = "El resultado del ajuste no puede ser negativo." });
 
             if (producto.EsKit)
             {
-                if (delta < 0)
+                if (datos.Delta < 0)
                 {
-                    var error = producto.ValidarPiezasSuficientes(datos.NuevaCantidad);
+                    var error = producto.ValidarPiezasSuficientes(cantidadNueva);
                     if (error != null) throw new StockInsuficienteException(error);
 
-                    producto.DescontarKit(Math.Abs(delta));
+                    producto.DescontarKit(Math.Abs(datos.Delta));
                 }
                 else
                 {
-                    producto.AgregarStockKit(delta);
+                    producto.AgregarStockKit(datos.Delta);
                 }
             }
             else
             {
-                producto.Stock_Actual = datos.NuevaCantidad;
+                if (cantidadNueva < producto.StockReservado)
+                    return Conflict(new { message = $"No se puede reducir a {cantidadNueva}. Hay {producto.StockReservado} unidades reservadas en órdenes pendientes." });
+                producto.Stock_Actual = cantidadNueva;
             }
 
             var ajuste = new AjusteStock
@@ -66,7 +71,7 @@ namespace UsaAutoPartes.Api.Controllers
                 message = "Stock ajustado.",
                 cantidadAnterior,
                 cantidadNueva = producto.Stock_Actual,
-                delta
+                delta = datos.Delta
             });
         }
 
@@ -83,19 +88,26 @@ namespace UsaAutoPartes.Api.Controllers
             if (pieza is null) return NotFound(new { message = "Pieza no encontrada en este kit." });
 
             int cantidadAnterior = pieza.StockActual;
-            int delta = datos.NuevaCantidad - cantidadAnterior;
 
-            if (delta == 0)
-                return BadRequest(new { message = "El stock de la pieza ya es igual a la cantidad indicada." });
+            if (datos.Delta == 0)
+                return BadRequest(new { message = "El delta no puede ser 0." });
 
-            pieza.StockActual = datos.NuevaCantidad;
+            int cantidadNueva = cantidadAnterior + datos.Delta;
+
+            if (cantidadNueva < 0)
+                return BadRequest(new { message = "El resultado del ajuste no puede ser negativo." });
+
+            if (cantidadNueva < pieza.StockReservado)
+                return Conflict(new { message = $"No se puede reducir a {cantidadNueva}. La pieza '{pieza.Nombre}' tiene {pieza.StockReservado} unidades reservadas." });
+
+            pieza.StockActual = cantidadNueva;
             producto.Stock_Actual = producto.CalcularStockKit();
 
             var ajuste = new AjusteStock
             {
                 Id_Producto = productoId,
                 CantidadAnterior = cantidadAnterior,
-                CantidadNueva = datos.NuevaCantidad,
+                CantidadNueva = cantidadNueva,
                 Motivo = $"[Pieza: {pieza.Nombre}] {datos.Motivo}",
                 Nota = datos.Nota
             };
@@ -107,9 +119,9 @@ namespace UsaAutoPartes.Api.Controllers
             {
                 message = "Stock de pieza ajustado.",
                 cantidadAnterior,
-                cantidadNueva = datos.NuevaCantidad,
+                cantidadNueva,
                 stockKitRecalculado = producto.Stock_Actual,
-                delta
+                delta = datos.Delta
             });
         }
     }
