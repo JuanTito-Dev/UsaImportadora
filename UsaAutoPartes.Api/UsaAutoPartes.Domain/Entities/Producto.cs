@@ -133,12 +133,20 @@ namespace UsaAutoPartes.Domain.Entities
             Stock_Actual = CalcularStockKit();
         }
 
-        // Returns null if valid, or error message describing which piece has insufficient stock
+        // Returns null if valid, or error message describing which piece has insufficient free stock
         public string? ValidarPiezasSuficientes(int cantidadKits)
         {
-            var pieza = PiezasKit.FirstOrDefault(p => p.StockActual < p.CantidadPorKit * cantidadKits);
-            if (pieza == null) return null;
-            return $"Pieza '{pieza.Nombre}' tiene {pieza.StockActual} unidades. Se necesitan {pieza.CantidadPorKit * cantidadKits} para armar {cantidadKits} kits.";
+            var cantidadActual = CalcularStockKit();
+            var deltaKits = cantidadActual - cantidadKits;
+
+            foreach (var p in PiezasKit)
+            {
+                var disponible = p.StockActual - p.StockReservado;
+                var necesario = p.CantidadPorKit * deltaKits;
+                if (disponible < necesario)
+                    return $"Pieza '{p.Nombre}' tiene {disponible} disponibles (descontando {p.StockReservado} reservadas). Se necesitan {necesario} para el ajuste.";
+            }
+            return null;
         }
 
         public void ActualizarPiezas(List<PiezaKit> nuevasPiezas)
