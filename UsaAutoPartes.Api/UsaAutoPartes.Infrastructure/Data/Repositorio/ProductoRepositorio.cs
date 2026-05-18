@@ -28,6 +28,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             var rows = await datos.Where(x => x.Id == Id && x.Activo == true)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(x => x.Activo, false)
+                    .SetProperty(x => x.Stock_Actual, 0)
                     .SetProperty(x => x.FechaEliminacion, DateTime.UtcNow));
 
             if (rows == 0) throw new EntidadNoEncontradaException(typeof(Producto).Name);

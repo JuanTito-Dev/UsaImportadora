@@ -92,6 +92,12 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
+                    if (!producto.Activo)
+                    {
+                        producto.Activo = true;
+                        producto.FechaEliminacion = null;
+                    }
+
                     if (producto.EsKit)
                     {
                         var cantidadNueva = item.Cantidad;
@@ -145,6 +151,12 @@ namespace UsaAutoPartes.Api.Controllers
 
                 if (producto != null)
                 {
+                    if (!producto.Activo)
+                    {
+                        producto.Activo = true;
+                        producto.FechaEliminacion = null;
+                    }
+
                     if (producto.EsKit)
                     {
                         var cantidadNueva = item.Cantidad;
