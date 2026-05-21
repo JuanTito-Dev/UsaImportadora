@@ -12,8 +12,15 @@ namespace UsaAutoPartes.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize(Roles = UsuarioRoles.Admin)]
-    public class ProductoController(IProductoRepositorio _producto, IUnitWork _db, ILogger<ProductoController> _logger) : ControllerBase
+    public class ProductoController(
+        IProductoRepositorio _producto,
+        IUnitWork _db,
+        IMargenGananciaRepositorio _margen,
+        ILogger<ProductoController> _logger) : ControllerBase
     {
+        private static decimal CalcularPrecioConMargen(decimal costoTotalBs, decimal margenValor)
+            => Math.Ceiling(costoTotalBs * margenValor * 100) / 100;
+
         [HttpPost]
         public async Task<IActionResult> Crear(ProductoCrear datos)
         {
@@ -86,8 +93,13 @@ namespace UsaAutoPartes.Api.Controllers
             int CreadoCant = 0;
             int ActualizadoCant = 0;
 
+            var margenLista = await _margen.GetUnico();
+
             foreach (var item in Lista.Productos)
             {
+                if (item.Precio == 0 && margenLista is not null)
+                    item.Precio = CalcularPrecioConMargen(item.Costo * item.ConversionABs, margenLista.Valor);
+
                 var producto = await _db.productos.GetProductoforCodigo(item.Codigo);
 
                 if (producto != null)

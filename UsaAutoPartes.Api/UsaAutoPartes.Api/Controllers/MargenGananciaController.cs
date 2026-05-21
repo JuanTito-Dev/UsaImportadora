@@ -12,16 +12,12 @@ namespace UsaAutoPartes.Api.Controllers
     [Authorize(Roles = UsuarioRoles.Admin)]
     public class MargenGananciaController(
         IMargenGananciaRepositorio _margen,
-        ITipoCambioRepositorio _tipoCambio,
         IUnitWork _db) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Actualizar(DtoMargenGanancia datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var tipoCambio = await _tipoCambio.GetUnico();
-            if (tipoCambio is null) return BadRequest(new { message = "No hay tipo de cambio registrado. Configúralo antes de actualizar el margen." });
 
             var margen = await _margen.GetUnico();
 
@@ -36,12 +32,15 @@ namespace UsaAutoPartes.Api.Controllers
                 margen.Actualizar(datos.Valor);
             }
 
-            var productos = _db.productos.GetProductos().ToList();
+            var productos = await _db.productos.GetProductosConHistorial();
 
             foreach (var producto in productos)
             {
-                var nuevoPrecio = producto.Costo * tipoCambio.PrecioDolar * (1 + datos.Valor / 100);
-                var historial = producto.CambiarPrecio(producto.Costo, nuevoPrecio, tipoCambio.PrecioDolar, "Actualización por margen de ganancia");
+                var ultimoHistorial = producto.HistorialPrecios.OrderByDescending(h => h.Fecha).FirstOrDefault();
+                if (ultimoHistorial is null) continue;
+
+                var nuevoPrecio = Math.Ceiling(ultimoHistorial.Costo * datos.Valor * 100) / 100;
+                var historial = producto.CambiarPrecio(ultimoHistorial.Costo, nuevoPrecio, ultimoHistorial.ConversionABs, "Actualización por margen de ganancia");
                 await _db.historialPrecios.Crear(historial);
             }
 

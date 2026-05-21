@@ -132,7 +132,8 @@ builder.Services.AddCors(X =>
 
 builder.Services.AddGraphQLServer()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
-    .ModifyCostOptions(options => options.MaxFieldCost = 10000)
+    .ModifyCostOptions(options => options.EnforceCostLimits = false)
+    .SetPagingOptions(new HotChocolate.Types.Pagination.PagingOptions { MaxPageSize = int.MaxValue, DefaultPageSize = 20 })
     .AddQueryType(d => d.Name("Query"))
     .AddTypeExtension<ProductoQuery>()
     .AddTypeExtension<ProveedorQuery>()
