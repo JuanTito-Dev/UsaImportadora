@@ -249,3 +249,5 @@ Cliente HTTP
     ↓
 [Api] Schema/Types/ProductoType.cs       # Se mapea al modelo de respuesta y se retorna al cliente
 ```
+# IMPORTANTE
+No utilizar desserialización

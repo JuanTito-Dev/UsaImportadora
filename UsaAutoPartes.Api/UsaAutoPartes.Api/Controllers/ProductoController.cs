@@ -61,13 +61,18 @@ namespace UsaAutoPartes.Api.Controllers
         [HttpPost("CambiarPrecio/{Id:int}")]
         public async Task<IActionResult> Cambiarprecio(int Id, DtoProductoUPrecio datos)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var productoBd = await _db.productos.Obtener(Id);
+            if (productoBd is null) return NotFound();
 
-            var precio = productoBd.CambiarPrecio(datos.Costo, datos.Precio, datos.ConversionABs, datos.Nota);
+            var ultimoHistorial = await _db.historialPrecios.GetUltimoPrecio(Id);
 
-            await _db.historialPrecios.Crear(precio);
+            var costo      = datos.Costo          ?? ultimoHistorial?.Costo          ?? productoBd.Costo;
+            var precio     = datos.Precio          ?? ultimoHistorial?.Precio         ?? productoBd.Precio;
+            var conversion = datos.ConversionABs   ?? ultimoHistorial?.ConversionABs  ?? productoBd.ConversionABs;
+
+            var historial = productoBd.CambiarPrecio(costo, precio, conversion, datos.Nota);
+
+            await _db.historialPrecios.Crear(historial);
 
             await _db.SaveUnitWork();
 
