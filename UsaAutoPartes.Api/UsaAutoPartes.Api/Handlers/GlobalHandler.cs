@@ -19,15 +19,18 @@ namespace UsaAutoPartes.Api.Handlers
         }
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            if (exception is DbUpdateException dbEx &&
-                dbEx.InnerException is PostgresException pgEx)
+            if (exception is DbUpdateException dbEx)
             {
-                exception = pgEx.SqlState switch
+                var pgEx = FindPostgresException(dbEx);
+                if (pgEx is not null)
                 {
-                    "23505" => new UniqueConstraintException(ResolverUnico(pgEx.ConstraintName)),
-                    "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName, pgEx.MessageText)),
-                    _ => exception
-                };
+                    exception = pgEx.SqlState switch
+                    {
+                        "23505" => new UniqueConstraintException(ResolverUnico(pgEx.ConstraintName)),
+                        "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName, pgEx.MessageText)),
+                        _ => exception
+                    };
+                }
             }
 
             var (statuscode, message) = GetExceptionDetails(exception);
@@ -61,7 +64,8 @@ namespace UsaAutoPartes.Api.Handlers
         {
             return constraintName switch
             {
-                "IX_Producto_Codigo" => "El código ya existe.",
+                "IX_Producto_Codigo_SinMarca" => "El código ya existe.",
+                "IX_Producto_Codigo_Marca" => "El código ya existe para esa marca.",
                 "IX_Producto_CodigoAux" => "El código auxiliar ya existe.",
                 "IX_Producto_CodigoAux2" => "El código auxiliar 2 ya existe.",
                 "IX_Importacion_Codigo" => "El código de importación ya existe.",
@@ -75,7 +79,9 @@ namespace UsaAutoPartes.Api.Handlers
 
         private string ResolverFK(string? constraintName, string? messageText)
         {
-            bool esInsercion = messageText?.Contains("insert or update") ?? false;
+            bool esInsercion = (messageText?.Contains("insert or update") ?? false)
+                            || (messageText?.Contains("insertar o actualizar") ?? false)
+                            || (messageText?.Contains("inserción") ?? false);
 
             return esInsercion
                 ? ResolverFK_Insercion(constraintName)
@@ -93,6 +99,17 @@ namespace UsaAutoPartes.Api.Handlers
                 "FK_PiezaKit_Producto" => "El producto no existe.",
                 _ => "El registro relacionado no existe."
             };
+        }
+
+        private static PostgresException? FindPostgresException(Exception ex)
+        {
+            var current = ex as Exception;
+            while (current is not null)
+            {
+                if (current is PostgresException pg) return pg;
+                current = current.InnerException;
+            }
+            return null;
         }
 
         private string ResolverFK_Eliminacion(string? constraintName)

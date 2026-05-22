@@ -49,6 +49,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(builder.Configuration["ConexionDataBase:CadenaConexion"]);
 } );
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IFacturaExtractorServicio, FacturaExtractorServicio>();
 builder.Services.AddScoped<IAuthTokenProcessor, AuthTokenProcessor>();
 builder.Services.AddScoped<IAuthenticationRepositorio, AuthenticationRepositorio>();
 builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();

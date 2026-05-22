@@ -99,13 +99,18 @@ namespace UsaAutoPartes.Api.Controllers
             int ActualizadoCant = 0;
 
             var margenLista = await _margen.GetUnico();
+            var nuevosEnSesion = new Dictionary<(string, int?), Producto>();
 
             foreach (var item in Lista.Productos)
             {
                 if (item.Precio == 0 && margenLista is not null)
                     item.Precio = CalcularPrecioConMargen(item.Costo * item.ConversionABs, margenLista.Valor);
 
-                var producto = await _db.productos.GetProductoforCodigo(item.Codigo, item.MarcaId);
+                var key = (item.Codigo, item.MarcaId);
+                bool esNuevoEnSesion = nuevosEnSesion.TryGetValue(key, out var tracked);
+                var producto = esNuevoEnSesion
+                    ? tracked
+                    : await _db.productos.GetProductoforCodigo(item.Codigo, item.MarcaId);
 
                 if (producto != null)
                 {
@@ -121,14 +126,14 @@ namespace UsaAutoPartes.Api.Controllers
                         var preciocambio = item.Precio > 0 ? item.Precio : producto.Precio;
                         var costocambio = item.Costo > 0 ? item.Costo : producto.Costo;
                         var precio = producto.CambiarPrecio(costocambio, preciocambio, item.ConversionABs, "Actualizacion de la lista");
-                        await _db.historialPrecios.Crear(precio);
+                        if (!esNuevoEnSesion) await _db.historialPrecios.Crear(precio);
                         if (cantidadNueva > 0)
                             producto.AgregarStockKit(cantidadNueva);
                     }
                     else
                     {
-                        var precio = item.Actualizar(producto, "Actualizacion de la lista");
-                        await _db.historialPrecios.Crear(precio);
+                        var historial = item.Actualizar(producto, "Actualizacion de la lista");
+                        if (!esNuevoEnSesion) await _db.historialPrecios.Crear(historial);
                     }
                     ActualizadoCant++;
                 }
@@ -136,6 +141,7 @@ namespace UsaAutoPartes.Api.Controllers
                 {
                     var newproducto = item.Crear();
                     await _db.productos.Crear(newproducto);
+                    nuevosEnSesion[key] = newproducto;
                     CreadoCant++;
                 }
             }

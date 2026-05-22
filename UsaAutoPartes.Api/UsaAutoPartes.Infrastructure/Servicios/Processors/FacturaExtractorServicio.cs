@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using UglyToad.PdfPig;
 using UsaAutoPartes.Application.IServicios;
 
 namespace UsaAutoPartes.Infrastructure.Servicios.Processors
@@ -23,19 +23,55 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
             ExcelPackage.License.SetNonCommercialOrganization("UsaAutoPartes");
         }
 
-        public async Task<byte[]> ExtraerProductosAsync(Stream excelStream)
+        public async Task<byte[]> ExtraerProductosAsync(Stream fileStream, string fileName)
         {
-            var filas    = LeerExcel(excelStream);
-            var (headers, rows) = await ExtraerConIaAsync(filas);
+            var ext = Path.GetExtension(fileName).ToLower();
+            var (geminiKey, groqKey) = ObtenerKeys();
+
+            List<string> headers;
+            List<List<string>> rows;
+
+            if (ext == ".pdf")
+            {
+                var pdfBytes = LeerStreamComoBytes(fileStream);
+                (headers, rows) = await ConFallbackAsync(
+                    geminiKey != null ? () => ExtraerDePdfConGeminiAsync(pdfBytes, geminiKey) : null,
+                    groqKey   != null ? () => ExtraerDePdfConGrokAsync(pdfBytes, groqKey, "llama-3.3-70b-versatile") : null
+                );
+            }
+            else
+            {
+                var filas = LeerExcel(fileStream);
+                (headers, rows) = await ConFallbackAsync(
+                    geminiKey != null ? () => ExtraerDeExcelConGeminiAsync(filas, geminiKey) : null,
+                    groqKey   != null ? () => ExtraerDeExcelConGrokAsync(filas, groqKey, "llama-3.3-70b-versatile") : null
+                );
+            }
+
             return GenerarExcel(headers, rows);
         }
 
-        // ── LEER EXCEL ───────────────────────────────────────────────────────
+        private static async Task<(List<string>, List<List<string>>)> ConFallbackAsync(
+            Func<Task<(List<string>, List<List<string>>)>>? primario,
+            Func<Task<(List<string>, List<List<string>>)>>? fallback)
+        {
+            if (primario == null && fallback == null)
+                throw new Exception("No hay API key configurada. Agregá IA:GeminiApiKey o IA:GrokApiKey en la configuración.");
 
-        private List<List<string?>> LeerExcel(Stream stream)
+            if (primario != null)
+            {
+                try   { return await primario(); }
+                catch { if (fallback == null) throw; }
+            }
+
+            return await fallback!();
+        }
+
+        // ── EXCEL ─────────────────────────────────────────────────────────────
+
+        private static List<List<string?>> LeerExcel(Stream stream)
         {
             var filas = new List<List<string?>>();
-
             using var package = new ExcelPackage(stream);
             var ws = package.Workbook.Worksheets[0];
 
@@ -49,16 +85,11 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
                 }
                 filas.Add(fila);
             }
-
             return filas;
         }
 
-        // ── LLAMAR A LA IA ───────────────────────────────────────────────────
-
-        private async Task<(List<string> Headers, List<List<string>> Rows)> ExtraerConIaAsync(List<List<string?>> filas)
+        private static string BuildPromptExcel(List<List<string?>> filas)
         {
-            var (apiKey, baseUrl, modelo) = ObtenerConfigIA();
-
             var muestra = filas
                 .Take(60)
                 .Select((fila, i) => new {
@@ -70,41 +101,171 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
 
             int nColumnas = muestra.Count > 0 ? muestra.Max(m => m.celdas.Count) : 0;
 
-            var prompt = $$"""
-                Sos un experto en procesar facturas de importación en cualquier idioma y formato.
-                Te doy las primeras filas de un Excel de proveedor. El archivo tiene hasta {{nColumnas}} columnas.
+            return $$"""
+                Sos un experto en extraer datos de facturas de importación de proveedores extranjeros.
+                Te doy filas crudas de un archivo Excel (número de fila + array de celdas). El archivo tiene {{nColumnas}} columnas.
 
-                TAREA:
-                1. Encontrá la fila que tiene los nombres de columna (encabezado de tabla).
-                   Puede estar en cualquier idioma: inglés, español, chino, etc.
-                2. Extraé TODAS las columnas del encabezado — la cantidad exacta que tiene, sin agregar ni quitar ninguna.
-                3. Extraé SOLO las filas de productos reales.
-                   Una fila es producto si tiene: código/referencia + descripción + al menos un número (cantidad o precio).
-                4. Ignorá: nombre de empresa, dirección, datos de envío, notas, filas de totales, filas vacías.
-                5. Limpiá los valores:
-                   - Precios: "$ 18.47" -> "18.47", "18,47 USD" -> "18.47"
-                   - Quitá comas de miles: "1,490.00" -> "1490.00"
-                   - Quitá saltos de línea dentro de celdas
-                6. Si la tabla aparece duplicada, deduplicá.
-                7. Cada fila de producto debe tener EXACTAMENTE la misma cantidad de valores que columnas hay en headers.
-                   Si una celda está vacía, poné "".
+                REGLAS CRÍTICAS:
+                1. Encontrá la fila que contiene los nombres de columna reales. Puede estar en cualquier idioma (inglés, español, chino, portugués).
+                2. IGNORÁ columnas completamente vacías (spacers). Incluí en headers SOLO las columnas que tienen al menos un valor en las filas de producto.
+                3. Si el documento tiene múltiples páginas, los headers pueden repetirse. Usá SOLO el primer set de headers.
+                4. Extraé ÚNICAMENTE filas de productos reales. Una fila es producto si tiene: código/referencia + descripción + al menos un número (cantidad o precio).
+                5. IGNORÁ completamente: nombre de empresa, dirección, datos de envío, teléfonos, totales, subtotales, notas de pago, datos bancarios, filas vacías, footers, balance due, términos de pago.
+                6. Limpiá valores:
+                   - Precios: "$ 18.47" → "18.47", "18,47 USD" → "18.47", "$ 1,490.00" → "1490.00"
+                   - Eliminá comas de miles: "1,490.00" → "1490.00"
+                   - Eliminá saltos de línea dentro de celdas
+                7. Si hay filas duplicadas (por saltos de página), deduplicá.
+                8. Cada fila debe tener EXACTAMENTE la misma cantidad de valores que columnas en headers. Celda vacía → "".
 
-                Respondé ÚNICAMENTE con este JSON, sin texto extra, sin backticks, sin explicaciones:
-                {"headers": ["col1", "col2", "col3", ...], "rows": [["val1", "val2", "val3", ...], ...]}
+                Respondé ÚNICAMENTE con este JSON, sin texto extra, sin backticks:
+                {"headers":["col1","col2"],"rows":[["val1","val2"]]}
 
-                Filas del Excel (número de fila + array de celdas):
+                Filas del Excel:
                 {{JsonConvert.SerializeObject(muestra)}}
                 """;
+        }
 
+        private async Task<(List<string>, List<List<string>>)> ExtraerDeExcelConGeminiAsync(
+            List<List<string?>> filas, string apiKey)
+        {
+            var texto = await LlamarGeminiAsync(apiKey, BuildPromptExcel(filas));
+            return ParsearRespuestaIa(texto);
+        }
+
+        private async Task<(List<string>, List<List<string>>)> ExtraerDeExcelConGrokAsync(
+            List<List<string?>> filas, string apiKey, string modelo)
+        {
+            var texto = await LlamarGrokAsync(apiKey, modelo, BuildPromptExcel(filas));
+            return ParsearRespuestaIa(texto);
+        }
+
+        // ── PDF ────────────────────────────────────────────────────────────────
+
+        private static byte[] LeerStreamComoBytes(Stream stream)
+        {
+            using var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            return ms.ToArray();
+        }
+
+        private const string PromptPdf = """
+            Sos un experto en extraer datos de facturas de importación. Analizá este PDF de factura de proveedor.
+
+            TAREA: Extraé SOLO la tabla de productos/items del documento.
+
+            REGLAS:
+            1. Identificá las columnas reales de la tabla de items (código, descripción, cantidad, precio unitario, total, etc.)
+            2. IGNORÁ: membrete de empresa, logo, dirección, datos de envío/cliente, totales finales, notas de pago, datos bancarios, balance due, términos de pago.
+            3. Si la tabla se repite en múltiples páginas, combiná todos los items en una sola lista sin duplicar los headers.
+            4. Limpiá precios: "$ 18.47" → "18.47", eliminá símbolos de moneda y comas de miles.
+            5. Cada fila de producto debe tener exactamente la misma cantidad de valores que columnas. Celda vacía → "".
+
+            Respondé ÚNICAMENTE con este JSON, sin texto extra, sin backticks:
+            {"headers":["col1","col2"],"rows":[["val1","val2"]]}
+            """;
+
+        private async Task<(List<string>, List<List<string>>)> ExtraerDePdfConGeminiAsync(
+            byte[] pdfBytes, string apiKey)
+        {
+            var texto = await LlamarGeminiConPdfAsync(apiKey, pdfBytes, PromptPdf);
+            return ParsearRespuestaIa(texto);
+        }
+
+        private async Task<(List<string>, List<List<string>>)> ExtraerDePdfConGrokAsync(
+            byte[] pdfBytes, string apiKey, string modelo)
+        {
+            var textoPdf = LeerPdfComoTexto(pdfBytes);
+            if (textoPdf.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length < 30)
+                throw new Exception("El PDF parece ser escaneado (imagen sin texto). Convertilo a Excel o usá un PDF con texto seleccionable.");
+
+            var texto = await LlamarGrokAsync(apiKey, modelo, PromptPdf + "\n\nContenido del PDF:\n" + textoPdf);
+            return ParsearRespuestaIa(texto);
+        }
+
+        private static string LeerPdfComoTexto(byte[] bytes)
+        {
+            var sb = new StringBuilder();
+            using var pdf = PdfDocument.Open(bytes);
+            foreach (var page in pdf.GetPages())
+                sb.AppendLine(string.Join(" ", page.GetWords().Select(w => w.Text)));
+            return sb.ToString();
+        }
+
+        // ── GEMINI API (nativa v1) ─────────────────────────────────────────────
+
+        private async Task<string> LlamarGeminiAsync(string apiKey, string prompt)
+        {
+            var url  = $"https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key={apiKey}";
             var body = new
             {
-                model          = modelo,
-                max_tokens     = 6000,
-                messages       = new[] { new { role = "user", content = prompt } },
+                contents = new[] { new { parts = new[] { new { text = prompt } } } },
+                generationConfig = new { maxOutputTokens = 16384 }
+            };
+            return await EnviarGeminiAsync(url, body);
+        }
+
+        private async Task<string> LlamarGeminiConPdfAsync(string apiKey, byte[] pdfBytes, string prompt)
+        {
+            var url = $"https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key={apiKey}";
+            var b64 = Convert.ToBase64String(pdfBytes);
+            var body = new
+            {
+                contents = new[]
+                {
+                    new
+                    {
+                        parts = new object[]
+                        {
+                            new { inlineData = new { mimeType = "application/pdf", data = b64 } },
+                            new { text = prompt }
+                        }
+                    }
+                },
+                generationConfig = new { maxOutputTokens = 16384 }
+            };
+            return await EnviarGeminiAsync(url, body);
+        }
+
+        private async Task<string> EnviarGeminiAsync(string url, object body)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _http.SendAsync(request);
+            var raw      = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Error de Gemini ({response.StatusCode}): {raw}");
+
+            try
+            {
+                var json  = JObject.Parse(raw);
+                var texto = json["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.ToString()
+                            ?? throw new Exception("Gemini devolvió respuesta vacía.");
+                return texto;
+            }
+            catch (JsonException ex)
+            {
+                throw new Exception($"Error al parsear respuesta de Gemini: {ex.Message}. Raw: {raw[..Math.Min(500, raw.Length)]}");
+            }
+        }
+
+        // ── GROQ API (OpenAI-compatible) ────────────────────────────────────────
+
+        private async Task<string> LlamarGrokAsync(string apiKey, string modelo, string prompt)
+        {
+            var body = new
+            {
+                model           = modelo,
+                max_tokens      = 16384,
+                messages        = new[] { new { role = "user", content = prompt } },
                 response_format = new { type = "json_object" }
             };
 
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{baseUrl}/chat/completions")
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.groq.com/openai/v1/chat/completions")
             {
                 Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json")
             };
@@ -114,18 +275,17 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
             var raw      = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"Error de la IA ({response.StatusCode}): {raw}");
+                throw new Exception($"Error de Groq ({response.StatusCode}): {raw}");
 
             var json  = JObject.Parse(raw);
             var texto = json["choices"]?[0]?["message"]?["content"]?.ToString()
-                        ?? throw new Exception("La IA devolvió respuesta vacía.");
-
-            return ParsearRespuestaIa(texto);
+                        ?? throw new Exception("Groq devolvió respuesta vacía.");
+            return texto;
         }
 
         // ── PARSEAR RESPUESTA ────────────────────────────────────────────────
 
-        private (List<string> Headers, List<List<string>> Rows) ParsearRespuestaIa(string texto)
+        private static (List<string> Headers, List<List<string>> Rows) ParsearRespuestaIa(string texto)
         {
             texto = Regex.Replace(texto, @"<think>.*?</think>", "", RegexOptions.Singleline).Trim();
             texto = Regex.Replace(texto, @"^```json\s*", "");
@@ -159,7 +319,7 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
 
         // ── GENERAR EXCEL LIMPIO ─────────────────────────────────────────────
 
-        private byte[] GenerarExcel(List<string> headers, List<List<string>> rows)
+        private static byte[] GenerarExcel(List<string> headers, List<List<string>> rows)
         {
             using var package = new ExcelPackage();
             var ws = package.Workbook.Worksheets.Add("Productos");
@@ -188,24 +348,19 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
             }
 
             ws.Cells[ws.Dimension.Address].AutoFitColumns(8, 60);
-
             return package.GetAsByteArray();
         }
 
         // ── CONFIGURACIÓN IA ─────────────────────────────────────────────────
 
-        private (string apiKey, string baseUrl, string modelo) ObtenerConfigIA()
+        private (string? geminiKey, string? groqKey) ObtenerKeys()
         {
-            var minimaxKey = _config["IA:MinimaxApiKey"];
-            var grokKey    = _config["IA:GrokApiKey"];
-
-            if (!string.IsNullOrEmpty(minimaxKey))
-                return (minimaxKey, "https://api.minimax.io/v1", "MiniMax-M2");
-
-            if (!string.IsNullOrEmpty(grokKey))
-                return (grokKey, "https://api.x.ai/v1", "grok-3-mini");
-
-            throw new Exception("No hay API key configurada. Agregá IA:MinimaxApiKey o IA:GrokApiKey en appsettings.json");
+            var gemini = _config["IA:GeminiApiKey"];
+            var groq   = _config["IA:GroqApiKey"];
+            return (
+                string.IsNullOrEmpty(gemini) ? null : gemini,
+                string.IsNullOrEmpty(groq)   ? null : groq
+            );
         }
     }
 }
