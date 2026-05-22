@@ -13,7 +13,7 @@ namespace UsaAutoPartes.Application.IRepositorio
 
         Task<List<Producto>> GetProductosConHistorial();
 
-        Task<Producto?> GetProductoforCodigo(string codigo);
+        Task<Producto?> GetProductoforCodigo(string codigo, int? marcaId = null);
 
         Task<Producto?> ObtenerConPiezas(int id);
     }

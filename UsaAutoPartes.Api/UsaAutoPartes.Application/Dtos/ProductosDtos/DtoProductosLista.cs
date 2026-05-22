@@ -18,7 +18,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         public string CodigoAux2 { get; set; } = string.Empty;
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
 
@@ -56,8 +56,8 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 CodigoAux = this.CodigoAux != string.Empty ? this.CodigoAux : string.Empty,
                 CodigoAux2 = this.CodigoAux2 != string.Empty ? this.CodigoAux2 : string.Empty,
                 Nombre = this.Nombre != string.Empty ? this.Nombre : this.Codigo,
-                Marca = this.Marca != string.Empty ? this.Marca : string.Empty,
-                Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion : string.Empty, 
+                MarcaId = this.MarcaId,
+                Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion : string.Empty,
                 Descripcion = this.Descripcion != string.Empty ? this.Descripcion : string.Empty,
                 Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : string.Empty,
                 Stock_Actual = this.Cantidad * this.Piezas,
@@ -74,7 +74,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
             producto.CodigoAux = this.CodigoAux != string.Empty? CodigoAux : producto.CodigoAux;
             producto.CodigoAux2 = this.CodigoAux2 != string.Empty ? this.CodigoAux2 : producto.CodigoAux2;
             producto.Nombre = this.Nombre != string.Empty ? this.Nombre : producto.Nombre;
-            producto.Marca = this.Marca != string.Empty ? this.Marca : producto.Marca;
+            if (this.MarcaId.HasValue) producto.MarcaId = this.MarcaId;
             producto.Descripcion = this.Descripcion != string.Empty ? this.Descripcion : producto.Descripcion;
             producto.Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : producto.Unidad_Medida;
             producto.Stock_Actual += this.Cantidad * this.Piezas;

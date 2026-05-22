@@ -30,7 +30,7 @@ namespace UsaAutoPartes.Application.Dtos.ImportacionDtos
                 CodigoAux = this.CodigoAux,
                 CodigoAux2 = this.CodigoAux2,
                 Nombre = this.Nombre,
-                Marca = this.Marca,
+                MarcaId = this.MarcaId,
                 Descripcion = this.Descripcion,
                 Unidad_Medida = this.Unidad_Medida,
                 Ubicacion = this.Ubicacion,

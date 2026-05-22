@@ -19,7 +19,7 @@ namespace UsaAutoPartes.Domain.Entities
 
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
 

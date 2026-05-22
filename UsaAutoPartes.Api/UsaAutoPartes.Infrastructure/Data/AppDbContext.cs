@@ -62,6 +62,8 @@ namespace UsaAutoPartes.Infrastructure.Data
 
         public DbSet<HorarioBloqueo> HorariosBloqueo { get; set; }
 
+        public DbSet<Marca> Marcas { get; set; }
+
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);
@@ -83,6 +85,7 @@ namespace UsaAutoPartes.Infrastructure.Data
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItem).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigOrdenVentaItemPieza).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigHorarioBloqueo).Assembly);
+            Builder.ApplyConfigurationsFromAssembly(typeof(ConfigMarca).Assembly);
         }
     }
 }

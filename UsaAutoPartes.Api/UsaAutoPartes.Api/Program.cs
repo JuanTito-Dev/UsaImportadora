@@ -66,6 +66,7 @@ builder.Services.AddScoped<ITipoCambioRepositorio, TipoCambioRepositorio>();
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IOrdenVentaRepositorio, OrdenVentaRepositorio>();
 builder.Services.AddScoped<IAjusteStockRepositorio, AjusteStockRepositorio>();
+builder.Services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
 builder.Services.AddScoped<IMargenGananciaRepositorio, MargenGananciaRepositorio>();
 builder.Services.AddScoped<IConfigVentaRepositorio, ConfigVentaRepositorio>();
 builder.Services.AddSignalR();
@@ -146,6 +147,7 @@ builder.Services.AddGraphQLServer()
     .AddTypeExtension<OrdenVentaQuery>()
     .AddTypeExtension<MargenGananciaQuery>()
     .AddTypeExtension<ConfigVentaQuery>()
+    .AddTypeExtension<MarcaQuery>()
     .AddType<ProductoType>()
     .AddType<MeQuery>()
     .AddType<ProveedorType>()

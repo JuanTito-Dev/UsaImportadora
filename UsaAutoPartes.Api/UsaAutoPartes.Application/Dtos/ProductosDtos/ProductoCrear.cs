@@ -20,7 +20,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         [Required(ErrorMessage = "Nombre requerido")]
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
 
@@ -59,7 +59,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 CodigoAux = this.CodigoAux,
                 CodigoAux2 = this.CodigoAux2,
                 Nombre = this.Nombre,
-                Marca = this.Marca,
+                MarcaId = this.MarcaId,
                 Descripcion = this.Descripcion,
                 Unidad_Medida = this.Unidad_Medida,
                 Ubicacion = this.Ubicacion,

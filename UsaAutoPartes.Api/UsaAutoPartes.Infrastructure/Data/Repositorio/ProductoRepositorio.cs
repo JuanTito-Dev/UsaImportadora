@@ -45,9 +45,11 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             return true;
         }
 
-        public async Task<Producto?> GetProductoforCodigo(string codigo)
+        public async Task<Producto?> GetProductoforCodigo(string codigo, int? marcaId = null)
         {
-            return await datos.Include(x => x.PiezasKit).FirstOrDefaultAsync(x => x.Codigo == codigo);
+            var q = datos.Include(x => x.PiezasKit).Where(x => x.Codigo == codigo);
+            q = q.Where(x => x.MarcaId == marcaId);
+            return await q.FirstOrDefaultAsync();
         }
 
         public async Task<Producto?> ObtenerConPiezas(int id)

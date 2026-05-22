@@ -46,7 +46,7 @@ namespace UsaAutoPartes.Api.Controllers
             productoBd.CodigoAux     = datos.CodigoAux;
             productoBd.CodigoAux2    = datos.CodigoAux2;
             productoBd.Nombre        = datos.Nombre;
-            productoBd.Marca         = datos.Marca;
+            productoBd.MarcaId       = datos.MarcaId;
             productoBd.Descripcion   = datos.Descripcion;
             productoBd.Unidad_Medida = datos.Unidad_Medida;
             productoBd.Ubicacion     = datos.Ubicacion;
@@ -105,7 +105,7 @@ namespace UsaAutoPartes.Api.Controllers
                 if (item.Precio == 0 && margenLista is not null)
                     item.Precio = CalcularPrecioConMargen(item.Costo * item.ConversionABs, margenLista.Valor);
 
-                var producto = await _db.productos.GetProductoforCodigo(item.Codigo);
+                var producto = await _db.productos.GetProductoforCodigo(item.Codigo, item.MarcaId);
 
                 if (producto != null)
                 {
@@ -164,7 +164,7 @@ namespace UsaAutoPartes.Api.Controllers
 
             foreach (var item in datos.Productos)
             {
-                var producto = await _db.productos.GetProductoforCodigo(item.Codigo);
+                var producto = await _db.productos.GetProductoforCodigo(item.Codigo, item.MarcaId);
 
                 if (producto != null)
                 {

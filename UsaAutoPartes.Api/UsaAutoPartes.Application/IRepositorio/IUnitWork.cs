@@ -24,6 +24,8 @@ namespace UsaAutoPartes.Application.IRepositorio
 
         IAjusteStockRepositorio ajustesStock { get; }
 
+        IMarcaRepositorio marcas { get; }
+
         Task<int> SaveUnitWork();
     }
 }
