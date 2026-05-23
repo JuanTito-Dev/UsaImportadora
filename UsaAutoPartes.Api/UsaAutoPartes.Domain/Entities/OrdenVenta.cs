@@ -13,6 +13,7 @@ namespace UsaAutoPartes.Domain.Entities
         public string Estado { get; set; } = EstadosOrden.Pendiente;
         public DateTime Fecha { get; set; }
         public DateTime? FechaCompletada { get; set; }
+        public DateTime? FechaEsperandoPago { get; set; }
         public string? NotaCancelacion { get; set; }
 
         public Usuario? Cajero { get; set; }
@@ -40,6 +41,17 @@ namespace UsaAutoPartes.Domain.Entities
         public void MarcarLista()
         {
             Estado = EstadosOrden.Lista;
+        }
+
+        public void MarcarConFaltantes()
+        {
+            Estado = EstadosOrden.ConFaltantes;
+        }
+
+        public void MarcarEsperandoPago()
+        {
+            Estado = EstadosOrden.EsperandoPago;
+            FechaEsperandoPago = DateTime.UtcNow;
         }
 
         public void Completar()

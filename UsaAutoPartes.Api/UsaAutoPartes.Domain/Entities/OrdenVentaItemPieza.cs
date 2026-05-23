@@ -32,5 +32,10 @@ namespace UsaAutoPartes.Domain.Entities
         {
             NotaIncompleto = nota;
         }
+
+        public void RevertirIncompleto()
+        {
+            NotaIncompleto = null;
+        }
     }
 }

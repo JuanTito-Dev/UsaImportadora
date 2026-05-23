@@ -16,6 +16,8 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.Property(x => x.Fecha).IsRequired();
 
+            builder.Property(x => x.FechaEsperandoPago).IsRequired(false);
+
             builder.HasIndex(x => x.Estado).HasDatabaseName("IX_OrdenVenta_Estado");
 
             builder.HasIndex(x => x.Id_Cajero).HasDatabaseName("IX_OrdenVenta_Cajero");

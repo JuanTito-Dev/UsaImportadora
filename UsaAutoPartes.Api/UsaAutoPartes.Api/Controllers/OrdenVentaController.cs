@@ -179,10 +179,34 @@ namespace UsaAutoPartes.Api.Controllers
             var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
             if (item is null) return NotFound(new { message = "Ítem no encontrado." });
 
-            item.MarcarIncompleto(datos.Nota);
+            var nota = datos.CantidadEncontrada.HasValue && datos.CantidadEncontrada.Value > 0
+                ? $"Encontró {datos.CantidadEncontrada.Value} de {item.Cantidad}" + (string.IsNullOrWhiteSpace(datos.Nota) ? "" : $" — {datos.Nota}")
+                : datos.Nota;
+            item.MarcarIncompleto(nota);
             await _db.SaveUnitWork();
 
             return Ok(new { message = "Ítem marcado como incompleto." });
+        }
+
+        [HttpDelete("{id:int}/Items/{itemId:int}/Incompleto")]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> RevertirItemIncompleto(int id, int itemId)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Id_Almacenero != userId) return Forbid();
+            if (orden.Estado != EstadosOrden.Aceptada) return BadRequest(new { message = "La orden no está en estado Aceptada." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+            if (item.Estado != EstadosOrdenItem.Incompleto) return BadRequest(new { message = "El ítem no está marcado como incompleto." });
+
+            item.RevertirIncompleto();
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Faltante revertido." });
         }
 
         [HttpPost("{id:int}/Items/{itemId:int}/Piezas/{piezaItemId:int}/Incompleto")]
@@ -216,6 +240,37 @@ namespace UsaAutoPartes.Api.Controllers
             return Ok(new { message = "Pieza marcada como incompleta." });
         }
 
+        [HttpDelete("{id:int}/Items/{itemId:int}/Piezas/{piezaItemId:int}/Incompleto")]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> RevertirPiezaIncompleta(int id, int itemId, int piezaItemId)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Id_Almacenero != userId) return Forbid();
+            if (orden.Estado != EstadosOrden.Aceptada) return BadRequest(new { message = "La orden no está en estado Aceptada." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+
+            var piezaItem = item.Piezas.FirstOrDefault(x => x.Id == piezaItemId);
+            if (piezaItem is null) return NotFound(new { message = "Pieza no encontrada." });
+            if (piezaItem.NotaIncompleto is null) return BadRequest(new { message = "La pieza no está marcada como incompleta." });
+
+            var pieza = await _db.piezasKit.Obtener(piezaItem.Id_Pieza);
+            if (pieza is not null) pieza.Reservar(piezaItem.Cantidad);
+
+            piezaItem.RevertirIncompleto();
+
+            if (item.Estado == EstadosOrdenItem.Incompleto)
+                item.RevertirIncompleto();
+
+            await _db.SaveUnitWork();
+
+            return Ok(new { message = "Faltante de pieza revertido." });
+        }
+
         [HttpPost("{id:int}/Lista")]
         [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> MarcarLista(int id)
@@ -244,7 +299,8 @@ namespace UsaAutoPartes.Api.Controllers
         {
             var orden = await _db.ordenesVenta.GetConItems(id);
             if (orden is null) return NotFound(new { message = "Orden no encontrada." });
-            if (orden.Estado != EstadosOrden.Lista) return BadRequest(new { message = "La orden no está lista para escaneo." });
+            if (orden.Estado != EstadosOrden.Lista && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está lista para escaneo." });
 
             var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
             if (item is null) return NotFound(new { message = "Ítem no encontrado." });
@@ -285,7 +341,8 @@ namespace UsaAutoPartes.Api.Controllers
 
             var orden = await _db.ordenesVenta.GetConItems(id);
             if (orden is null) return NotFound(new { message = "Orden no encontrada." });
-            if (orden.Estado != EstadosOrden.Lista) return BadRequest(new { message = "La orden no está lista para escaneo." });
+            if (orden.Estado != EstadosOrden.Lista && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está lista para escaneo." });
 
             var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
             if (item is null) return NotFound(new { message = "Ítem no encontrado." });
@@ -314,15 +371,219 @@ namespace UsaAutoPartes.Api.Controllers
             return Ok(new { message = "Pieza confirmada." });
         }
 
-        [HttpPost("{id:int}/Completar")]
+        [HttpPost("{id:int}/AgregarItem")]
         [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> AgregarItem(int id, DtoAgregarItemOrden datos)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Lista && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está lista para escaneo." });
+
+            var producto = await _db.productos.ObtenerConPiezas(datos.Id_Producto);
+            if (producto is null) return NotFound(new { message = "Producto no encontrado." });
+            if (producto.EsKit) return BadRequest(new { message = "Los kits no pueden agregarse en escaneo." });
+
+            var disponible = producto.Stock_Actual - producto.StockReservado;
+            if (disponible < datos.Cantidad)
+                return BadRequest(new { message = $"Stock insuficiente. Disponible: {disponible}." });
+
+            producto.Reservar(datos.Cantidad);
+
+            var item = new OrdenVentaItem(datos.Id_Producto, datos.Cantidad, false, producto.Precio, null, 0)
+            {
+                Id_Orden = id
+            };
+            orden.Items.Add(item);
+            orden.MarcarConFaltantes();
+            await _db.SaveUnitWork();
+
+            await _hub.Clients.Group("Almaceneros").SendAsync("NuevoItemAgregado", new
+            {
+                ordenId = id,
+                itemId = item.Id,
+                productoNombre = producto.Nombre,
+                codigo = producto.Codigo,
+                cantidad = item.Cantidad
+            });
+
+            await _hub.Clients.Group($"orden-{id}").SendAsync("OrdenConFaltantes", new
+            {
+                ordenId = id
+            });
+
+            return Ok(new
+            {
+                id = item.Id,
+                id_Producto = item.Id_Producto,
+                cantidad = item.Cantidad,
+                precioUnitario = (double)item.PrecioUnitario,
+                estado = item.Estado,
+                producto = new { id = producto.Id, codigo = producto.Codigo, nombre = producto.Nombre, ubicacion = producto.Ubicacion }
+            });
+        }
+
+        [HttpDelete("{id:int}/Items/{itemId:int}")]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> EliminarItem(int id, int itemId)
+        {
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Lista && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está lista para escaneo." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+            if (item.Estado == EstadosOrdenItem.Confirmado) return BadRequest(new { message = "No se puede eliminar un ítem ya confirmado." });
+
+            var producto = await _db.productos.ObtenerConPiezas(item.Id_Producto);
+            if (producto is not null)
+                producto.LiberarReserva(item.Cantidad);
+
+            orden.Items.Remove(item);
+            await _db.SaveUnitWork();
+
+            await _hub.Clients.Group("Almaceneros").SendAsync("ItemEliminado", new
+            {
+                ordenId = id,
+                itemId
+            });
+
+            return Ok(new { message = "Ítem eliminado." });
+        }
+
+        [HttpPut("{id:int}/Items/{itemId:int}/Cantidad")]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> ActualizarCantidadItem(int id, int itemId, DtoActualizarCantidadItem datos)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Lista && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está lista para escaneo." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+            if (item.Estado == EstadosOrdenItem.Confirmado) return BadRequest(new { message = "No se puede modificar un ítem ya confirmado." });
+
+            var producto = await _db.productos.ObtenerConPiezas(item.Id_Producto);
+            if (producto is null) return NotFound(new { message = "Producto no encontrado." });
+
+            var diferencia = datos.Cantidad - item.Cantidad;
+            if (diferencia > 0)
+            {
+                var disponible = producto.Stock_Actual - producto.StockReservado;
+                if (disponible < diferencia)
+                    return BadRequest(new { message = $"Stock insuficiente. Disponible adicional: {disponible}." });
+                producto.Reservar(diferencia);
+            }
+            else if (diferencia < 0)
+            {
+                producto.LiberarReserva(-diferencia);
+            }
+
+            item.Cantidad = datos.Cantidad;
+            await _db.SaveUnitWork();
+
+            await _hub.Clients.Group("Almaceneros").SendAsync("CantidadItemActualizada", new
+            {
+                ordenId = id,
+                itemId,
+                nuevaCantidad = datos.Cantidad
+            });
+
+            return Ok(new { message = "Cantidad actualizada.", nuevaCantidad = datos.Cantidad });
+        }
+
+        [HttpPost("{id:int}/Items/{itemId:int}/MarcarListoIndividual")]
+        [Authorize(Roles = $"{UsuarioRoles.Almacenero},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> MarcarItemListoIndividual(int id, int itemId)
+        {
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Aceptada && orden.Estado != EstadosOrden.ConFaltantes)
+                return BadRequest(new { message = "La orden no está en preparación." });
+
+            var item = orden.Items.FirstOrDefault(x => x.Id == itemId);
+            if (item is null) return NotFound(new { message = "Ítem no encontrado." });
+            if (item.Estado != EstadosOrdenItem.Pendiente) return BadRequest(new { message = "El ítem no está en estado pendiente." });
+
+            item.MarcarListoIndividual();
+
+            // Si estaba en ConFaltantes y todos los items ya están resueltos, volver a Lista
+            if (orden.Estado == EstadosOrden.ConFaltantes)
+            {
+                var todosResueltos = orden.Items.All(i =>
+                    i.Estado == EstadosOrdenItem.Confirmado ||
+                    i.Estado == EstadosOrdenItem.Incompleto ||
+                    i.Estado == EstadosOrdenItem.ListoIndividual);
+
+                if (todosResueltos)
+                {
+                    orden.MarcarLista();
+                    await _db.SaveUnitWork();
+
+                    await _hub.Clients.Group($"orden-{id}").SendAsync("ItemListoParaScaneo", new { ordenId = id, itemId });
+                    await _hub.Clients.Group($"orden-{id}").SendAsync("OrdenLista", new { orden.Id });
+
+                    return Ok(new { message = "Ítem marcado como listo. Orden vuelve a Lista." });
+                }
+            }
+
+            await _db.SaveUnitWork();
+
+            await _hub.Clients.Group($"orden-{id}").SendAsync("ItemListoParaScaneo", new
+            {
+                ordenId = id,
+                itemId
+            });
+
+            return Ok(new { message = "Ítem marcado como listo." });
+        }
+
+        [HttpPost("{id:int}/MarcarEsperandoPago")]
+        [Authorize(Roles = $"{UsuarioRoles.Operador},{UsuarioRoles.Admin}")]
+        public async Task<IActionResult> MarcarEsperandoPago(int id)
+        {
+            var orden = await _db.ordenesVenta.GetConItems(id);
+            if (orden is null) return NotFound(new { message = "Orden no encontrada." });
+            if (orden.Estado != EstadosOrden.Lista) return BadRequest(new { message = "La orden no está lista para escaneo." });
+
+            var itemsPendientes = orden.Items.Where(i =>
+                i.Estado == EstadosOrdenItem.Pendiente ||
+                i.Estado == EstadosOrdenItem.ListoIndividual).ToList();
+
+            if (itemsPendientes.Count > 0)
+                return BadRequest(new { message = "Hay ítems pendientes de escanear." });
+
+            orden.MarcarEsperandoPago();
+            await _db.SaveUnitWork();
+
+            await _hub.Clients.Group($"orden-{id}").SendAsync("OrdenEsperandoPago", new
+            {
+                orden.Id
+            });
+
+            await _hub.Clients.Group("Cajeros").SendAsync("OrdenEsperandoPago", new
+            {
+                orden.Id
+            });
+
+            return Ok(new { message = "Orden marcada como esperando pago." });
+        }
+
+        [HttpPost("{id:int}/Completar")]
+        [Authorize(Roles = $"{UsuarioRoles.Cajero},{UsuarioRoles.Admin}")]
         public async Task<IActionResult> Completar(int id, DtoCompletarOrden datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var orden = await _db.ordenesVenta.GetConItems(id);
             if (orden is null) return NotFound(new { message = "Orden no encontrada." });
-            if (orden.Estado != EstadosOrden.Lista) return BadRequest(new { message = "La orden no está lista para completar." });
+            if (orden.Estado != EstadosOrden.EsperandoPago) return BadRequest(new { message = "La orden no está esperando pago." });
 
             // Liberar reservas de ítems no confirmados
             foreach (var item in orden.Items.Where(i => i.Estado != EstadosOrdenItem.Confirmado))
@@ -367,16 +628,22 @@ namespace UsaAutoPartes.Api.Controllers
                 }
             }
 
-            var movimiento = new MovimientoCaja(
-                orden.Id_Caja,
-                TipoMovimiento.Ingreso,
-                CategoriaMovimiento.Ventas,
-                datos.TipoPago,
-                total,
-                $"Venta #{orden.Id}"
-            );
+            var sumaPagos = datos.Pagos.Sum(p => p.Monto);
+            if (Math.Abs(sumaPagos - total) > 0.01m)
+                return BadRequest(new { message = $"La suma de pagos ({sumaPagos:F2}) no coincide con el total ({total:F2})." });
 
-            await _movimientos.Crear(movimiento);
+            foreach (var pago in datos.Pagos)
+            {
+                var movimiento = new MovimientoCaja(
+                    orden.Id_Caja,
+                    TipoMovimiento.Ingreso,
+                    CategoriaMovimiento.Ventas,
+                    pago.TipoPago,
+                    pago.Monto,
+                    $"Venta #{orden.Id}"
+                );
+                await _movimientos.Crear(movimiento);
+            }
 
             orden.Completar();
             await _db.SaveUnitWork();

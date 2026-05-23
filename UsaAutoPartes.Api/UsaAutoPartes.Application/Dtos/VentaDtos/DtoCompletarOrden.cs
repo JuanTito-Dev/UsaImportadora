@@ -5,6 +5,7 @@ namespace UsaAutoPartes.Application.Dtos.VentaDtos
     public class DtoCompletarOrden
     {
         [Required]
-        public string TipoPago { get; set; } = string.Empty;
+        [MinLength(1)]
+        public List<DtoPago> Pagos { get; set; } = new();
     }
 }

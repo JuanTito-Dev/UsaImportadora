@@ -43,5 +43,16 @@ namespace UsaAutoPartes.Domain.Entities
             Estado = EstadosOrdenItem.Confirmado;
             PrecioUnitario = precioUnitario;
         }
+
+        public void MarcarListoIndividual()
+        {
+            Estado = EstadosOrdenItem.ListoIndividual;
+        }
+
+        public void RevertirIncompleto()
+        {
+            Estado = EstadosOrdenItem.Pendiente;
+            NotaIncompleto = null;
+        }
     }
 }
