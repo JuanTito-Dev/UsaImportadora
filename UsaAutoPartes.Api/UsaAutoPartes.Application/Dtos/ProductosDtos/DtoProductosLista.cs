@@ -27,7 +27,6 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         public string Ubicacion { get; set; } = string.Empty;
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "No puedes inresar menos de 0")]
         public required int Cantidad { get; set; }
 
         public int Stock_Minimo { get; set; } = 0;

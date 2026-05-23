@@ -66,8 +66,7 @@ namespace UsaAutoPartes.Api.Handlers
             {
                 "IX_Producto_Codigo_SinMarca" => "El código ya existe.",
                 "IX_Producto_Codigo_Marca" => "El código ya existe para esa marca.",
-                "IX_Producto_CodigoAux" => "El código auxiliar ya existe.",
-                "IX_Producto_CodigoAux2" => "El código auxiliar 2 ya existe.",
+
                 "IX_Importacion_Codigo" => "El código de importación ya existe.",
                 "IX_Proveedor_Nombre" => "El nombre del proveedor ya existe.",
                 "IX_Usuario_Email" => "El email del usuario ya existe.",

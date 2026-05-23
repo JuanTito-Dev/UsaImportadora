@@ -33,9 +33,6 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
                 .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
 
-            builder.HasIndex(x => x.CodigoAux).IsUnique().HasFilter("\"CodigoAux\" <> ''").HasDatabaseName("IX_Producto_CodigoAux");
-
-            builder.HasIndex(x => x.CodigoAux2).IsUnique().HasFilter("\"CodigoAux2\" <> ''").HasDatabaseName("IX_Producto_CodigoAux2");
 
             builder.Property(x => x.Codigo).IsRequired();
 
