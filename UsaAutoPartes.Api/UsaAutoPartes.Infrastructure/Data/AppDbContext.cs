@@ -67,6 +67,14 @@ namespace UsaAutoPartes.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder Builder)
         {
            base.OnModelCreating(Builder);
+
+            // Register unaccent() PostgreSQL function for EF Core translation.
+            // The extension must be enabled in the database:
+            //   CREATE EXTENSION IF NOT EXISTS unaccent;
+            Builder.HasDbFunction(
+                typeof(PostgresFunctions).GetMethod(nameof(PostgresFunctions.Unaccent), [typeof(string)])!)
+                .HasName("unaccent");
+
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigUsuario).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigRefreshToken).Assembly);
             Builder.ApplyConfigurationsFromAssembly(typeof(ConfigProducto).Assembly);

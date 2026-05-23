@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Net;
 using System.Text;
+using HotChocolate.Data.Filters.Expressions;
+using UsaAutoPartes.Api.Filters;
 using UsaAutoPartes.Api.Handlers;
 using UsaAutoPartes.Api.Hubs;
 using UsaAutoPartes.Api.Schema.Queries;
@@ -168,7 +170,12 @@ builder.Services.AddGraphQLServer()
     .AddType<OrdenVentaItemPiezaType>()
     .AddAuthorization()
     .AddProjections()
-    .AddFiltering()
+    .AddFiltering(x => x
+        .AddDefaults()
+        .AddProviderExtension(new QueryableFilterProviderExtension(p => p
+            .AddFieldHandler<ILikeStringContainsHandler>()
+        ))
+    )
     .AddSorting();
 
 var app = builder.Build();
