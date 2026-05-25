@@ -7,7 +7,7 @@
 *.suo
 *.user
 *.userosscache
-appsettings.Development.json
+**/appsettings.Development.json
 *.sln.docstates
 
 # NuGet
