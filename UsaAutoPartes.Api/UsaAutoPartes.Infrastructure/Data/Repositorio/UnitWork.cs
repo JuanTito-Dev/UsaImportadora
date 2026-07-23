@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using UsaAutoPartes.Application.IRepositorio;
+using UsaAutoPartes.Domain.Entities.BasesEntidades;
 
 namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 {
@@ -11,6 +13,11 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
     {
         public AppDbContext db;
         public IProductoRepositorio productos { get; private set;  }
+
+        public IQueryable<T> Set<T>() where T : BaseEntity
+        {
+            return db.Set<T>().AsNoTracking().AsQueryable();
+        }
         public IProveedorRepositorio proveedores { get; private set; }
         public IImportacionRepositorio importaciones { get; private set; }
 
@@ -18,11 +25,26 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
 
         public IPrestamoRepositorio prestamos {  get; private set; }
 
-        public UnitWork(IProductoRepositorio _productos, 
-            AppDbContext _db, IProveedorRepositorio proveedor, 
-            IImportacionRepositorio _impoop, 
+        public IPiezaKitRepositorio piezasKit { get; private set; }
+
+        public IOrdenVentaRepositorio ordenesVenta { get; private set; }
+
+        public IAjusteStockRepositorio ajustesStock { get; private set; }
+
+        public IMarcaRepositorio marcas { get; private set; }
+
+        public ICreditoRepositorio creditos { get; private set; }
+
+        public UnitWork(IProductoRepositorio _productos,
+            AppDbContext _db, IProveedorRepositorio proveedor,
+            IImportacionRepositorio _impoop,
             IHistorialPrecioRepositorio _historialPrecios,
-            IPrestamoRepositorio prestamos
+            IPrestamoRepositorio prestamos,
+            IPiezaKitRepositorio _piezasKit,
+            IOrdenVentaRepositorio _ordenesVenta,
+            IAjusteStockRepositorio _ajustesStock,
+            IMarcaRepositorio _marcas,
+            ICreditoRepositorio _creditos
             )
         {
             productos = _productos;
@@ -31,6 +53,11 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             importaciones = _impoop;
             historialPrecios = _historialPrecios;
             this.prestamos = prestamos;
+            piezasKit = _piezasKit;
+            ordenesVenta = _ordenesVenta;
+            ajustesStock = _ajustesStock;
+            marcas = _marcas;
+            creditos = _creditos;
         }
         public void Dispose()
         {

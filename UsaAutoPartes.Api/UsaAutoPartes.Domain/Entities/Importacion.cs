@@ -21,6 +21,8 @@ namespace UsaAutoPartes.Domain.Entities
 
         public string Estado { get; set; } = "Recibida";
 
+        public string Tipo { get; set; } = "Internacional";
+
         public decimal F_Internacional { get; set; } = 0.00M;
 
         public decimal Aduana_Arancel { get; set; } = 0.00M;

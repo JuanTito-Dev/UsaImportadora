@@ -35,7 +35,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             await _db.SaveChangesAsync();
         } 
 
-        public async Task<bool> Eliminar(int Id)
+        public virtual async Task<bool> Eliminar(int Id)
         {
             var entidad = await _Set.FindAsync(Id);
 
@@ -46,7 +46,7 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             return true;
         } 
 
-        public IQueryable<T> Query()
+        public virtual IQueryable<T> Query()
         {
             return _Set.AsNoTracking().AsQueryable();
         }

@@ -8,6 +8,7 @@ namespace UsaAutoPartes.Api.Schema.Queries
     [ExtendObjectType("Query")]
     public class ImportacionQuery
     {
+        [Authorize]
         [UsePaging(IncludeTotalCount = true, DefaultPageSize = 20)]
         [UseProjection]
         [UseSorting]

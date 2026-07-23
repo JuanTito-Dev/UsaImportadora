@@ -11,7 +11,7 @@ namespace UsaAutoPartes.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = UsuarioRoles.Admin)]
+    [Authorize(Roles = UsuarioRoles.Admin)]
     public class DescuentoController(IDescuentoRepositorio _descuento) : ControllerBase
     {
         [HttpPost]

@@ -20,9 +20,11 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         [Required(ErrorMessage = "Nombre requerido")]
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
+
+        public string? Procedencia { get; set; }
 
         public string Unidad_Medida { get; set; } = string.Empty;
 
@@ -41,9 +43,7 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         [Range(0.01, double.MaxValue, ErrorMessage = "Costo debe ser mayor a 0")]
         public required decimal Costo { get; set; }
 
-        [Required(ErrorMessage = "Precio requerido")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Precio debe ser mayor a 0")]
-        public required decimal Precio { get; set; }
+        public decimal Precio { get; set; } = 0;
 
         [Required(ErrorMessage = "ConversionABs requerido")]
         [Range(0.01, double.MaxValue, ErrorMessage = "ConversionABs debe ser mayor a 0")]
@@ -59,8 +59,9 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 CodigoAux = this.CodigoAux,
                 CodigoAux2 = this.CodigoAux2,
                 Nombre = this.Nombre,
-                Marca = this.Marca,
+                MarcaId = this.MarcaId,
                 Descripcion = this.Descripcion,
+                Procedencia = this.Procedencia,
                 Unidad_Medida = this.Unidad_Medida,
                 Ubicacion = this.Ubicacion,
                 Stock_Actual = this.Cantidad * Piezas,

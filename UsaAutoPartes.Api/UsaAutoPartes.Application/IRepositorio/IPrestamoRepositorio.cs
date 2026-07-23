@@ -9,6 +9,6 @@ namespace UsaAutoPartes.Application.IRepositorio
 {
     public interface IPrestamoRepositorio : IGenericRepositorio<Prestamo>
     {
-
+        Task<Prestamo?> ObtenerConDetalle(int id);
     }
 }

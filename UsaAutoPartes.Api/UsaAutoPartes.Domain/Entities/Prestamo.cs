@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +10,13 @@ namespace UsaAutoPartes.Domain.Entities
 {
     public class Prestamo : BaseEntity
     {
+        public int Id_Cliente { get; set; }
+
         public string Nombre { get; set; } = string.Empty;
 
         public DateTime Fecha { get; set; }
 
-        public string Nota { get; set;  } = string.Empty;
+        public string Nota { get; set; } = string.Empty;
 
         public decimal Total { get; private set; } = 0.00M;
 
@@ -22,18 +24,21 @@ namespace UsaAutoPartes.Domain.Entities
 
         public List<Prestamo_detalle> Detalle { get; set; } = new List<Prestamo_detalle>();
 
+        public Cliente? Cliente { get; set; }
+
         public Prestamo() { }
 
-        public Prestamo(string nombre, DateTime fecha, string nota)
+        public Prestamo(int idCliente, string nombre, DateTime fecha, string nota)
         {
+            Id_Cliente = idCliente;
             Nombre = nombre;
             Fecha = fecha;
             Nota = nota;
         }
 
-        public void CancelarPedido()
+        public void Devolver()
         {
-            Estado = EstadosPrestamo.Cancelado;
+            Estado = EstadosPrestamo.Devuelto;
         }
 
         public void SumarPrecio(decimal precio)

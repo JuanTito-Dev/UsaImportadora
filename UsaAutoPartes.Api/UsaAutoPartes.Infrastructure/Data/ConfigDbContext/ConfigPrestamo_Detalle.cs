@@ -29,7 +29,14 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
             builder.HasOne(x => x.Prestamo)
                 .WithMany(x => x.Detalle)
                 .HasForeignKey(x => x.Id_Prestamo)
-                .OnDelete(DeleteBehavior.Cascade).HasConstraintName("fx_pretamos_pretamodetalle");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fx_pretamos_pretamodetalle");
+
+            builder.HasOne(x => x.Producto)
+                .WithMany()
+                .HasForeignKey(x => x.Id_Producto)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_prestamo_detalle_producto");
         }
     }
 }

@@ -6,7 +6,10 @@ namespace UsaAutoPartes.Api.Schema.Types
     {
         protected override void Configure(IObjectTypeDescriptor<Importacion_Detalle> build)
         {
+            base.Configure(build);
             build.Field(x => x.Importacion).Ignore();
+            build.Field(x => x.MarcaNavigation).Ignore();
+            build.Field(x => x.Procedencia).Type<StringType>();
         }
     }
 }

@@ -11,6 +11,16 @@ namespace UsaAutoPartes.Application.IRepositorio
     {
         IQueryable<Producto> GetProductos();
 
-        Task<Producto?> GetProductoforCodigo(string codigo);
+        Task<List<Producto>> GetProductosConHistorial();
+
+        Task<Producto?> GetProductoforCodigo(string codigo, int? marcaId = null);
+
+        Task<Producto?> BuscarPorCodigoEscaneo(string codigo);
+
+        IQueryable<Producto> BuscarPorTermino(string termino);
+
+        Task<Producto?> ObtenerConPiezas(int id);
+
+        Task<Producto?> ObtenerConPiezasYMarca(int id);
     }
 }

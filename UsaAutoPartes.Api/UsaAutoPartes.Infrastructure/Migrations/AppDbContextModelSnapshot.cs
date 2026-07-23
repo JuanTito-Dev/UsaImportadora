@@ -152,6 +152,332 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.AjusteStock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CantidadAnterior")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CantidadNueva")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("Id_Producto")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Nota")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fecha")
+                        .HasDatabaseName("IX_AjusteStock_Fecha");
+
+                    b.HasIndex("Id_Producto")
+                        .HasDatabaseName("IX_AjusteStock_IdProducto");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("AjusteStock", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Caja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("FechaCierre")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Justificacion")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal?>("MontoContado")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<decimal>("MontoInicial")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Estado");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Caja", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Cliente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CorreoElectronico")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Telefono")
+                        .HasDatabaseName("IX_Cliente_Telefono");
+
+                    b.ToTable("Cliente", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.ConfigVenta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ModoVenta")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConfigVenta", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Credito", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("FechaCancelacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaPagoCompleto")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Id_CajaOrigen")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Id_Cajero")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Id_Cliente")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_Descuento")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_OrdenVenta")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("MontoDescuento")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Nota")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<uint>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.Property<decimal>("SaldoPendiente")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Estado")
+                        .HasDatabaseName("IX_Credito_Estado");
+
+                    b.HasIndex("FechaCreacion")
+                        .HasDatabaseName("IX_Credito_FechaCreacion");
+
+                    b.HasIndex("Id_CajaOrigen");
+
+                    b.HasIndex("Id_Cajero");
+
+                    b.HasIndex("Id_Cliente")
+                        .HasDatabaseName("IX_Credito_Cliente");
+
+                    b.HasIndex("Id_Descuento")
+                        .HasDatabaseName("IX_Credito_Id_Descuento");
+
+                    b.HasIndex("Id_OrdenVenta");
+
+                    b.HasIndex("Id_Cliente", "Estado")
+                        .HasDatabaseName("IX_Credito_Cliente_Estado");
+
+                    b.ToTable("Credito", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Credito_SaldoPendiente_NoNegativo", "\"SaldoPendiente\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.CreditoItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id_Credito")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_Pieza")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_Producto")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Credito")
+                        .HasDatabaseName("IX_CreditoItem_Credito");
+
+                    b.HasIndex("Id_Pieza");
+
+                    b.HasIndex("Id_Producto");
+
+                    b.ToTable("CreditoItem", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.CreditoPago", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("Id_Caja")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id_Credito")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_MovimientoCaja")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Id_Usuario")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Monto")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Nota")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("TipoPago")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fecha")
+                        .HasDatabaseName("IX_CreditoPago_Fecha");
+
+                    b.HasIndex("Id_Caja");
+
+                    b.HasIndex("Id_Credito")
+                        .HasDatabaseName("IX_CreditoPago_Credito");
+
+                    b.HasIndex("Id_MovimientoCaja");
+
+                    b.HasIndex("Id_Usuario");
+
+                    b.ToTable("CreditoPago", (string)null);
+                });
+
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Descuento", b =>
                 {
                     b.Property<int>("Id")
@@ -230,6 +556,83 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.ToTable("HistorialPrecio", (string)null);
                 });
 
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.BloqueoGlobalProgramado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Aplicado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime>("Desde")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Hasta")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloqueoGlobalProgramado", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.HorarioBloqueo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("HorarioBloqueo", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.HorarioGlobal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HorarioGlobal", (string)null);
+                });
+
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -275,9 +678,18 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("BloqueoHorarioActivo")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("BloqueoHorarioGlobalActivo")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("EliminadoEn")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -313,6 +725,11 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<decimal>("PorcentajeComision")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(0m);
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -325,20 +742,21 @@ namespace UsaAutoPartes.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Usuario_Email");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("\"EliminadoEn\" IS NULL");
 
-                    b.HasIndex("UserName")
+                    b.HasIndex("Email", "EliminadoEn")
                         .IsUnique()
-                        .HasDatabaseName("IX_Usuario_UserName");
+                        .HasDatabaseName("IX_Usuario_Email_EliminadoEn");
+
+                    b.HasIndex("UserName", "EliminadoEn")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Usuario_UserName_EliminadoEn");
 
                     b.ToTable("Usuario", (string)null);
                 });
@@ -375,6 +793,13 @@ namespace UsaAutoPartes.Infrastructure.Migrations
 
                     b.Property<int>("Id_Proveedor")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Internacional");
 
                     b.Property<decimal>("Total")
                         .HasPrecision(10, 2)
@@ -432,9 +857,8 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<int>("Id_Importacion")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int?>("MarcaId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -446,6 +870,9 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<decimal>("Precio")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Procedencia")
+                        .HasColumnType("text");
 
                     b.Property<int>("Stock_Actual")
                         .HasColumnType("integer");
@@ -474,7 +901,308 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.HasIndex("Id_Importacion")
                         .HasDatabaseName("IX_ImportacionDetalle_IdImportacion");
 
+                    b.HasIndex("MarcaId");
+
                     b.ToTable("Importacion_Detalle", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Marca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Prefijo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Marca_Nombre");
+
+                    b.HasIndex("Prefijo")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Marca_Prefijo");
+
+                    b.ToTable("Marca", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.MargenGanancia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Valor")
+                        .HasPrecision(10, 4)
+                        .HasColumnType("numeric(10,4)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MargenGanancia", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.MovimientoCaja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("Id_Caja")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Monto")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TipoPago")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Caja");
+
+                    b.HasIndex("Tipo");
+
+                    b.HasIndex("TipoPago");
+
+                    b.ToTable("MovimientoCaja", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVenta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaCompletada")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaEsperandoPago")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("Id_Almacenero")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Id_Caja")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Id_Cajero")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("Id_Cliente")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_Descuento")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Modalidad")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal>("MontoDescuento")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Nota")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NotaCancelacion")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Estado")
+                        .HasDatabaseName("IX_OrdenVenta_Estado");
+
+                    b.HasIndex("Id_Almacenero");
+
+                    b.HasIndex("Id_Caja");
+
+                    b.HasIndex("Id_Cajero")
+                        .HasDatabaseName("IX_OrdenVenta_Cajero");
+
+                    b.HasIndex("Id_Cliente");
+
+                    b.HasIndex("Id_Descuento")
+                        .HasDatabaseName("IX_OrdenVenta_Id_Descuento");
+
+                    b.HasIndex("Modalidad")
+                        .HasDatabaseName("IX_OrdenVenta_Modalidad");
+
+                    b.ToTable("OrdenVenta", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVentaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("EsParcial")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("Id_Orden")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Id_Producto")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NotaIncompleto")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Orden");
+
+                    b.HasIndex("Id_Producto");
+
+                    b.ToTable("OrdenVentaItem", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVentaItemPieza", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Confirmado")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Id_Item")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id_Pieza")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("ListoAlmacenero")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("NotaIncompleto")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Item");
+
+                    b.HasIndex("Id_Pieza");
+
+                    b.ToTable("OrdenVentaItemPieza", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.PiezaKit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CantidadPorKit")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CodigoPieza")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("Id_Producto")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Orden")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StockActual")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StockReservado")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_Producto");
+
+                    b.HasIndex("Id_Producto", "CodigoPieza")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PiezaKit_Producto_CodigoPieza");
+
+                    b.HasIndex("Id_Producto", "Orden")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PiezaKit_Producto_Orden");
+
+                    b.ToTable("PiezaKit", (string)null);
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
@@ -492,6 +1220,9 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Id_Cliente")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -505,6 +1236,8 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("numeric(10,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id_Cliente");
 
                     b.ToTable("Prestamo", (string)null);
                 });
@@ -527,6 +1260,9 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<int>("Id_Prestamo")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Id_Producto")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -539,6 +1275,8 @@ namespace UsaAutoPartes.Infrastructure.Migrations
 
                     b.HasIndex("Id_Prestamo");
 
+                    b.HasIndex("Id_Producto");
+
                     b.ToTable("Prestamo_detalle", (string)null);
                 });
 
@@ -549,6 +1287,11 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -574,9 +1317,24 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("EsKit")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("FechaActualizacion")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("fecha_actualizacion");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("fecha_creacion")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("MarcaId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -588,6 +1346,12 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                     b.Property<decimal>("Precio")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Procedencia")
+                        .HasColumnType("text");
+
+                    b.Property<int>("StockReservado")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Stock_Actual")
                         .HasColumnType("integer");
@@ -607,19 +1371,17 @@ namespace UsaAutoPartes.Infrastructure.Migrations
 
                     b.HasIndex("Codigo")
                         .IsUnique()
-                        .HasDatabaseName("IX_Producto_Codigo");
+                        .HasDatabaseName("IX_Producto_Codigo_SinMarca")
+                        .HasFilter("\"MarcaId\" IS NULL");
 
-                    b.HasIndex("CodigoAux")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Producto_CodigoAux")
-                        .HasFilter("\"CodigoAux\" <> ''");
-
-                    b.HasIndex("CodigoAux2")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Producto_CodigoAux2")
-                        .HasFilter("\"CodigoAux2\" <> ''");
+                    b.HasIndex("MarcaId");
 
                     b.HasIndex("Nombre");
+
+                    b.HasIndex("Codigo", "MarcaId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Producto_Codigo_Marca")
+                        .HasFilter("\"MarcaId\" IS NOT NULL");
 
                     b.ToTable("Producto", (string)null);
                 });
@@ -636,7 +1398,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("Estado")
@@ -645,7 +1406,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Moneda")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
@@ -653,7 +1413,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre_Contacto")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nota")
@@ -661,7 +1420,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Pais")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SitioWeb")
@@ -673,7 +1431,6 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Terminos")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("TiempoReposicion")
@@ -694,6 +1451,26 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasDatabaseName("IX_Proveedor_Nombre");
 
                     b.ToTable("Proveedor", (string)null);
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.TipoCambio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("PrecioDolar")
+                        .HasPrecision(10, 4)
+                        .HasColumnType("numeric(10,4)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoCambio", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -747,6 +1524,150 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.AjusteStock", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
+                        .WithMany("AjustesStock")
+                        .HasForeignKey("Id_Producto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_AjusteStock_Producto");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_AjusteStock_Usuario");
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Caja", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Caja_Usuario");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Credito", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Caja", "CajaOrigen")
+                        .WithMany()
+                        .HasForeignKey("Id_CajaOrigen")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Credito_CajaOrigen");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Cajero")
+                        .WithMany()
+                        .HasForeignKey("Id_Cajero")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Credito_Cajero");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("Id_Cliente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Credito_Cliente");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Descuento", "Descuento")
+                        .WithMany()
+                        .HasForeignKey("Id_Descuento")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Credito_Descuento");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.OrdenVenta", "OrdenVenta")
+                        .WithMany()
+                        .HasForeignKey("Id_OrdenVenta")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_Credito_OrdenVenta");
+
+                    b.Navigation("CajaOrigen");
+
+                    b.Navigation("Cajero");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Descuento");
+
+                    b.Navigation("OrdenVenta");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.CreditoItem", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Credito", "Credito")
+                        .WithMany("Items")
+                        .HasForeignKey("Id_Credito")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CreditoItem_Credito");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.PiezaKit", "Pieza")
+                        .WithMany()
+                        .HasForeignKey("Id_Pieza")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_CreditoItem_Pieza");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("Id_Producto")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_CreditoItem_Producto");
+
+                    b.Navigation("Credito");
+
+                    b.Navigation("Pieza");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.CreditoPago", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Caja", "Caja")
+                        .WithMany()
+                        .HasForeignKey("Id_Caja")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_CreditoPago_Caja");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Credito", "Credito")
+                        .WithMany("Pagos")
+                        .HasForeignKey("Id_Credito")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CreditoPago_Credito");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.MovimientoCaja", "MovimientoCaja")
+                        .WithMany()
+                        .HasForeignKey("Id_MovimientoCaja")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_CreditoPago_MovimientoCaja");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("Id_Usuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_CreditoPago_Usuario");
+
+                    b.Navigation("Caja");
+
+                    b.Navigation("Credito");
+
+                    b.Navigation("MovimientoCaja");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.HistorialPrecio", b =>
                 {
                     b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
@@ -757,6 +1678,17 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .HasConstraintName("FK_HistorialPrecio_Producto");
 
                     b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.HorarioBloqueo", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.IdentityDb.RefreshToken", b =>
@@ -791,7 +1723,136 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Importacion_Detalle_Importacion");
 
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Marca", "MarcaNavigation")
+                        .WithMany()
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Importacion");
+
+                    b.Navigation("MarcaNavigation");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.MovimientoCaja", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Caja", "Caja")
+                        .WithMany("Movimientos")
+                        .HasForeignKey("Id_Caja")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_MovimientoCaja_Caja");
+
+                    b.Navigation("Caja");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVenta", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Almacenero")
+                        .WithMany()
+                        .HasForeignKey("Id_Almacenero")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_OrdenVenta_Almacenero");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Caja", "Caja")
+                        .WithMany()
+                        .HasForeignKey("Id_Caja")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_OrdenVenta_Caja");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.IdentityDb.Usuario", "Cajero")
+                        .WithMany()
+                        .HasForeignKey("Id_Cajero")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_OrdenVenta_Cajero");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("Id_Cliente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_OrdenVenta_Cliente");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Descuento", "Descuento")
+                        .WithMany()
+                        .HasForeignKey("Id_Descuento")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_OrdenVenta_Descuento");
+
+                    b.Navigation("Almacenero");
+
+                    b.Navigation("Caja");
+
+                    b.Navigation("Cajero");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Descuento");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVentaItem", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.OrdenVenta", "Orden")
+                        .WithMany("Items")
+                        .HasForeignKey("Id_Orden")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_OrdenVentaItem_Orden");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("Id_Producto")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_OrdenVentaItem_Producto");
+
+                    b.Navigation("Orden");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVentaItemPieza", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.OrdenVentaItem", "Item")
+                        .WithMany("Piezas")
+                        .HasForeignKey("Id_Item")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_OrdenVentaItemPieza_Item");
+
+                    b.HasOne("UsaAutoPartes.Domain.Entities.PiezaKit", "Pieza")
+                        .WithMany()
+                        .HasForeignKey("Id_Pieza")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_OrdenVentaItemPieza_Pieza");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Pieza");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.PiezaKit", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
+                        .WithMany("PiezasKit")
+                        .HasForeignKey("Id_Producto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_PiezaKit_Producto");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("Id_Cliente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_prestamo_cliente");
+
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo_detalle", b =>
@@ -803,12 +1864,58 @@ namespace UsaAutoPartes.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fx_pretamos_pretamodetalle");
 
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("Id_Producto")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_prestamo_detalle_producto");
+
                     b.Navigation("Prestamo");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Producto", b =>
+                {
+                    b.HasOne("UsaAutoPartes.Domain.Entities.Marca", "Marca")
+                        .WithMany("Productos")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Caja", b =>
+                {
+                    b.Navigation("Movimientos");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Credito", b =>
+                {
+                    b.Navigation("Items");
+
+                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Importacion", b =>
                 {
                     b.Navigation("Detalles");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Marca", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVenta", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("UsaAutoPartes.Domain.Entities.OrdenVentaItem", b =>
+                {
+                    b.Navigation("Piezas");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Prestamo", b =>
@@ -818,7 +1925,11 @@ namespace UsaAutoPartes.Infrastructure.Migrations
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Producto", b =>
                 {
+                    b.Navigation("AjustesStock");
+
                     b.Navigation("HistorialPrecios");
+
+                    b.Navigation("PiezasKit");
                 });
 
             modelBuilder.Entity("UsaAutoPartes.Domain.Entities.Proveedor", b =>

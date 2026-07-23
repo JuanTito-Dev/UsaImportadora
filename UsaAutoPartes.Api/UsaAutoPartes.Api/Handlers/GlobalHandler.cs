@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Net;
-using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.Exceptions.AuthenticationExceptions;
+using UsaAutoPartes.Application.Exceptions.Autentication;
 using UsaAutoPartes.Application.Exceptions.DataBaseException;
 using UsaAutoPartes.Application.Exceptions.GenericExceptions;
 using UsaAutoPartes.Domain.Entities.IdentityDb;
@@ -19,15 +19,18 @@ namespace UsaAutoPartes.Api.Handlers
         }
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            if (exception is DbUpdateException dbEx &&
-                dbEx.InnerException is PostgresException pgEx)
+            if (exception is DbUpdateException dbEx)
             {
-                exception = pgEx.SqlState switch
+                var pgEx = FindPostgresException(dbEx);
+                if (pgEx is not null)
                 {
-                    "23505" => new UniqueConstraintException(ResolverUnico(pgEx.ConstraintName)),
-                    "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName, pgEx.MessageText)),
-                    _ => exception
-                };
+                    exception = pgEx.SqlState switch
+                    {
+                        "23505" => new UniqueConstraintException(ResolverUnico(pgEx.ConstraintName)),
+                        "23503" => new ForeignKeyException(ResolverFK(pgEx.ConstraintName, pgEx.MessageText)),
+                        _ => exception
+                    };
+                }
             }
 
             var (statuscode, message) = GetExceptionDetails(exception);
@@ -45,35 +48,68 @@ namespace UsaAutoPartes.Api.Handlers
             return exception switch
             {
                 LoginFailException => (HttpStatusCode.Unauthorized, exception.Message),
+                UsuarioDesactivadoException => (HttpStatusCode.Forbidden, exception.Message),
+                UsuarioEliminadoException => (HttpStatusCode.Forbidden, exception.Message),
                 RefreshTokenFailException => (HttpStatusCode.BadRequest, exception.Message),
                 RegistroTransaccionFailException => (HttpStatusCode.BadRequest, exception.Message),
                 UsuarioExisteException => (HttpStatusCode.Conflict, exception.Message),
                 EntidadNoEncontradaException => (HttpStatusCode.NotFound, exception.Message),
+                StockInsuficienteException => (HttpStatusCode.Conflict, exception.Message),
                 UniqueConstraintException => (HttpStatusCode.Conflict, exception.Message),
                 ForeignKeyException => (HttpStatusCode.BadRequest, exception.Message),
+                PasswordIncorrectaException => (HttpStatusCode.BadRequest, exception.Message),
+                CorreoDuplicadoException => (HttpStatusCode.Conflict, exception.Message),
+                EliminarUsuarioInvalidoException => (HttpStatusCode.BadRequest, exception.Message),
+                DbUpdateException dbUpdate => (HttpStatusCode.InternalServerError, ResolverDbUpdate(dbUpdate)),
                 _ => (HttpStatusCode.InternalServerError, $"Ocurrio un error inesperado. {exception.Message}")
             };
+        }
+
+        private string ResolverDbUpdate(DbUpdateException dbEx)
+        {
+            var pgEx = FindPostgresException(dbEx);
+            if (pgEx is not null)
+            {
+                return pgEx.SqlState switch
+                {
+                    "23502" => "Faltan datos obligatorios para guardar el registro.",
+                    "22001" => "Uno de los campos supera la longitud máxima permitida.",
+                    "42703" => "La base de datos no está actualizada. Ejecute las migraciones pendientes.",
+                    _ => $"Error al guardar en base de datos: {pgEx.MessageText}"
+                };
+            }
+
+            if (dbEx.InnerException is not null)
+                return $"Error al guardar: {dbEx.InnerException.Message}";
+
+            return $"Ocurrio un error inesperado. {dbEx.Message}";
         }
 
         private string ResolverUnico(string? constraintName)
         {
             return constraintName switch
             {
-                "IX_Producto_Codigo" => "El código ya existe.",
-                "IX_Producto_CodigoAux" => "El código auxiliar ya existe.",
-                "IX_Producto_CodigoAux2" => "El código auxiliar 2 ya existe.",
+                "IX_Producto_Codigo_SinMarca" => "El código ya existe.",
+                "IX_Producto_Codigo_Marca" => "El código ya existe para esa marca.",
+
                 "IX_Importacion_Codigo" => "El código de importación ya existe.",
                 "IX_Proveedor_Nombre" => "El nombre del proveedor ya existe.",
-                "IX_Usuario_Email" => "El email del usuario ya existe.",
-                "IX_Usuario_UserName" => "El nombre de usuario ya existe.",
+                "IX_Usuario_Email_EliminadoEn" => "El email del usuario ya existe.",
+                "IX_Usuario_UserName_EliminadoEn" => "El nombre de usuario ya existe.",
+                "UserNameIndex" => "El nombre de usuario ya está en uso.",
                 "Id_nombre_descuento" => "El nombre de descuento ya existe",
+
+                "IX_PiezaKit_Producto_Orden" => "Ya existe una pieza con ese orden en el kit. Reintenta la operación.",
+                "IX_PiezaKit_Producto_CodigoPieza" => "Ya existe una pieza con ese código en el kit.",
                 _ => "Ya existe un registro con esos datos."
             };
         }
 
         private string ResolverFK(string? constraintName, string? messageText)
         {
-            bool esInsercion = messageText?.Contains("insert or update") ?? false;
+            bool esInsercion = (messageText?.Contains("insert or update") ?? false)
+                            || (messageText?.Contains("insertar o actualizar") ?? false)
+                            || (messageText?.Contains("inserción") ?? false);
 
             return esInsercion
                 ? ResolverFK_Insercion(constraintName)
@@ -87,8 +123,23 @@ namespace UsaAutoPartes.Api.Handlers
                 "FK_HistorialPrecio_Producto" => "Producto no encontrado para el historial",
                 "FK_Importacion_Proveedor" => "El proveedor seleccionado no existe.",
                 "fx_pretamos_pretamodetalle" => "Prestamo no encontrado",
+                "FK_MovimientoCaja_Caja" => "La caja no existe.",
+                "FK_PiezaKit_Producto" => "El producto no existe.",
+                "FK_AjusteStock_Producto" => "El producto no existe.",
+                "FK_AjusteStock_Usuario" => "El usuario no existe.",
                 _ => "El registro relacionado no existe."
             };
+        }
+
+        private static PostgresException? FindPostgresException(Exception ex)
+        {
+            var current = ex as Exception;
+            while (current is not null)
+            {
+                if (current is PostgresException pg) return pg;
+                current = current.InnerException;
+            }
+            return null;
         }
 
         private string ResolverFK_Eliminacion(string? constraintName)

@@ -24,7 +24,10 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.Property(x => x.Tipo).HasMaxLength(50);
 
-            
+            builder.HasOne(x => x.MarcaNavigation)
+                .WithMany()
+                .HasForeignKey(x => x.MarcaId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasIndex(x => x.Id_Importacion).HasDatabaseName("IX_ImportacionDetalle_IdImportacion");
 

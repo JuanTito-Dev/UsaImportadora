@@ -33,6 +33,8 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.Property(x => x.Fecha);
 
+            builder.Property(x => x.Tipo).HasMaxLength(20).HasDefaultValue("Internacional");
+
             builder.HasOne(x => x.Proveedor)
             .WithMany(p => p.Importaciones)
             .HasForeignKey(x => x.Id_Proveedor)

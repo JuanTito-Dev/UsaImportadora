@@ -17,6 +17,11 @@ namespace UsaAutoPartes.Infrastructure.Data.Repositorio
             _Set = _db.Set<Prestamo>();
         }
 
-
+        public async Task<Prestamo?> ObtenerConDetalle(int id)
+        {
+            return await _Set
+                .Include(x => x.Detalle)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

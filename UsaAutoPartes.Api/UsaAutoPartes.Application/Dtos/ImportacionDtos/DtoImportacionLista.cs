@@ -28,6 +28,8 @@ namespace UsaAutoPartes.Application.Dtos.ImportacionDtos
         [Required]
         public decimal Trasporte_Interno { get; set; } = 0.00M;
 
+        public string Tipo { get; set; } = "Internacional";
+
         public List<DtoImportacionProducto> Productos { get; set; } = new List<DtoImportacionProducto>();
     }
 }

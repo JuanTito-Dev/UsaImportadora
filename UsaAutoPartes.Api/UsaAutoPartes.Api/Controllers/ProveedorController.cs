@@ -12,7 +12,7 @@ namespace UsaAutoPartes.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = UsuarioRoles.Admin)]
+    [Authorize(Roles = UsuarioRoles.Admin)]
     public class ProveedorController(IProveedorRepositorio _db) : ControllerBase
     {
         [HttpPost]
@@ -20,7 +20,7 @@ namespace UsaAutoPartes.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            datos.Email.ToLower();
+            datos.Email = datos.Email?.ToLower();
 
             var proveedor = datos.Adapt<Proveedor>();
 
@@ -28,7 +28,7 @@ namespace UsaAutoPartes.Api.Controllers
 
             await _db.GuardarAsync();
 
-            return Created();
+            return Created("", new { id = proveedor.Id, nombre = proveedor.Nombre });
         }
 
         [HttpPut("{Id:int}")]
@@ -36,7 +36,7 @@ namespace UsaAutoPartes.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            datos.Email.ToLower();
+            datos.Email = datos.Email?.ToLower();
 
             var proveedor = await _db.Obtener(Id);
 

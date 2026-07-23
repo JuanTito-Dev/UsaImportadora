@@ -11,15 +11,15 @@ namespace UsaAutoPartes.Domain.Entities
     {
         public required string Nombre { get; set;  }
 
-        public required string Pais { get; set; }
+        public string? Pais { get; set; }
 
-        public required string Moneda { get; set; }
+        public string? Moneda { get; set; }
 
-        public required string Terminos { get; set; }
+        public string? Terminos { get; set; }
 
-        public required string Nombre_Contacto { get; set; }
+        public string? Nombre_Contacto { get; set; }
 
-        public required string Email { get; set; }
+        public string? Email { get; set; }
 
         public string Telefono { get; set; } = string.Empty;
 

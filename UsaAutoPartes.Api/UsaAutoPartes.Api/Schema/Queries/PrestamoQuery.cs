@@ -1,4 +1,5 @@
-﻿using UsaAutoPartes.Application.IRepositorio;
+﻿using HotChocolate.Authorization;
+using UsaAutoPartes.Application.IRepositorio;
 using UsaAutoPartes.Domain.Entities;
 
 namespace UsaAutoPartes.Api.Schema.Queries
@@ -6,6 +7,7 @@ namespace UsaAutoPartes.Api.Schema.Queries
     [ExtendObjectType("Query")]
     public class PrestamoQuery
     {
+        [Authorize]
         [UsePaging(IncludeTotalCount = true, DefaultPageSize = 20)]
         [UseProjection]
         [UseSorting]

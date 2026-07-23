@@ -10,6 +10,6 @@ namespace UsaAutoPartes.Domain.Enum.InventarioEnums
     {
         public static string Activo = "Activo";
 
-        public static string Cancelado = "Cancelado";
+        public static string Devuelto = "Devuelto";
     }
 }

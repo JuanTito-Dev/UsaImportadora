@@ -8,6 +8,8 @@ namespace UsaAutoPartes.Application.Dtos.Authentication
 {
     public class DtoUsuarioDatos
     {
+        public Guid Id { get; set; }
+
         public string Nombre { get; set; }
 
         public string Correo { get; set; }

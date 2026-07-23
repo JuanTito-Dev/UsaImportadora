@@ -17,11 +17,22 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.HasKey(x => x.Id);
 
-            builder.HasIndex(x => x.Codigo).IsUnique().HasDatabaseName("IX_Producto_Codigo");
+            builder.HasIndex(x => x.Codigo)
+                .IsUnique()
+                .HasFilter("\"MarcaId\" IS NULL")
+                .HasDatabaseName("IX_Producto_Codigo_SinMarca");
 
-            builder.HasIndex(x => x.CodigoAux).IsUnique().HasFilter("\"CodigoAux\" <> ''").HasDatabaseName("IX_Producto_CodigoAux");
+            builder.HasIndex(x => new { x.Codigo, x.MarcaId })
+                .IsUnique()
+                .HasFilter("\"MarcaId\" IS NOT NULL")
+                .HasDatabaseName("IX_Producto_Codigo_Marca");
 
-            builder.HasIndex(x => x.CodigoAux2).IsUnique().HasFilter("\"CodigoAux2\" <> ''").HasDatabaseName("IX_Producto_CodigoAux2");
+            builder.HasOne(x => x.Marca)
+                .WithMany(m => m.Productos)
+                .HasForeignKey(x => x.MarcaId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
+
 
             builder.Property(x => x.Codigo).IsRequired();
 
@@ -32,6 +43,18 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
             builder.Property(x => x.Precio).HasPrecision(10, 2);
 
             builder.Property(x => x.ConversionABs).HasPrecision(10, 2);
+
+            builder.Property(x => x.Activo).HasDefaultValue(true);
+
+            builder.Property(x => x.FechaEliminacion).IsRequired(false);
+
+            builder.Property(x => x.FechaCreacion)
+                .HasColumnName("fecha_creacion")
+                .HasDefaultValueSql("NOW()");
+
+            builder.Property(x => x.FechaActualizacion)
+                .HasColumnName("fecha_actualizacion")
+                .IsRequired(false);
         }
     }
 }

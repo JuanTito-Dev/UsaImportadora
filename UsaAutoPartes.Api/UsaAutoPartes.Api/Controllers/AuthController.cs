@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UsaAutoPartes.Application.Dtos.Autentication;
 using UsaAutoPartes.Application.Dtos.Authentication;
 using UsaAutoPartes.Application.IRepositorio;
-using UsaAutoPartes.Domain.Entities.IdentityDb;
 using UsaAutoPartes.Domain.Enum.CookieNames;
 
 namespace UsaAutoPartes.Api.Controllers
@@ -13,6 +13,7 @@ namespace UsaAutoPartes.Api.Controllers
     public class AuthController(IAuthenticationRepositorio _Auth) : ControllerBase
     {
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Registro(RequestRegister Datos)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -33,7 +34,6 @@ namespace UsaAutoPartes.Api.Controllers
         }
 
         [HttpPost("refresh")]
-
         public async Task<ActionResult<DtoUsuarioDatos>> RefreshToken()
         {
             var token = Request.Cookies[CookiesNames.accessreload.ToString()];
@@ -41,6 +41,20 @@ namespace UsaAutoPartes.Api.Controllers
             var usuario = await _Auth.RefreshTokenAsync(token);
 
             return Ok(usuario);
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            await _Auth.LogoutAsync(userId);
+
+            Response.Cookies.Delete(CookiesNames.access.ToString(), new CookieOptions { Path = "/" });
+            Response.Cookies.Delete(CookiesNames.accessreload.ToString(), new CookieOptions { Path = "/api/Auth/refresh" });
+
+            return Ok(new { message = "Sesión cerrada." });
         }
     }
 }

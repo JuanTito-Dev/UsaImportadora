@@ -9,5 +9,6 @@ namespace UsaAutoPartes.Application.IRepositorio
 {
     public interface IHistorialPrecioRepositorio : IGenericRepositorio<HistorialPrecio>
     {
+        Task<HistorialPrecio?> GetUltimoPrecio(int idProducto);
     }
 }

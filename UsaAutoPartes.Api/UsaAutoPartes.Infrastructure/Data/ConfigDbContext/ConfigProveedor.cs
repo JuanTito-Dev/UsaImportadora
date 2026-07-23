@@ -21,15 +21,15 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.Property(x => x.Nombre).IsRequired();
 
-            builder.Property(x => x.Pais).IsRequired();
+            builder.Property(x => x.Pais);
 
-            builder.Property(x => x.Moneda).IsRequired();
+            builder.Property(x => x.Moneda);
 
-            builder.Property(x => x.Terminos).IsRequired();
+            builder.Property(x => x.Terminos);
 
-            builder.Property(x => x.Nombre_Contacto).IsRequired();
+            builder.Property(x => x.Nombre_Contacto);
 
-            builder.Property(x => x.Email).IsRequired();
+            builder.Property(x => x.Email);
 
             builder.Property(x => x.Estado).HasDefaultValue(true);
 

@@ -18,16 +18,17 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
         public string CodigoAux2 { get; set; } = string.Empty;
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
+
+        public string? Procedencia { get; set; }
 
         public string Unidad_Medida { get; set; } = string.Empty;
 
         public string Ubicacion { get; set; } = string.Empty;
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "No puedes inresar menos de 0")]
         public required int Cantidad { get; set; }
 
         public int Stock_Minimo { get; set; } = 0;
@@ -55,10 +56,11 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
                 Codigo = Codigo,
                 CodigoAux = this.CodigoAux != string.Empty ? this.CodigoAux : string.Empty,
                 CodigoAux2 = this.CodigoAux2 != string.Empty ? this.CodigoAux2 : string.Empty,
-                Nombre = this.Nombre != string.Empty ? this.Nombre : this.Codigo,
-                Marca = this.Marca != string.Empty ? this.Marca : string.Empty,
-                Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion : string.Empty, 
+                Nombre = this.Nombre,
+                MarcaId = this.MarcaId,
+                Ubicacion = this.Ubicacion != string.Empty ? this.Ubicacion : string.Empty,
                 Descripcion = this.Descripcion != string.Empty ? this.Descripcion : string.Empty,
+                Procedencia = this.Procedencia,
                 Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : string.Empty,
                 Stock_Actual = this.Cantidad * this.Piezas,
                 Stock_Minimo = this.Stock_Minimo <= 0 ? 5 : this.Stock_Minimo,
@@ -74,8 +76,9 @@ namespace UsaAutoPartes.Application.Dtos.ProductosDtos
             producto.CodigoAux = this.CodigoAux != string.Empty? CodigoAux : producto.CodigoAux;
             producto.CodigoAux2 = this.CodigoAux2 != string.Empty ? this.CodigoAux2 : producto.CodigoAux2;
             producto.Nombre = this.Nombre != string.Empty ? this.Nombre : producto.Nombre;
-            producto.Marca = this.Marca != string.Empty ? this.Marca : producto.Marca;
+            if (this.MarcaId.HasValue) producto.MarcaId = this.MarcaId;
             producto.Descripcion = this.Descripcion != string.Empty ? this.Descripcion : producto.Descripcion;
+            if (this.Procedencia != null) producto.Procedencia = this.Procedencia;
             producto.Unidad_Medida = this.Unidad_Medida != string.Empty ? this.Unidad_Medida : producto.Unidad_Medida;
             producto.Stock_Actual += this.Cantidad * this.Piezas;
             producto.Stock_Minimo = this.Stock_Minimo <= 0 ? producto.Stock_Minimo : this.Stock_Minimo;

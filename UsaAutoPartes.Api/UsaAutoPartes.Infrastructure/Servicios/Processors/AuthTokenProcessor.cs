@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UsaAutoPartes.Application.Dtos.Authentication;
 using UsaAutoPartes.Application.IServicios;
-using UsaAutoPartes.Domain.Entities.IdentityDb;
 using UsaAutoPartes.Domain.Enum.CookieNames;
 
 namespace UsaAutoPartes.Infrastructure.Servicios.Processors
@@ -30,7 +29,7 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
         {
             var singniKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
 
-            var credentials = new SigningCredentials(singniKey, SecurityAlgorithms.HmacSha512);
+            var credentials = new SigningCredentials(singniKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
@@ -70,6 +69,7 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
         public void WriteAuthCookie(string CookieName, string Token, DateTime Expires)
         {
             var context = _http.HttpContext?? throw new Exception("No se pudo acceder al contexto HTTP");
+            var isHttps = context.Request.IsHttps;
 
             context.Response.Cookies.Append(
                 CookieName,
@@ -79,8 +79,8 @@ namespace UsaAutoPartes.Infrastructure.Servicios.Processors
                     HttpOnly = true,
                     Expires = Expires,
                     IsEssential = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.Strict,
+                    Secure = isHttps,
+                    SameSite = isHttps ? SameSiteMode.None : SameSiteMode.Lax,
                     Path = CookieName == CookiesNames.accessreload.ToString()
                    ? "/api/Auth/refresh"   // refresh token solo va a este endpoint
                    : "/"

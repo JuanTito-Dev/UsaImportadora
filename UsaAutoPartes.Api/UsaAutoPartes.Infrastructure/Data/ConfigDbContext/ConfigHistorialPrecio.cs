@@ -22,7 +22,7 @@ namespace UsaAutoPartes.Infrastructure.Data.ConfigDbContext
 
             builder.Property(x => x.Fecha).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            // Relación con Producto
+            // Relaciï¿½n con Producto
             builder.HasOne(x => x.Producto)
                 .WithMany(p => p.HistorialPrecios)
                 .HasForeignKey(x => x.Id_producto)

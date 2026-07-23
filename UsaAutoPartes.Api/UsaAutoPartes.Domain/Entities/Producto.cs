@@ -17,9 +17,13 @@ namespace UsaAutoPartes.Domain.Entities
 
         public required string Nombre { get; set; }
 
-        public string Marca { get; set; } = string.Empty;
+        public int? MarcaId { get; set; }
+
+        public Marca? Marca { get; set; }
 
         public string Descripcion { get; set; } = string.Empty;
+
+        public string? Procedencia { get; set; }
 
         public string Unidad_Medida { get; set; } = string.Empty;
 
@@ -37,8 +41,23 @@ namespace UsaAutoPartes.Domain.Entities
 
         public decimal ConversionABs { get; private set; }
 
+        public bool EsKit { get; set; } = false;
+
+        public int StockReservado { get; set; } = 0;
+
+        public bool Activo { get; set; } = true;
+
+        public DateTime? FechaEliminacion { get; set; }
+
+        public DateTime FechaCreacion { get; set; }
+
+        public DateTime? FechaActualizacion { get; set; }
+
         public List<HistorialPrecio> HistorialPrecios { get; set; } = new List<HistorialPrecio>();
 
+        public List<PiezaKit> PiezasKit { get; set; } = new List<PiezaKit>();
+
+        public List<AjusteStock> AjustesStock { get; set; } = new List<AjusteStock>();
 
         public Producto() { }
         public Producto(decimal costo, decimal precio, decimal conversionABs)
@@ -72,9 +91,91 @@ namespace UsaAutoPartes.Domain.Entities
             };
         }
 
+        public void Reservar(int cantidad) => StockReservado += cantidad;
+
+        public void LiberarReserva(int cantidad) => StockReservado = Math.Max(0, StockReservado - cantidad);
+
         public void Descontar(int cantidad)
         {
             Stock_Actual -= cantidad;
+        }
+
+        public void Devolver(int cantidad)
+        {
+            Stock_Actual += cantidad;
+        }
+
+        public int CalcularStockKit()
+        {
+            if (!PiezasKit.Any()) return 0;
+            return PiezasKit.Min(p => p.StockActual / p.CantidadPorKit);
+        }
+
+        /// <summary>
+        /// Stock disponible del kit descontando las piezas ya reservadas por
+        /// otras órdenes (pendientes o en preparación). Distinto de
+        /// <see cref="CalcularStockKit"/>, que devuelve el stock crudo y se usa
+        /// internamente para mantener <see cref="Stock_Actual"/> al agregar /
+        /// descontar stock — ahí NO se quieren restar reservas, porque
+        /// <see cref="Stock_Actual"/> refleja el inventario físico.
+        /// </summary>
+        public int CalcularStockKitDisponible()
+        {
+            if (!PiezasKit.Any()) return 0;
+            return PiezasKit.Min(p => Math.Max(0, p.StockActual - p.StockReservado) / p.CantidadPorKit);
+        }
+
+        public void ConvertirAKit(List<PiezaKit> piezas)
+        {
+            EsKit = true;
+            foreach (var pieza in piezas)
+                pieza.EstablecerStockInicial(Stock_Actual);
+            PiezasKit.AddRange(piezas);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        public void ConvertirARegular(int stockManual)
+        {
+            EsKit = false;
+            Stock_Actual = stockManual;
+            PiezasKit.Clear();
+        }
+
+        public void AgregarStockKit(int cantidad)
+        {
+            foreach (var pieza in PiezasKit)
+                pieza.AgregarStock(cantidad * pieza.CantidadPorKit);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        public void DescontarKit(int cantidad)
+        {
+            foreach (var pieza in PiezasKit)
+                pieza.DescontarStock(cantidad * pieza.CantidadPorKit);
+            Stock_Actual = CalcularStockKit();
+        }
+
+        // Returns null if valid, or error message describing which piece has insufficient free stock
+        public string? ValidarPiezasSuficientes(int cantidadKits)
+        {
+            var cantidadActual = CalcularStockKit();
+            var deltaKits = cantidadActual - cantidadKits;
+
+            foreach (var p in PiezasKit)
+            {
+                var disponible = p.StockActual - p.StockReservado;
+                var necesario = p.CantidadPorKit * deltaKits;
+                if (disponible < necesario)
+                    return $"Pieza '{p.Nombre}' tiene {disponible} disponibles (descontando {p.StockReservado} reservadas). Se necesitan {necesario} para el ajuste.";
+            }
+            return null;
+        }
+
+        public void ActualizarPiezas(List<PiezaKit> nuevasPiezas)
+        {
+            PiezasKit.Clear();
+            PiezasKit.AddRange(nuevasPiezas);
+            Stock_Actual = CalcularStockKit();
         }
     }
 }

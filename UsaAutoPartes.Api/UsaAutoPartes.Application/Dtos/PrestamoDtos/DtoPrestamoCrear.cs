@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,22 +10,19 @@ namespace UsaAutoPartes.Application.Dtos.PrestamoDtos
 {
     public class DtoPrestamoCrear
     {
-        [Required(ErrorMessage = "Nombre requerido")]
-        public required string Nombre { get; set; }
+        [Required(ErrorMessage = "Cliente requerido")]
+        public int Id_Cliente { get; set; }
 
         [Required]
         public DateTime Fecha { get; set; }
 
-
         public string Nota { get; set; } = string.Empty;
 
-        public List<DtoPrestamoDetalleCrear> Detalles {  get; set; } = new List<DtoPrestamoDetalleCrear>();
+        public List<DtoPrestamoDetalleCrear> Detalles { get; set; } = new List<DtoPrestamoDetalleCrear>();
 
-        public Prestamo Crear()
+        public Prestamo Crear(string nombre)
         {
-            var prestamo = new Prestamo(nombre: Nombre, Fecha, Nota);
-
-            return prestamo;
+            return new Prestamo(Id_Cliente, nombre, Fecha, Nota);
         }
     }
 }

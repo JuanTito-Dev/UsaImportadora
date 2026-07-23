@@ -14,5 +14,6 @@ namespace UsaAutoPartes.Application.IRepositorio
         Task Register(RequestRegister datos);
         Task<DtoUsuarioDatos> Login(RequestLogin datos);
         Task<DtoUsuarioDatos> RefreshTokenAsync(string? Token);
+        Task LogoutAsync(Guid userId);
     }
 }

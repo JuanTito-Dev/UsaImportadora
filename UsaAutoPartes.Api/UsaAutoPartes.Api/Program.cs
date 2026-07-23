@@ -7,7 +7,10 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Net;
 using System.Text;
+using HotChocolate.Data.Filters.Expressions;
+using UsaAutoPartes.Api.Middleware;
 using UsaAutoPartes.Api.Handlers;
+using UsaAutoPartes.Api.Hubs;
 using UsaAutoPartes.Api.Schema.Queries;
 using UsaAutoPartes.Api.Schema.Types;
 using UsaAutoPartes.Application.IRepositorio;
@@ -17,9 +20,13 @@ using UsaAutoPartes.Domain.Enum.CookieNames;
 using UsaAutoPartes.Domain.Enum.UsuarioEnums;
 using UsaAutoPartes.Infrastructure.Data;
 using UsaAutoPartes.Infrastructure.Data.Repositorio;
+using UsaAutoPartes.Infrastructure.Servicios;
 using UsaAutoPartes.Infrastructure.Servicios.Processors;
+using UsaAutoPartes.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+var zonaHoraria = TimeZoneInfo.FindSystemTimeZoneById("SA Western Standard Time");
+builder.Services.AddSingleton(zonaHoraria);
 
 builder.Services.AddControllers();
 
@@ -47,6 +54,9 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(builder.Configuration["ConexionDataBase:CadenaConexion"]);
 } );
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IFacturaExtractorServicio, FacturaExtractorServicio>();
+builder.Services.AddScoped<IExportProductoServicio, ExportProductoServicio>();
 builder.Services.AddScoped<IAuthTokenProcessor, AuthTokenProcessor>();
 builder.Services.AddScoped<IAuthenticationRepositorio, AuthenticationRepositorio>();
 builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();
@@ -57,6 +67,19 @@ builder.Services.AddScoped<IImportacionRepositorio, ImportacionRepositorio>();
 builder.Services.AddScoped<IHistorialPrecioRepositorio, HistorialPrecioRepositorio>();
 builder.Services.AddScoped<IDescuentoRepositorio, DescuentoRepositorio>();
 builder.Services.AddScoped<IPrestamoRepositorio, PrestamoRepositorio>();
+builder.Services.AddScoped<ICajaRepositorio, CajaRepositorio>();
+builder.Services.AddScoped<IMovimientoCajaRepositorio, MovimientoCajaRepositorio>();
+builder.Services.AddScoped<IPiezaKitRepositorio, PiezaKitRepositorio>();
+builder.Services.AddScoped<ITipoCambioRepositorio, TipoCambioRepositorio>();
+builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+builder.Services.AddScoped<IOrdenVentaRepositorio, OrdenVentaRepositorio>();
+builder.Services.AddScoped<IAjusteStockRepositorio, AjusteStockRepositorio>();
+builder.Services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
+builder.Services.AddScoped<IMargenGananciaRepositorio, MargenGananciaRepositorio>();
+builder.Services.AddScoped<IConfigVentaRepositorio, ConfigVentaRepositorio>();
+builder.Services.AddScoped<ICreditoRepositorio, CreditoRepositorio>();
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<BloqueoRecurrenteService>();
 
 
 builder.Services.AddAuthentication(opt =>
@@ -77,6 +100,7 @@ builder.Services.AddAuthentication(opt =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtoptions.Issuer,
         ValidAudience = jwtoptions.Audience,
+        ValidAlgorithms = [SecurityAlgorithms.HmacSha256],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoptions.SecretKey))
     };
 
@@ -117,13 +141,30 @@ builder.Services.AddCors(X =>
         
 });
 
-builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
+builder.Services.AddGraphQLServer()
+    .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
+    .ModifyCostOptions(options => options.EnforceCostLimits = false)
+    .ModifyPagingOptions(opt =>
+    {
+        opt.MaxPageSize = int.MaxValue;
+        opt.DefaultPageSize = 20;
+    })
     .AddQueryType(d => d.Name("Query"))
     .AddTypeExtension<ProductoQuery>()
     .AddTypeExtension<ProveedorQuery>()
     .AddTypeExtension<ImportacionQuery>()
     .AddTypeExtension<DescuentoQuery>()
     .AddTypeExtension<PrestamoQuery>()
+    .AddTypeExtension<CajaQuery>()
+    .AddTypeExtension<TipoCambioQuery>()
+    .AddTypeExtension<ClienteQuery>()
+    .AddTypeExtension<OrdenVentaQuery>()
+    .AddTypeExtension<MargenGananciaQuery>()
+    .AddTypeExtension<ConfigVentaQuery>()
+    .AddTypeExtension<MarcaQuery>()
+    .AddTypeExtension<AjusteStockQuery>()
+    .AddTypeExtension<ImportacionDetalleExtensions>()
+    .AddTypeExtension<CreditoQuery>()
     .AddType<ProductoType>()
     .AddType<MeQuery>()
     .AddType<ProveedorType>()
@@ -132,29 +173,46 @@ builder.Services.AddGraphQLServer().ModifyRequestOptions(opt => opt.IncludeExcep
     .AddType<Importacion_DetalleType>()
     .AddType<PrestamoType>()
     .AddType<Prestamo_DetalleType>()
+    .AddType<CajaType>()
+    .AddType<MovimientoCajaType>()
+    .AddType<PiezaKitType>()
+    .AddType<TipoCambioType>()
+    .AddType<ClienteType>()
+    .AddType<OrdenVentaType>()
+    .AddType<OrdenVentaItemType>()
+    .AddType<OrdenVentaItemPiezaType>()
+    .AddType<DescuentoType>()
+    .AddType<CreditoType>()
+    .AddType<CreditoItemType>()
+    .AddType<CreditoPagoType>()
     .AddAuthorization()
     .AddProjections()
-    .AddFiltering()
+    .AddFiltering(x => x
+        .AddDefaults()
+        .AddProviderExtension(new QueryableFilterProviderExtension(p => p
+            .AddFieldHandler<ILikeStringContainsHandler>()
+        ))
+    )
     .AddSorting();
 
 var app = builder.Build();
-
-app.MapOpenApi();
-app.MapGraphQL();
-app.MapScalarApiReference(options =>
-{
-    options.Title = "UsaAutoPartes API";
-    options.Theme = ScalarTheme.DeepSpace;
-}
-); 
 
 app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
 app.UseCors("CorsPoliticy");
 app.UseAuthentication();
+app.UseMiddleware<UsuarioBloqueadoMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<VentasHub>("/hubs/ventas");
+app.MapGraphQL().AllowAnonymous();
+app.MapOpenApi().AllowAnonymous();
+app.MapScalarApiReference(options =>
+{
+    options.WithTitle("UsaAutoPartes API")
+        .WithTheme(ScalarTheme.DeepSpace);
+}).AllowAnonymous();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -163,6 +221,21 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync(UsuarioRoles.Admin.ToString()))
     {
         await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Admin.ToString()));
+    }
+
+    if (!await roleManager.RoleExistsAsync(UsuarioRoles.Cajero))
+    {
+        await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Cajero));
+    }
+
+    if (!await roleManager.RoleExistsAsync(UsuarioRoles.Almacenero))
+    {
+        await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Almacenero));
+    }
+
+    if (!await roleManager.RoleExistsAsync(UsuarioRoles.Operador))
+    {
+        await roleManager.CreateAsync(new IdentityRole<Guid>(UsuarioRoles.Operador));
     }
 }
 
